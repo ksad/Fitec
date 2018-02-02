@@ -10,5 +10,9 @@ object Variables {
         y = 3 * 4 //> x = 12  
         println(y)
         
+        val a = 1 + 2 //val instead of var
+        println(a)
+        /* a = 3 * 4 //error: reassignment to val
+        println(a)*/
     }
 }
