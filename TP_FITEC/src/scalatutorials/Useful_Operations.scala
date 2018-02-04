@@ -9,8 +9,8 @@ object Useful_Operations {
       //from 2 to 10 with jumps of 3  
       val range3 = 2 until 10 by 3 
       
-      println(range1.toList) //List(2, 5, 8)
-      println(range2.toList) //List(2, 5, 8)
+      println(range1.toList) //List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+      println(range2.toList) //List(1, 2, 3, 4, 5, 6, 7, 8, 9)
       println(range3.toList) //List(2, 5, 8)
       
       //Number convinience methods   
