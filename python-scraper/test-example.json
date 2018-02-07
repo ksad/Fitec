@@ -1,0 +1,23 @@
+{
+
+	"items": [{
+
+			"name": "Item #1",
+
+			"price": "$19.95",
+
+			"permalink": "/item-1/"
+
+		},
+
+		{
+
+			"name": "Item #2",
+
+			"price": "$12.95",
+
+			"permalink": "/item-2/"
+
+		}
+		]
+}
