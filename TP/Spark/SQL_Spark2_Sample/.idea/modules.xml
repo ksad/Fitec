@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/SQL_Spark2_Sample.iml" filepath="$PROJECT_DIR$/.idea/SQL_Spark2_Sample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SQL_Spark_Sample/.idea/modules/sql_spark_sample.iml" filepath="$PROJECT_DIR$/SQL_Spark_Sample/.idea/modules/sql_spark_sample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SQL_Spark_Sample/.idea/modules/sql_spark_sample-build.iml" filepath="$PROJECT_DIR$/SQL_Spark_Sample/.idea/modules/sql_spark_sample-build.iml" />
+    </modules>
+  </component>
+</project>
