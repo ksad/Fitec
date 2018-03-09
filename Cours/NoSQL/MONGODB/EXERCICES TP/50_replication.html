@@ -1,0 +1,510 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>Exercices sur la réplication</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="css/code.css"/>
+  <link rel="stylesheet" type="text/css" media="screen" href="css/screen.css"/>
+  <link rel="stylesheet" type="text/css" media="print" href="css/print.css"/>
+  <link rel="stylesheet" type="text/css" href="css/style.css"/>
+  <link rel="alternate stylesheet" type="text/css" media="screen" title="question" href="css/question.css"/>
+  <link rel="stylesheet" type="text/css" media="screen" title="solution" href="css/solution.css"/>
+  <link type="image/x-icon" rel="shortcut icon" href="images/icon.png"/>
+  
+</head>
+<body><h1>Exercices sur la réplication</h1>
+<div class="exo">
+<h2>mise en place de de la réplication</h2>
+
+<h2>Objectif : configurer et lancer plusieurs serveurs en mode répliqués</h2>
+<p>Pour tester la réplication nous allons lancer cinq serveurs <kbd>mongod</kbd>. les quatre premiers seront utilisés en réplication tandis que le de dernier
+  sera utilisé en arbitre. Pour cela il faut :</p>
+<ol>
+  <li>préparer les répertoires de destination des divers éléments :<ul>
+      <li><samp>/home/usera/mongo/replicas/repl_1</samp> pour le premier serveur en mode répliqué,</li>
+      <li><samp>/home/usera/mongo/replicas/repl_2</samp> pour le second serveur en mode répliqué,</li>
+      <li><samp>/home/usera/mongo/replicas/repl_3</samp> pour le troisième serveur en mode répliqué,</li>
+      <li><samp>/home/usera/mongo/replicas/repl_4</samp> pour le quatrième serveur en mode répliqué,</li>
+      <li><samp>/home/usera/mongo/replicas/repl_5</samp> pour le cinquième serveur en mode arbitre,</li>
+      <li><samp>/home/usera/mongo/log</samp> pour les fichiers journaux,</li></ul></li>
+  <li>préparer un fichier de configuration <samp>~/mongo/replicas/repl_l/mongod.conf</samp> afin d'indiquer au serveur :<ul>
+      <li>le chemin des données dans <samp>/home/usera/mongo/replicas/repl_1/mongodb_data</samp>,</li>
+      <li>le chemin des journaux <samp>/home/usera/mongo/log/mongod_repl_1.log</samp>,</li>
+      <li>l'adresse <em>IP</em> et le port <em>TCP</em> qui seront <samp>10.0.0.6:27021</samp>,</li>
+      <li>le nom du <q>replica set</q> qui sera <samp>replica_1</samp>.</li></ul>
+    réaliser également la configuration appropriée conformément à ce modèle pour les 4 autres serveurs en utilisant les ports
+    <samp>27022</samp>, <samp>27023</samp>, <samp>27024</samp> et <samp>27025</samp>.</li>
+  
+  <li>lancer manuellement ces cinq serveurs.</li>
+</ol>
+<div class="solution">
+<p>la liste des commandes à exécuter :</p>
+<ol> 
+  <li>création des répertoires :
+    <pre class="shl"><kbd>mkdir -p /home/usera/mongo/replicas/repl_1/mongodb_data</kbd>
+<kbd>mkdir -p /home/usera/mongo/replicas/repl_2/mongodb_data</kbd>
+<kbd>mkdir -p /home/usera/mongo/replicas/repl_3/mongodb_data</kbd>
+<kbd>mkdir -p /home/usera/mongo/replicas/repl_4/mongodb_data</kbd>
+<kbd>mkdir -p /home/usera/mongo/replicas/repl_5/mongodb_data</kbd>
+<kbd>mkdir -p /home/usera/mongo/log</kbd></pre></li>
+
+  <li>Configuration des 4 serveurs :<ol>
+      <li>le premier serveur sera configuré à partir du fichier <samp>~/mongo/replicas/repl_1/mongod.conf</samp> dont le contenu est :
+	<pre class="file test1" title="~/mongo/replicas/repl_1/mongod.conf"><em># répertoire des données</em>
+dbpath=/home/usera/mongo/replicas/<strong>repl_1</strong>/mongodb_data
+
+<em># fichier des logs en mode insertion</em>
+logpath=/home/usera/mongo/log/<strong>mongod_repl_1.log</strong>
+logappend=true
+
+<em># pour avoir des petits fichiers des journaux (128 Mio au lieu de 1 Gio)</em>
+smallfiles=true
+
+<em># adresse IP et port TCP d'écoute</em>
+bind_ip = 10.0.0.6
+<strong>port = 27021</strong>
+
+<em># le nom du groupe de réplication</em>
+replSet = replica_1</pre></li>
+
+      <li>le second serveur sera configuré à partir du fichier <samp>~/mongo/replicas/repl_2/mongod.conf</samp> dont le contenu est :
+	<pre class="file test2" title="~/mongo/replicas/repl_2/mongod.conf"><em># répertoire des données</em>
+dbpath=/home/usera/mongo/replicas/repl_2/mongodb_data
+
+<em># fichier des logs en mode insertion</em>
+logpath=/home/usera/mongo/log/mongod_repl_2.log
+logappend=true
+
+<em># pour avoir des petits fichiers des journaux (128 Mio au lieu de 1 Gio)</em>
+smallfiles=true
+
+<em># adresse IP et port TCP d'écoute</em>
+bind_ip = 10.0.0.6
+port = 27022
+
+<em># le nom du groupe de réplication</em>
+replSet = replica_1</pre></li>
+
+      <li>le troisième serveur sera configuré à partir du fichier <samp>~/mongo/replicas/repl_3/mongod.conf</samp> dont le contenu est :
+	<pre class="file test3" title="~/mongo/replicas/repl_3/mongod.conf"><em># répertoire des données</em>
+dbpath=/home/usera/mongo/replicas/repl_3/mongodb_data
+
+<em># fichier des logs en mode insertion</em>
+logpath=/home/usera/mongo/log/mongod_repl_3.log
+logappend=true
+
+<em># pour avoir des petits fichiers des journaux (128 Mio au lieu de 1 Gio)</em>
+smallfiles=true
+
+<em># adresse IP et port TCP d'écoute</em>
+bind_ip = 10.0.0.6
+port = 27023
+
+<em># le nom du groupe de réplication</em>
+replSet = replica_1</pre></li>
+
+      <li>le quatrième serveur sera configuré à partir du fichier <samp>~/mongo/replicas/repl_4/mongod.conf</samp> dont le contenu est :
+	<pre class="file test4" title="~/mongo/replicas/repl_4/mongod.conf"><em># répertoire des données</em>
+dbpath=/home/usera/mongo/replicas/repl_4/mongodb_data
+
+<em># fichier des logs en mode insertion</em>
+logpath=/home/usera/mongo/log/mongod_repl_4.log
+logappend=true
+
+<em># pour avoir des petits fichiers des journaux (128 Mio au lieu de 1 Gio)</em>
+smallfiles=true
+
+<em># adresse IP et port TCP d'écoute</em>
+bind_ip = 10.0.0.6
+port = 27024
+
+<em># le nom du groupe de réplication</em>
+replSet = replica_1</pre></li>
+  
+      <li>le cinquième serveur sera configuré à partir du fichier <samp>~/mongo/replicas/repl_5/mongod.conf</samp> dont le contenu est :
+	<pre class="file test5" title="~/mongo/replicas/repl_5/mongod.conf"><em># répertoire des données</em>
+dbpath=/home/usera/mongo/replicas/repl_5/mongodb_data
+
+<em># fichier des logs en mode insertion</em>
+logpath=/home/usera/mongo/log/mongod_repl_5.log
+logappend=true
+
+<em># pour ne pas avoir de fichiers des journaux sur l'arbitre</em>
+nojournal=true
+
+<em># adresse IP et port TCP d'écoute</em>
+bind_ip = 10.0.0.6
+port = 27025
+
+<em># le nom du groupe de réplication</em>
+replSet = replica_1</pre></li></ol></li>
+  
+  <li>lancement des serveurs :
+    <pre class="shl"><kbd>mongod --config /home/usera/mongo/replicas/repl_1/mongod.conf &amp;</kbd>
+<kbd>mongod --config /home/usera/mongo/replicas/repl_2/mongod.conf &amp;</kbd>
+<kbd>mongod --config /home/usera/mongo/replicas/repl_3/mongod.conf &amp;</kbd>
+<kbd>mongod --config /home/usera/mongo/replicas/repl_4/mongod.conf &amp;</kbd>
+<kbd>mongod --config /home/usera/mongo/replicas/repl_5/mongod.conf &amp;</kbd></pre></li>
+</ol>
+
+</div>
+</div>
+<div class="exo">
+<h2>vérifier le comportement des serveurs en mode réplication</h2>
+
+<h2>Objectif : Activer la réplication du groupe de serveurs répliqués et vérifier le fonctionnement</h2>
+<p>Pour tester si les serveurs sont correctement opérationnels nous allons effectuer les opérations suivantes :</p>
+<ol>
+  <li>se connecter au premier serveur lancé puis :<ol>
+      <li>vérifier l'état de la réplication,</li>
+      <li>activer la réplication,</li>
+      <li>vérifier de nouveau l'état de la réplication,</li>
+      <li>indiquer l'adresse d'un autre serveur du groupe par la commande <kbd>rs.add()</kbd>,</li>
+      <li>vérifier de nouveau l'état de la réplication,</li>
+      <li>envoyer du contenu dans le serveur primaire,</li></ol></li>
+  <li>se connecter au serveur secondaire puis :<ol>
+      <li>activer la lecture sur ce serveur secondaire,</li>
+      <li>vérifier si le contenu est à jour.</li></ol></li>
+</ol>
+<div class="solution">
+<p>la liste des commandes à exécuter :</p>
+<ol> 
+  <li>connexion sur le premier serveur :
+    <pre class="shl test1"><kbd>mongo 10.0.0.6:27021</kbd></pre>
+    puis à partir du <q>mongo shell</q> :<ol>
+      <li>vérification de l'état avant activation de la réplication :
+	<pre class="mongo_shl test1"><kbd>rs.status();</kbd>
+{
+	"info" : "run rs.initiate(...) if not yet done for the set",
+	"ok" : 0,
+	"errmsg" : "no replset config has been received",
+	"code" : 94
+}</pre></li>
+
+      <li>activation de la réplication :
+	<pre class="mongo_shl test1"><kbd>rs.initiate();</kbd>
+{
+	"info2" : "no configuration explicitly specified -- making one",
+	"me" : "10.0.0.6:27021",
+	"ok" : 1
+}</pre></li>
+
+      <li>vérification de l'état après activation de la réplication :
+	<pre class="mongo_shl test1"><kbd>rs.status();</kbd>
+{
+	"set" : "replica_1",
+	"date" : ISODate("2015-06-04T14:32:13.998Z"),
+	"myState" : 1,
+	"members" : [
+		{
+			"_id" : 0,
+			"name" : "10.0.0.6:27021",
+			"health" : 1,
+			"state" : 1,
+			"stateStr" : "PRIMARY",
+			"uptime" : 266,
+			"optime" : Timestamp(1433428269, 1),
+			"optimeDate" : ISODate("2015-06-04T14:31:09Z"),
+			"electionTime" : Timestamp(1433428269, 2),
+			"electionDate" : ISODate("2015-06-04T14:31:09Z"),
+			"configVersion" : 1,
+			"self" : true
+		}
+	],
+	"ok" : 1
+}</pre></li>
+
+      <li>vérification de l'état après activation de la réplication :
+	<pre class="mongo_shl test1"><kbd>rs.add('10.0.0.6:27022');</kbd>
+{ "ok" : 1 }</pre></li>
+
+      <li>vérification de l'état après activation de la réplication :
+	<pre class="mongo_shl test1"><kbd>rs.status();</kbd>
+{
+	"set" : "replica_1",
+	"date" : ISODate("2015-06-04T14:41:40.513Z"),
+	"myState" : 1,
+	"members" : [
+		{
+			"_id" : 0,
+			"name" : "10.0.0.6:27021",
+			"health" : 1,
+			"state" : 1,
+			"stateStr" : "PRIMARY",
+			"uptime" : 833,
+			"optime" : Timestamp(1433428795, 1),
+			"optimeDate" : ISODate("2015-06-04T14:39:55Z"),
+			"electionTime" : Timestamp(1433428269, 2),
+			"electionDate" : ISODate("2015-06-04T14:31:09Z"),
+			"configVersion" : 2,
+			"self" : true
+		},
+		{
+			"_id" : 1,
+			"name" : "10.0.0.6:27022",
+			"health" : 1,
+			"state" : 2,
+			"stateStr" : "SECONDARY",
+			"uptime" : 104,
+			"optime" : Timestamp(1433428795, 1),
+			"optimeDate" : ISODate("2015-06-04T14:39:55Z"),
+			"lastHeartbeat" : ISODate("2015-06-04T14:41:39.610Z"),
+			"lastHeartbeatRecv" : ISODate("2015-06-04T14:41:39.678Z"),
+			"pingMs" : 0,
+			"configVersion" : 2
+		}
+	],
+	"ok" : 1
+}</pre></li>
+
+      <li>envoi du contenu de la collection <samp>villes</samp> dans le serveur primaire :
+	<pre class="mongo_shl test1"><kbd>use geo_france;</kbd>
+<kbd>load('<em>/chemin/vers/</em>collection_villes.js');</kbd>
+true</pre></li></ol></li>
+
+  <li>connexion sur le serveur secondaire :
+    <pre class="shl test2"><kbd>mongo 10.0.0.6:27022</kbd></pre>
+    puis à partir du <q>mongo shell</q> :<ol>
+
+      <li>activation de la lecture depuis ce serveur secondaire :
+	<pre class="mongo_shl test2"><kbd>rs.slaveOk();</kbd></pre></li>
+
+      <li>vérification du contenu du serveur secondaire :
+	<pre class="mongo_shl test2"><kbd>use geo_france;</kbd>
+<kbd>db.villes.find();</kbd>
+{ "_id" : 1, "_id_dept" : 62, "nom" : "Aast", "cp" : "64460", "pop" : 163, "lat" : 43.283333, "lon" : -0.083333 }
+{ "_id" : 2, "_id_dept" : 53, "nom" : "Abainville", "cp" : "55130", "pop" : 305, "lat" : 48.5333, "lon" : 5.5 }
+{ "_id" : 3, "_id_dept" : 57, "nom" : "Abancourt", "cp" : "59268", "lat" : 50.234722, "lon" : 3.2141666 }
+{ "_id" : 4, "_id_dept" : 58, "nom" : "Abancourt", "cp" : "60220", "pop" : 582, "lat" : 49.7, "lon" : 1.766667 }
+{ "_id" : 5, "_id_dept" : 52, "nom" : "Abaucourt", "cp" : "54610", "pop" : 273, "lat" : 48.9, "lon" : 6.25 }
+<em>...</em></pre></li></ol></li>
+</ol>
+
+</div>
+</div>
+<div class="exo">
+<h2>modifier la configuration des serveurs en mode réplication</h2>
+
+<h2>Objectif : Insérer les autres serveurs et changer de serveur primaire</h2>
+<p>Afin de compléter notre <q>replica set</q> nous allons effectuer les opérations suivantes :</p>
+<ol>
+  <li>se connecter au premier serveur lancé puis :<ul>
+      <li>modifier le configuration de façon à ce que :<ul>
+	  <li>deux nouveaux serveurs soient intégrés en mode répliqué,</li>
+	  <li>un nouveau serveur soit intégré en mode arbitre,</li>
+	  <li>le dernier serveur répliqué devienne le serveur primaire.</li></ul></li></ul></li>
+  <li>vérifier enfin si sur le nouveau serveur primaire le contenu est à jour.</li>
+</ol>
+<div class="solution">
+<p>la liste des commandes à exécuter :</p>
+<ol> 
+  <li>connexion sur le premier serveur :
+    <pre class="shl test1"><kbd>mongo 10.0.0.6:27021</kbd></pre>
+    puis à partir du <q>mongo shell</q> :
+	<pre class="mongo_shl test1"><em>// Récupération de la configuration actuelle</em>
+<kbd>var config = rs.conf();</kbd>
+<em>// insertion du troisième serveur</em>
+<kbd>config.members.push({_id: 2, host: '10.0.0.6:27023'});</kbd>
+2
+<em>// insertion du quatrième serveur en priorité plus élevée</em>
+<kbd>config.members.push({_id: 3, host: '10.0.0.6:27024', priority: 2});</kbd>
+3
+<em>// insertion du cinquième serveur en mode arbitre</em>
+<kbd>config.members.push({_id: 3, host: '10.0.0.6:27025', arbiterOnly: true});</kbd>
+4
+
+<em>// Activation de la configuration</em>
+<kbd>rs.reconfig(config);</kbd>
+{ "ok" : 1 }
+2015-06-04T17:17:23.535+0200 I NETWORK  DBClientCursor::init call() failed
+2015-06-04T17:17:23.537+0200 I NETWORK  trying reconnect to 10.0.0.6:27021 (10.0.0.6) failed
+2015-06-04T17:17:23.537+0200 I NETWORK  reconnect 10.0.0.6:27021 (10.0.0.6) ok</pre></li>
+
+  <li>connexion sur le nouveau serveur primaire :
+    <pre class="shl test4"><kbd>mongo 10.0.0.6:27024</kbd></pre>
+    puis à partir du <q>mongo shell</q> vérification du contenu :
+    <pre class="mongo_shl test4"><kbd>use geo_france;</kbd>
+<kbd>db.villes.find();</kbd>
+{ "_id" : 1, "_id_dept" : 62, "nom" : "Aast", "cp" : "64460", "pop" : 163, "lat" : 43.283333, "lon" : -0.083333 }
+{ "_id" : 2, "_id_dept" : 53, "nom" : "Abainville", "cp" : "55130", "pop" : 305, "lat" : 48.5333, "lon" : 5.5 }
+{ "_id" : 3, "_id_dept" : 57, "nom" : "Abancourt", "cp" : "59268", "lat" : 50.234722, "lon" : 3.2141666 }
+{ "_id" : 4, "_id_dept" : 58, "nom" : "Abancourt", "cp" : "60220", "pop" : 582, "lat" : 49.7, "lon" : 1.766667 }
+{ "_id" : 5, "_id_dept" : 52, "nom" : "Abaucourt", "cp" : "54610", "pop" : 273, "lat" : 48.9, "lon" : 6.25 }
+<em>...</em></pre></li>
+</ol>
+
+</div>
+</div>
+<div class="exo">
+<h2>vérifier le comportement en cas de défaillances</h2>
+
+<h2>Objectif : <q>tuer</q> des serveurs et vérifier la continuité du service</h2>
+<p>La configuration déployée ici permet de perdre deux serveurs car il nous faudra une majorité restante sur cinq, c'est à dire trois serveurs.
+  Nous allons donc vérifier le comportement par les actions suivantes :</p>
+<ol>
+  <li>interruption brutale (<kbd>kill -9 <em>pid</em></kbd>) du processus hébergeant le serveur primaire,</li>
+  <li>interruption brutale d'un autre processus,</li>
+  <li>vérification de l'état,</li>
+  <li>insertion de données dans le nouveau serveur élu maître,</li>
+  <li>interruption brutale de ce nouveau serveur élu maître,</li>
+  <li>vérification de l'état,</li>
+  <li>remise en route de tous les serveurs,</li>
+  <li>vérification des données présentes sur tous les serveurs.</li>
+</ol>
+<div class="solution">
+<p>la liste des commandes à exécuter :</p>
+<ol> 
+  <li>interruption brutale du serveur maître :
+    <pre class="shl test4"><kbd>kill -9 $(mongo 10.0.0.6:27024 --quiet --eval 'Number(db.serverStatus().pid)')</kbd></pre></li>
+
+  <li>interruption brutale d'un autre serveur :
+    <pre class="shl test3"><kbd>kill -9 $(mongo 10.0.0.6:27023 --quiet --eval 'Number(db.serverStatus().pid)')</kbd></pre></li>
+
+  <li>vérification de l'état par connexion sur un serveur encore actif :
+    <pre class="mongo_shl test2"><kbd>rs.status();</kbd>
+replica_1:SECONDARY> rs.status();
+{
+  <em>...</em>
+  "members" : [
+    {
+      "_id" : 0,
+      "name" : "10.0.0.115:27021",
+      "health" : 1,
+      "state" : 1,
+      "stateStr" : "PRIMARY",
+      <em>...</em>
+    },
+    {
+      "_id" : 1,
+      "name" : "10.0.0.115:27022",
+      "health" : 1,
+      "state" : 2,
+      "stateStr" : "SECONDARY",
+      <em>...</em>
+    },
+    {
+      "_id" : 2,
+      "name" : "10.0.0.115:27023",
+      "health" : 0,
+      "state" : 8,
+      "stateStr" : "(not reachable/healthy)",
+      "lastHeartbeatMessage" : "Failed attempt to connect to 10.0.0.115:27023; couldn't connect to server 10.0.0.115:27023 (10.0.0.115), connection attempt failed",
+      <em>...</em>
+    },
+    {
+      "_id" : 3,
+      "name" : "10.0.0.115:27024",
+      "health" : 0,
+      "state" : 8,
+      "stateStr" : "(not reachable/healthy)",
+      "lastHeartbeatMessage" : "Failed attempt to connect to 10.0.0.115:27024; couldn't connect to server 10.0.0.115:27024 (10.0.0.115), connection attempt failed",
+      <em>...</em>
+    },
+    {
+      "_id" : 4,
+      "name" : "10.0.0.115:27025",
+      "health" : 1,
+      "state" : 7,
+      "stateStr" : "ARBITER",
+      <em>...</em>
+     }
+   ],
+   "ok" : 1
+}</pre></li>
+
+  <li>insertion de données dans le nouveau serveur élu maître :
+    <pre class="shl test1"><kbd>cat <em>/chemin/vers/fichier</em>/collection_regions.js | mongo 10.0.0.115:27021/geo_france</kbd>
+MongoDB shell version: 3.0.5
+connecting to: 10.0.0.115:27021/test
+WriteResult({ "nInserted" : 1 })
+<em>...</em>
+bye</pre></li>
+
+  <li>interruption brutale du serveur maître élu :
+    <pre class="shl test1"><kbd>kill -9 $(mongo 10.0.0.6:27021 --quiet --eval 'Number(db.serverStatus().pid)')</kbd></pre></li>
+
+  <li>vérification de l'état par connexion sur un serveur encore actif :
+    <pre class="mongo_shl test2"><kbd>rs.status();</kbd>
+replica_1:SECONDARY> rs.status();
+{
+  <em>...</em>
+  "members" : [
+    {
+      "_id" : 0,
+      "name" : "10.0.0.115:27021",
+      "health" : 0,
+      "state" : 8,
+      "stateStr" : "(not reachable/healthy)",
+      "lastHeartbeatMessage" : "Failed attempt to connect to 10.0.0.115:27021; couldn't connect to server 10.0.0.115:27021 (10.0.0.115), connection attempt failed",          <em>...</em>
+    },
+    {
+      "_id" : 1,
+      "name" : "10.0.0.115:27022",
+      "health" : 1,
+      "state" : 2,
+      "stateStr" : "SECONDARY",
+      <em>...</em>
+    },
+    {
+      "_id" : 2,
+      "name" : "10.0.0.115:27023",
+      "health" : 0,
+      "state" : 8,
+      "stateStr" : "(not reachable/healthy)",
+      "lastHeartbeatMessage" : "Failed attempt to connect to 10.0.0.115:27023; couldn't connect to server 10.0.0.115:27023 (10.0.0.115), connection attempt failed",
+      <em>...</em>
+    },
+    {
+      "_id" : 3,
+      "name" : "10.0.0.115:27024",
+      "health" : 0,
+      "state" : 8,
+      "stateStr" : "(not reachable/healthy)",
+      "lastHeartbeatMessage" : "Failed attempt to connect to 10.0.0.115:27024; couldn't connect to server 10.0.0.115:27024 (10.0.0.115), connection attempt failed",
+      <em>...</em>
+    },
+    {
+      "_id" : 4,
+      "name" : "10.0.0.115:27025",
+      "health" : 1,
+      "state" : 7,
+      "stateStr" : "ARBITER",
+      <em>...</em>
+     }
+   ],
+   "ok" : 1
+}</pre></li>
+
+  <li>remise en route des serveurs interrompus :
+    <pre class="shl"><kbd>mongod --config /home/usera/mongo/replicas/repl_1/mongod.conf &amp;</kbd>
+<kbd>mongod --config /home/usera/mongo/replicas/repl_3/mongod.conf &amp;</kbd>
+<kbd>mongod --config /home/usera/mongo/replicas/repl_4/mongod.conf &amp;</kbd></pre></li>
+  
+  <li>vérification des données présentes sur chaque serveur :
+    <pre class="shl"><kbd>for i in 1 2 3 4; do</kbd>
+<kbd class="next">mongo 10.0.0.115:2702$i/geo_france --eval 'rs.slaveOk(); print(db.regions.findOne().nom)'</kbd>
+<kbd class="next">done</kbd>
+MongoDB shell version: 3.0.5
+connecting to: 10.0.0.115:27021/test
+Aquitaine
+MongoDB shell version: 3.0.5
+connecting to: 10.0.0.115:27022/test
+Aquitaine
+MongoDB shell version: 3.0.5
+connecting to: 10.0.0.115:27023/test
+Aquitaine
+MongoDB shell version: 3.0.5
+connecting to: 10.0.0.115:27024/test
+Aquitaine</pre></li>
+  
+</ol>
+
+</div>
+</div>
+<div class="validator">
+  pages validées par
+  <a href="http://validator.w3.org/check?uri=referer"><img src="images/valid_xhtml.svg" alt="Valid XHTML 1.1" title="xHTML 1.1 validé !"/></a>
+  <a href="http://jigsaw.w3.org/css-validator/check/referer"><img src="images/valid_css.svg" alt="CSS validé !" title="CSS validé !"/></a>
+</div>
+</body>
+</html>

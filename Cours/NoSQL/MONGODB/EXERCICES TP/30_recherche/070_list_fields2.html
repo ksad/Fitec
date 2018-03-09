@@ -1,0 +1,21 @@
+<-- titre: extraire toutes les propriétés présentes dans une collection
+--crypt: actif
+--answer-start:
+  <p>La requête à exécuter dans <em>mongo shell</em> est :</p>
+  <pre class="mongo_shl"><kbd>var collection = 'villes';</kbd>
+<kbd class="next">mr = db.runCommand({
+    mapreduce: collection,
+    map: function() { for (var key in this) { emit(key, null); } },
+    reduce: function(key, stuff) { return null; },
+    out: 'keys'
+})
+db.keys.find();</kbd>
+--answer-stop:
+    
+  <p>Objectif : à l'aide d'un <samp>mapReduce()</samp> extraire l'ensemble des noms des propriétés de tous les documents de la collection
+    <samp>villes</samp>.</p>
+-->
+
+
+
+

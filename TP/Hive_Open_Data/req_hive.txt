@@ -1,0 +1,8 @@
+beeline > !connect jdbc:hive2://
+Enter username for jdbc:hive2://: hiveuser
+Enter password for jdbc:hive2://: ********
+
+CREATE TABLE IF NOT EXISTS vehicles ( idetifiant_A String, identifiant_B String, Site_Label String, label_site_type String, accesstype_label String) COMMENT 'Laposte details' ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n' STORED AS TEXTFILE;
+INSERT INTO TABLE access_info VALUES ("10171A", "561550", "PENESTIN BP", "BUREAU DE POSTE", "Pas d'escalier ou escalier avec bande de vigilance")
+alter table access_infos set SERDEPROPERTIES ('field.delim' = '\073');
+LOAD DATA LOCAL INPATH '/home/ubuntu/Hive/laposte_handicap.csv' OVERWRITE INTO TABLE access;

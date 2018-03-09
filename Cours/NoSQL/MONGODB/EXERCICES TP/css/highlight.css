@@ -1,0 +1,204 @@
+/* mise en forme de la numérotation */
+pre {counter-reset:lig_num}
+pre>samp {
+ padding-left:0em;
+ display:block;
+ width:auto;
+ border:#222 solid;
+ border-width:0 0 1px 0;
+ counter-increment:lig_num;
+ font-weight:normal;
+ overflow:auto;
+ white-space: pre-wrap;
+}
+
+pre>samp:first-child {border-top-width:1px}
+pre>samp:before {
+ margin-right:0.5ex;
+ padding:0 0.5ex;
+ border-top-width:1px;
+ content: counter(lig_num, decimal-leading-zero);
+ float:left;
+ color:#400;
+ background-color:#8B8;
+ font-weight:bold;
+ display:block;
+}
+
+pre.color {
+    white-space: normal;
+}
+
+/* surlignage des commentaires */
+pre .sc-1 {font-style:italic;color:#4F4}
+pre .co0 {font-style:italic;color:#9FA}
+pre .co1 {font-style:italic;color:#7F4}
+pre .co2 {font-style:italic;color:#4F7}
+pre .co3 {font-style:italic;color:#488}
+pre .co4 {font-style:italic;color:#484}
+pre .coMULTI {font-style:italic;color:#488}
+
+/* surlignage des langages */
+/* html4strict */
+pre.html4strict .sc1 {color:#FF0; font-style:italic}
+pre.html4strict .sc2 {color:#F00}
+pre.html4strict .sc2 * {font-weight:bold}
+pre.html4strict .sc2 .kw1 {color:#F40}
+pre.html4strict .sc2 .kw2 {color:#F0F}
+pre.html4strict .sc2 .kw3 {color:#F48}
+pre.html4strict .sc2 .sy0 {color:#F80}
+pre.html4strict .sc2 .st0 {color:#FF4}
+pre.html4strict .sc1 {color:#EEE;font-weight:bold}
+pre.html4strict .sc0 {color:#FFC}
+
+/* html5 */
+pre.html5 .sc1 {color:#FF0; font-style:italic}
+pre.html5 .sc2 {color:#F00}
+pre.html5 .sc2 * {font-weight:bold}
+pre.html5 .sc2 .kw1 {color:#F40}
+pre.html5 .sc2 .kw2 {color:#F0F}
+pre.html5 .sc2 .kw3 {color:#F48}
+pre.html5 .sc2 .sy0 {color:#F80}
+pre.html5 .sc2 .st0 {color:#FF4}
+pre.html5 .sc1 {color:#EEE;font-weight:bold}
+pre.html5 .sc0 {color:#FFC}
+
+/* javascript */
+pre.javascript .sc-0 {color:#4fF;}
+pre.javascript .sc0 .kw1 {color:#FF4}
+pre.javascript .sc0 .kw2 {color:#F4F}
+pre.javascript .sc0 .kw3 {color:#F4B}
+pre.javascript .sc0 .re2 {color:#B4F}
+pre.javascript .sc0 .br0 {color:#F00}
+pre.javascript .sc0 .re0 {color:#4FB}
+pre.javascript .sc0 .re2 {color:#B4F}
+pre.javascript .sc0 .sy0 {color:#F84}
+pre.javascript .sc0 .st0 {color:#FF4}
+pre.javascript .sc0 {color:#f88;}
+pre.javascript .me1 {color:#EBB}
+
+/* ecmascript */
+pre.ecmascript .kw1 {color:#FF4}
+pre.ecmascript .kw2 {color:#F4F}
+pre.ecmascript .kw3 {color:#F4B}
+pre.ecmascript .re2 {color:#B4F}
+pre.ecmascript .br0 {color:#F00}
+pre.ecmascript .re0 {color:#4FB}
+pre.ecmascript .re2 {color:#B4F}
+pre.ecmascript .sy0 {color:#F84}
+pre.ecmascript .st0 {color:#FF4}
+pre.ecmascript .sc-0 {color:#4fF;}
+pre.ecmascript .sc0 {color:#f88;}
+pre.ecmascript .me1 {color:#EBB}
+
+/* CSS */
+pre.css .sy0 {color:#F55}
+pre.css .br0 {color:#F88}
+pre.css .re4 {color:#FC0}
+pre.css .re5 {color:#F0C}
+pre.css .re0 {color:#CCF}
+pre.css .re2 {color:#CCC}
+pre.css .kw1 {color:#FCC}
+
+/* PHP */
+pre.php .st1 {color:#FC0}
+pre.php .sc0 {font-weight:bold}
+pre.php .sc4 {font-weight:bold}
+pre.php .re0 {color:#CCF}
+pre.php .kw0 {color:#CC7}
+pre.php .kw1 {color:#C77}
+pre.php .kw2 {color:#7CC}
+pre.php .kw3 {color:#C7C}
+pre.php .sy0 {color:#88F}
+pre.php .me1 {color:#EBB}
+pre.php .st_h {color:#F0F}
+pre.php .st_q {color:#F8F}
+
+/* Perl */
+pre.perl .st1 {color:#FC0}
+pre.perl .sc0 {font-weight:bold}
+pre.perl .sc4 {font-weight:bold}
+pre.perl .re0 {color:#CCF}
+pre.perl .kw0 {color:#CC7}
+pre.perl .kw1 {color:#C77}
+pre.perl .kw2 {color:#7CC}
+pre.perl .kw3 {color:#C7C}
+pre.perl .sy0 {color:#88F}
+pre.perl .me1 {color:#EBB}
+pre.perl .st_h {color:#F0F}
+pre.perl .st_q {color:#F8F}
+
+/* SQL */
+pre.sql .st0 {color:#FC0}
+pre.sql .sc0 {font-weight:bold}
+pre.sql .sc4 {font-weight:bold}
+pre.sql .re0 {color:#CCF}
+pre.sql .kw0 {color:#CC7}
+pre.sql .kw1 {color:#FC8}
+pre.sql .kw2 {color:#7CC}
+pre.sql .kw3 {color:#C7C}
+pre.sql .sy0 {color:#88F}
+pre.sql .me1 {color:#EBB}
+pre.sql .st_h {color:#F0F}
+pre.sql .st_q {color:#F8F}
+pre.sql .br0 {color:#FCF}
+pre.sql .sy0 {color:#CFC}
+
+/* MySQL */
+pre.mysql .st0 {color:#FC0}
+pre.mysql .sc0 {font-weight:bold}
+pre.mysql .sc4 {font-weight:bold}
+pre.mysql .re0 {color:#CCF}
+pre.mysql .kw0 {color:#CC7}
+pre.mysql .kw1 {color:#FC8}
+pre.mysql .kw2 {color:#7CC}
+pre.mysql .kw3 {color:#C7C}
+pre.mysql .sy0 {color:#88F}
+pre.mysql .me1 {color:#EBB}
+pre.mysql .st_h {color:#F0F}
+pre.mysql .st_q {color:#F8F}
+pre.mysql .br0 {color:#FCF}
+pre.mysql .sy0 {color:#CFC}
+
+/* INI */
+pre.ini .co0 {color:#6F6}
+pre.ini .re2 {color:#88F}
+pre.ini .sy0 {color:#F88}
+pre.ini .st0 {color:#8FF}
+pre.ini .re0 {color:#FF4}
+
+/* XML */
+pre.xml .sc3 {color:#FF0; font-style:italic}
+pre.xml .re0 {color:#8CF}
+pre.xml .st0 {color:#8FC}
+pre.xml .re1 {color:#F88}
+pre.xml .re2 {color:#F88}
+
+/* Bash */
+pre.bash .st1 {color:#FC0}
+pre.bash .sc0 {font-weight:bold}
+pre.bash .sc4 {font-weight:bold}
+pre.bash .re0 {color:#CCF}
+pre.bash .kw0 {color:#CC7}
+pre.bash .kw1 {color:#C77}
+pre.bash .kw2 {color:#7CC}
+pre.bash .kw3 {color:#C7C}
+pre.bash .sy0 {color:#88F}
+pre.bash .me1 {color:#EBB}
+pre.bash .st_h {color:#F0F}
+pre.bash .st_q {color:#F8F}
+
+/* awk */
+pre.awk .st1 {color:#FC0}
+pre.awk .sc0 {font-weight:bold}
+pre.awk .sc4 {font-weight:bold}
+pre.awk .re0 {color:#CCF}
+pre.awk .kw0 {color:#CC7}
+pre.awk .kw1 {color:#C77}
+pre.awk .kw2 {color:#7CC}
+pre.awk .kw3 {color:#C7C}
+pre.awk .sy0 {color:#88F}
+pre.awk .me1 {color:#EBB}
+pre.awk .st_h {color:#F0F}
+pre.awk .st_q {color:#F8F}
+

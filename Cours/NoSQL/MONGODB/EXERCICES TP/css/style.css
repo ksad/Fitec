@@ -1,0 +1,16 @@
+@import url(extra_screen.css) screen;
+
+body	{font-family:sans-serif}
+
+.warning {
+ color:#B30;
+ font-weight:bolder;
+}
+
+em, strong, cite, code, samp, q, acronym, abbr, var, dfn, ins, del, tt {font-size:inherit}
+
+var,samp {
+  vertical-align:middle;
+  font-family:courier;
+  font-style:normal;
+}

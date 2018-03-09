@@ -1,0 +1,418 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>Exercices sur les interfaces avec MongoDB</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="css/code.css"/>
+  <link rel="stylesheet" type="text/css" media="screen" href="css/screen.css"/>
+  <link rel="stylesheet" type="text/css" media="print" href="css/print.css"/>
+  <link rel="stylesheet" type="text/css" href="css/style.css"/>
+  <link rel="alternate stylesheet" type="text/css" media="screen" title="question" href="css/question.css"/>
+  <link rel="stylesheet" type="text/css" media="screen" title="solution" href="css/solution.css"/>
+  <link type="image/x-icon" rel="shortcut icon" href="images/icon.png"/>
+  
+</head>
+<body><h1>Exercices sur les interfaces avec <em>MongoDB</em></h1>
+<blockquote><p>Dans cette série d'exercices nous allons réaliser des programmes se connectant directement sur une base de données.</p>
+  <p>Pour cela nous procéderons par étapes :</p>
+  <ol>
+    <li>Nous allons utiliser la librairie <em>PHP</em> <em>MongoDB</em> afin de réaliser un programme effectuant une connexion sans retour.</li>
+    <li>Nous réaliserons ensuite toujours avec cette librairie <em>MongoDB</em> un programme effectuant la lecture d'une collection.</li>
+  </ol>
+</blockquote>
+<div class="exo">
+<h2>effectuer une première connexion sur MongoDB par un script PHP</h2>
+
+<blockquote>
+<h3>Pour les utilisateurs <em>Windows</em></h3>
+<p>Pour pouvoir faire fonctionner <samp>MongoDB</samp> avec le module <samp>php_mongodb</samp> sous <em>WAMP</em> il faut :</p>
+<ul>
+  <li>avoir installé le module <a href="http://localhost/~marc/formations/sgbd/2015_06_mgo_orsys/exercices/35_interfaces/drivers/php_mongodb.dll">php_mongodb.dll</a> dans le répertoire approprié (à priori
+    <samp>C:\wamp\bin\php\php5.3.0</samp>)</li>
+  <li>activer le module PHP par l'interface <samp>WAMP</samp> : <kbd>PHP&rarr;Extensions PHP&rarr;php_mongodb</kbd></li>
+  <li>redémarrer tous les services de <samp>WAMP</samp>.</li>
+</ul>
+<h3>Pour les utilisateurs <em>Linux</em></h3>
+<p>À priori tout est installé, si ceci n'était pas le cas il suffit de lancer les commandes suivantes en tant que <samp>root</samp> :</p>
+   <ul>
+     <li>Sous <em>Debian</em> :
+	 <pre class="shl_root"><kbd>apt-get install php5-mongo</kbd>
+<kbd>service apache2 restart</kbd></pre></li>
+     <li>Sous <em>CentOS</em> :
+	 <pre class="shl_root"><kbd>yum install php-pecl-mongo</kbd>
+<kbd>service httpd restart</kbd></pre></li>
+   </ul>
+</blockquote>
+
+<p>Écrire un script tel que celui-ci :</p>
+<ul>
+  <li>se connecte sur le système de bases de données <em>mongodb</em>,</li>
+  <li>affiche la liste des bases de données présentes sur celui-ci,</li>
+  <li>affiche également l'espace occupé par chacune d'elles ainsi que l'espace total.</li>
+</ul>
+<div class="solution">
+<pre class="file color php" title="(colorisé en PHP)"><samp class="li1">&lt;html&gt;</samp>
+<samp class="li1">&lt;head&gt;</samp>
+<samp class="li1">  &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;</samp>
+<samp class="li1">  &lt;title&gt;TP PHP/MongoDB : Affichage des bases de données&lt;/title&gt;</samp>
+<samp class="li2">  &lt;style type=&quot;text/css&quot;&gt;</samp>
+<samp class="li1">    samp {background-color:#000; color:#FF0}</samp>
+<samp class="li1">    em {color:#006}</samp>
+<samp class="li1">  &lt;/style&gt;</samp>
+<samp class="li1">&lt;/head&gt;</samp>
+<samp class="li2"></samp>
+<samp class="li1">&lt;body&gt;</samp>
+<samp class="li1">  &lt;h1&gt;Affichage des bases de données présentes dans le système&lt;/h1&gt;</samp>
+<samp class="li1"><span class="sc4"><span class="kw2">&lt;?php</span></span></samp>
+<samp class="li1"><span class="sc4">  <span class="co1">//phpinfo();exit;</span></span></samp>
+<samp class="li2"><span class="sc4">  <span class="co1">//$dsn='mongodb://monRoot:topSecret@10.0.1.100:27017';</span></span></samp>
+<samp class="li1"><span class="sc4"><span class="re0">$dsn</span><span class="sy0">=</span><span class="st_h">'mongodb://localhost:27017'</span><span class="sy0">;</span></span></samp>
+<samp class="li1"></samp>
+<samp class="li1"><span class="sc4"><span class="re0">$mgc</span> <span class="sy0">=</span> <span class="kw2">new</span> MongoClient<span class="br0">&#40;</span><span class="re0">$dsn</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc4"><span class="re0">$dbs</span> <span class="sy0">=</span> <span class="re0">$mgc</span><span class="sy0">-&gt;</span><span class="me1">listDBs</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li2"><span class="sc4"><span class="kw1">echo</span> <span class="st0">&quot;&lt;ul&gt;<span class="es1">\n</span>&quot;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc4"><span class="kw1">foreach</span><span class="br0">&#40;</span><span class="re0">$dbs</span><span class="br0">&#91;</span><span class="st_h">'databases'</span><span class="br0">&#93;</span> <span class="kw1">as</span> <span class="re0">$db</span><span class="br0">&#41;</span> <span class="br0">&#123;</span></span></samp>
+<samp class="li1"><span class="sc4">  <a href="http://www.php.net/printf"><span class="kw3">printf</span></a><span class="br0">&#40;</span><span class="st0">&quot;&lt;li&gt;la base de données &lt;samp&gt;<span class="es6">%s</span>&lt;/samp&gt; : occupe &lt;em&gt;<span class="es6">%d</span>&lt;/em&gt; octets.&lt;/li&gt;<span class="es1">\n</span>&quot;</span><span class="sy0">,</span> <span class="re0">$db</span><span class="br0">&#91;</span><span class="st_h">'name'</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="re0">$db</span><span class="br0">&#91;</span><span class="st_h">'sizeOnDisk'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc4"><span class="br0">&#125;</span></span></samp>
+<samp class="li1"><span class="sc4"><span class="kw1">echo</span> <span class="st0">&quot;&lt;ul&gt;<span class="es1">\n</span>&quot;</span><span class="sy0">;</span></span></samp>
+<samp class="li2"><span class="sc4"><a href="http://www.php.net/printf"><span class="kw3">printf</span></a><span class="br0">&#40;</span><span class="st0">&quot;&lt;h2&gt;la taille totale occupée est de &lt;em&gt;<span class="es6">%s</span>&lt;/em&gt; octets.&lt;/h2&gt;<span class="es1">\n</span>&quot;</span><span class="sy0">,</span> <span class="re0">$dbs</span><span class="br0">&#91;</span><span class="st_h">'totalSize'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc4"><span class="sy1">?&gt;</span></span></samp>
+<samp class="li1">&lt;/body&gt;</samp>
+<samp class="li1">&lt;/html&gt;</samp>
+</pre><h5><a href="35_interfaces/010_show_dbs.php.html">voir le résultat</a></h5>
+</div>
+</div>
+<div class="exo">
+<h2>effectuer une requête d'extraction dans <em>MongoDB</em> par un script <em>PHP</em></h2>
+
+<h3>Objectif : tester la construction de requêtes avec critère de sélection et de tri.</h3>
+<p>Écrire un script tel que celui-ci :</p>
+<ul>
+  <li>se connecte sur la base de données <em>geo_france</em>,</li>
+  <li>effectue une requête affichant les caractéristiques de 5 villes prises au hasard dans la collection <samp>villes</samp>,</li>
+  <li>les villes retenues devront avoir :<ul>
+     <li>un nom commençant par une lettre dans l'intervalle <samp>E-G</samp></li>
+     <li>une population comprise entre 10000 et 100000 habitants.</li></ul></li>
+</ul>
+<div class="solution">
+<pre class="file color php" title="(colorisé en PHP)"><samp class="li1">&lt;html&gt;</samp>
+<samp class="li1">&lt;head&gt;</samp>
+<samp class="li1">  &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;</samp>
+<samp class="li1">  &lt;title&gt;TP PHP/MongoDB : Extraction de documents&lt;/title&gt;</samp>
+<samp class="li2">  &lt;style type=&quot;text/css&quot;&gt;</samp>
+<samp class="li1">    samp {background-color:#000; color:#FF0}</samp>
+<samp class="li1">    em {color:#006}</samp>
+<samp class="li1">  &lt;/style&gt;</samp>
+<samp class="li1">&lt;/head&gt;</samp>
+<samp class="li2"></samp>
+<samp class="li1">&lt;body&gt;</samp>
+<samp class="li1"><span class="sc4"><span class="kw2">&lt;?php</span></span></samp>
+<samp class="li1"><span class="sc4"><span class="re0">$num</span> <span class="sy0">=</span> <span class="nu0">5</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc4"><span class="re0">$dsn</span><span class="sy0">=</span><span class="st_h">'mongodb://localhost:27017'</span><span class="sy0">;</span></span></samp>
+<samp class="li2"><span class="sc4"><span class="re0">$dbname</span> <span class="sy0">=</span> <span class="st_h">'geo_france'</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc4"><span class="re0">$collname</span> <span class="sy0">=</span> <span class="st_h">'villes'</span><span class="sy0">;</span></span></samp>
+<samp class="li1"></samp>
+<samp class="li1"><span class="sc4"><a href="http://www.php.net/printf"><span class="kw3">printf</span></a><span class="br0">&#40;</span><span class="st0">&quot;&lt;h1&gt;Affichage de &lt;em&gt;<span class="es6">%d</span>&lt;/em&gt; éléments pris au hasard dans la collection &lt;samp&gt;<span class="es6">%s</span>&lt;/samp&gt;&lt;/h1&gt;<span class="es1">\n</span>&quot;</span><span class="sy0">,</span> <span class="re0">$num</span><span class="sy0">,</span> <span class="re0">$collname</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"></samp>
+<samp class="li2"><span class="sc4">try <span class="br0">&#123;</span></span></samp>
+<samp class="li1"><span class="sc4">  <span class="re0">$mgc</span> <span class="sy0">=</span> <span class="kw2">new</span> MongoClient<span class="br0">&#40;</span><span class="re0">$dsn</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc4">  <span class="re0">$mgo</span> <span class="sy0">=</span> <span class="re0">$mgc</span><span class="sy0">-&gt;</span><span class="me1">selectDB</span><span class="br0">&#40;</span><span class="re0">$dbname</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc4">  <span class="re0">$coll</span> <span class="sy0">=</span> <span class="kw2">new</span> MongoCollection<span class="br0">&#40;</span><span class="re0">$mgo</span><span class="sy0">,</span> <span class="re0">$collname</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc4">  <span class="re0">$request</span> <span class="sy0">=</span> <a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span><span class="st_h">'pop'</span> <span class="sy0">=&gt;</span> <a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span><span class="st_h">'$gte'</span> <span class="sy0">=&gt;</span> <span class="nu0">10000</span><span class="sy0">,</span> <span class="st_h">'$lte'</span> <span class="sy0">=&gt;</span> <span class="nu0">100000</span><span class="br0">&#41;</span><span class="sy0">,</span>  <span class="co1">// critère de population</span></span></samp>
+<samp class="li2"><span class="sc4">                   <span class="st_h">'nom'</span> <span class="sy0">=&gt;</span> <span class="kw2">new</span> MongoRegex<span class="br0">&#40;</span><span class="st_h">'/^[e-g]/i'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>              <span class="co1">// critère de nommage</span></span></samp>
+<samp class="li1"></samp>
+<samp class="li1"><span class="sc4">  <span class="re0">$num_villes</span> <span class="sy0">=</span> <span class="re0">$coll</span><span class="sy0">-&gt;</span><span class="me1">find</span><span class="br0">&#40;</span><span class="re0">$request</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><a href="http://www.php.net/count"><span class="kw3">count</span></a><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span> <span class="co1">// récupération du nombre de documents en correspondance</span></span></samp>
+<samp class="li1"><span class="sc4">  <span class="re0">$rand</span> <span class="sy0">=</span> <a href="http://www.php.net/rand"><span class="kw3">rand</span></a><span class="br0">&#40;</span><span class="nu0">0</span><span class="sy0">,</span> <span class="re0">$num_villes</span><span class="sy0">-</span><span class="re0">$num</span><span class="br0">&#41;</span><span class="sy0">;</span>            <span class="co1">// génération d'une valeur aléatoire en accord ce nombre</span></span></samp>
+<samp class="li1"><span class="sc4">  <a href="http://www.php.net/printf"><span class="kw3">printf</span></a><span class="br0">&#40;</span><span class="st0">&quot;&lt;h2&gt;Il y a en tout <span class="es6">%d</span> villes&lt;/h2&gt;<span class="es1">\n</span>&quot;</span><span class="sy0">,</span> <span class="re0">$num_villes</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li2"></samp>
+<samp class="li1"><span class="sc4">  <span class="kw1">echo</span> <span class="st0">&quot;&lt;ol&gt;<span class="es1">\n</span>&quot;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"></samp>
+<samp class="li1"><span class="sc4">  <span class="re0">$cursor</span> <span class="sy0">=</span> <span class="re0">$coll</span><span class="sy0">-&gt;</span><span class="me1">find</span><span class="br0">&#40;</span><span class="re0">$request</span><span class="br0">&#41;</span>            <span class="co1">// recherche</span></span></samp>
+<samp class="li1"><span class="sc4">                 <span class="sy0">-&gt;</span><a href="http://www.php.net/sort"><span class="kw3">sort</span></a><span class="br0">&#40;</span><a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span><span class="st_h">'pop'</span> <span class="sy0">=&gt;</span> <span class="sy0">-</span><span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>  <span class="co1">// tri</span></span></samp>
+<samp class="li2"><span class="sc4">                 <span class="sy0">-&gt;</span><span class="me1">skip</span><span class="br0">&#40;</span><span class="re0">$rand</span><span class="br0">&#41;</span>               <span class="co1">// origine</span></span></samp>
+<samp class="li1"><span class="sc4">                 <span class="sy0">-&gt;</span><span class="me1">limit</span><span class="br0">&#40;</span><span class="re0">$num</span><span class="br0">&#41;</span><span class="sy0">;</span>              <span class="co1">// limite</span></span></samp>
+<samp class="li1"></samp>
+<samp class="li1"><span class="sc4">  <span class="kw1">foreach</span><span class="br0">&#40;</span><span class="re0">$cursor</span> <span class="kw1">as</span> <span class="re0">$doc</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>  <span class="co1">// parcours du curseur retourné par la recherche</span></span></samp>
+<samp class="li1"><span class="sc4">    <span class="kw1">echo</span> <span class="st0">&quot;&lt;li&gt;&lt;ul&gt;<span class="es1">\n</span>&quot;</span><span class="sy0">;</span></span></samp>
+<samp class="li2"><span class="sc4">    <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$doc</span> <span class="kw1">as</span> <span class="re0">$key</span> <span class="sy0">=&gt;</span> <span class="re0">$val</span><span class="br0">&#41;</span> <span class="br0">&#123;</span></span></samp>
+<samp class="li1"><span class="sc4">      <a href="http://www.php.net/printf"><span class="kw3">printf</span></a><span class="br0">&#40;</span><span class="st0">&quot;&lt;li&gt;<span class="es6">%s</span> = &lt;em&gt;<span class="es6">%s</span>&lt;/em&gt;<span class="es1">\n</span>&quot;</span><span class="sy0">,</span> <span class="re0">$key</span><span class="sy0">,</span> <span class="re0">$val</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc4">    <span class="br0">&#125;</span></span></samp>
+<samp class="li1"><span class="sc4">    <span class="kw1">echo</span> <span class="st0">&quot;&lt;/ul&gt;&lt;/li&gt;<span class="es1">\n</span>&quot;</span><span class="sy0">;</span>    </span></samp>
+<samp class="li1"><span class="sc4">  <span class="br0">&#125;</span></span></samp>
+<samp class="li2"><span class="sc4">  <span class="kw1">echo</span> <span class="st0">&quot;&lt;/ol&gt;<span class="es1">\n</span>&quot;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc4"><span class="br0">&#125;</span> catch <span class="br0">&#40;</span>Exception <span class="re0">$e</span><span class="br0">&#41;</span> <span class="br0">&#123;</span></span></samp>
+<samp class="li1"><span class="sc4">  <span class="kw1">echo</span> <span class="st0">&quot;exception interceptée :&quot;</span><span class="sy0">.</span><span class="re0">$e</span><span class="sy0">-&gt;</span><span class="me1">getMessage</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc4"><span class="br0">&#125;</span></span></samp>
+<samp class="li1"><span class="sc4"><span class="sy1">?&gt;</span></span></samp>
+<samp class="li2">&lt;/body&gt;</samp>
+<samp class="li1">&lt;/html&gt;</samp>
+</pre><h5><a href="35_interfaces/020_list_collections_with_array.php.html">voir le résultat</a></h5>
+</div>
+</div>
+<div class="exo">
+<h2>afficher les formes géométriques par génération d'une image <em>SVG</em> via un script <em>PHP</em></h2>
+
+<p>Écrire un script tel que celui-ci :</p>
+<ul>
+  <li>assure l'extraction des polygones des contours de la France en incluant la Corse,</li>
+  <li>assure l'extraction des polygones représentant les contours de chaque département,</li>
+  <li>assure l'extraction des points correspondant aux coordonnées de toutes les villes les plus importantes de chaque département mais de population &lt; 200000 habitants,</li>
+  <li>assure l'extraction des points correspondant aux coordonnées de toutes les villes de population &gt;= 200000 habitants,</li>
+  <li>Produise une image <em>SVG</em> affichant le contour de la france et les points des villes extraites.</li>
+</ul>
+
+<blockquote>
+  <p>On remarquera que la collection <samp>departements</samp> contient les contours enregistrés dans la propriété <samp>contours</samp> sous forme d'un tableau
+    dont le résultat extrait est semblable à cette structure de données :</p>
+  <pre>[[[<em>x11</em>,<em>y11</em>],[<em>x12</em>,<em>y12</em>],[<em>x13</em>,<em>y13</em>],<em>...</em>,[<em>x1n</em>,<em>y1n</em>]],
+[[<em>x21</em>,<em>y21</em>],[<em>x22</em>,<em>y22</em>],[<em>x23</em>,<em>y23</em>],<em>...</em>,[<em>x2n</em>,<em>y2n</em>]],
+[<em>...</em>],
+[[<em>xp1</em>,<em>yp1</em>],[<em>xp2</em>,<em>yp2</em>],[<em>xp3</em>,<em>yp3</em>],<em>...</em>,[<em>xpn</em>,<em>ypn</em>]]]</pre>
+<p>les paires <samp><em>x</em>,<em>y</em></samp> correspondant aux coordonnées <em>(latitude,longitude)</em> des différents points définissant
+ le polygone de contour du département. Les groupes de cordonnées permettent d'avoir des contours non connexes (îles, encleves...)</p>
+
+  <p>Pour dessiner un polygone en <em>SVG</em> il suffit d'utiliser la balise <samp>&lt;polygon&gt;</samp> de la façon suivante :</p>
+<pre>&lt;polygon fill="<em>couleur</em>" points="<em>x1</em> <em>y1</em> <em>x2</em> <em>y2</em> <em>...</em> <em>xn</em> <em>yn</em>"/&gt;</pre>
+
+  <p>Pour dessiner un texte en <em>SVG</em> il suffit d'utiliser la balise <samp>&lt;text&gt;</samp> qui accepte les attributs de position
+    <samp>x="<em>cx</em>"</samp>, <samp>y="<em>cy</em>"</samp> et le contenu qui sera le texte à afficher.</p>
+  <p>L'exemple suivant illustre la <strong>création d'une image <em>SVG</em> contenant un texte et un polygone</strong>, le tout étant intégré à une page <em>HTML</em> :</p>
+    <pre>&lt;html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"&gt;
+  &lt;head&gt;
+    &lt;title&gt;Bonjour&lt;/title&gt;
+    &lt;meta http-equiv="Content-Type" content="text/html"/&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Salut&lt;/h1&gt;
+    <strong>&lt;svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300"&gt;
+      &lt;text x="100" y="50"&gt;Bonjour à tous&lt;/text&gt;
+      &lt;polygon fill="#F00" points="10 10 100 10 100 300 300 300 10 30"/&gt;
+    &lt;svg&gt;</strong>
+  &lt;body&gt;
+&lt;html&gt;</pre>
+</blockquote>
+
+<div class="solution">
+<pre class="file color php" title="(colorisé en PHP)"><samp class="li1"><span class="sc0"><span class="kw2">&lt;?php</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co1">// cette fonction rétablit la distance à partir des latitudes</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co1">// Les constantes LAT_MOY, TX, TY et RATIO seront définies à partir du contenu de la base de données.</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="kw2">function</span> projection<span class="br0">&#40;</span><span class="re0">$lon</span><span class="sy0">,</span> <span class="re0">$lat</span><span class="br0">&#41;</span> <span class="br0">&#123;</span></span></samp>
+<samp class="li2"><span class="sc0">  <span class="kw1">return</span> <a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span>RATIO<span class="sy0">*</span><span class="br0">&#40;</span><span class="re0">$lon</span><span class="sy0">+</span>TX<span class="br0">&#41;</span><span class="sy0">*</span><a href="http://www.php.net/cos"><span class="kw3">cos</span></a><span class="br0">&#40;</span>LAT_MOY<span class="sy0">*</span><span class="br0">&#40;</span>M_PI <span class="sy0">/</span> <span class="nu0">180</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span> RATIO<span class="sy0">*</span><span class="br0">&#40;</span><span class="sy0">-</span><span class="re0">$lat</span><span class="sy0">+</span>TY<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0">  <span class="co1">// le rendu réel devrait plutôt être celui produit par ce calcul</span></span></samp>
+<samp class="li1"><span class="sc0">  <span class="co1">// return array(RATIO*(TX*cos(LAT_MOY*(M_PI / 180)) + $lon*cos($lat*(M_PI / 180))), RATIO*(-$lat+TY)); </span></span></samp>
+<samp class="li1"><span class="sc0"><span class="br0">&#125;</span></span></samp>
+<samp class="li1"></samp>
+<samp class="li2"><span class="sc0"><span class="co1">//en cas de réplica-set</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co1">//$dsn='mongodb://192.168.36.100:27021,192.168.36.100:27022/?replicaSet=replica_1';</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="re0">$dsn</span><span class="sy0">=</span><span class="st_h">'mongodb://localhost:27017'</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="re0">$dbname</span> <span class="sy0">=</span> <span class="st_h">'geo_france'</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="re0">$height</span> <span class="sy0">=</span> <span class="nu0">700</span><span class="sy0">;</span></span></samp>
+<samp class="li2"></samp>
+<samp class="li1"><span class="sc0"><span class="re0">$htmlheader</span> <span class="sy0">=</span> <span class="co3">&lt;&lt;&lt;EOHTMLH</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; lang=&quot;en-US&quot; xml:lang=&quot;en-US&quot;&gt;</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&lt;head&gt;</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&lt;title&gt;La carte de France&lt;/title&gt;</span></span></samp>
+<samp class="li2"><span class="sc0"><span class="co3">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html&quot;/&gt;</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&lt;/head&gt;</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&lt;body&gt;</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&lt;h1&gt;La carte de France&lt;/h1&gt;</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">EOHTMLH</span><span class="sy0">;</span></span></samp>
+<samp class="li2"></samp>
+<samp class="li1"><span class="sc0"><span class="re0">$svgheader</span> <span class="sy0">=</span> <span class="co3">&lt;&lt;&lt;EOSVGH</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot;</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;    viewBox=&quot;0 0 %s %s&quot;</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;    style=&quot;background:#DDD&quot;&gt;</span></span></samp>
+<samp class="li2"><span class="sc0"><span class="co3">&nbsp;   &lt;style type=&quot;text/css&quot;&gt;</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;       polygon {stroke:#000;stroke-width:1px}</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;       polygon:hover {stroke:#FFF;fill:#000;stroke-width:2px}</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;       text {font-size:12px;fill:#000;alignment-baseline:middle}</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;       text:hover {fill:#F00;font-weight:bold}</span></span></samp>
+<samp class="li2"><span class="sc0"><span class="co3">&nbsp;       g circle {stroke:#F00;stroke-width:1;stroke-opacity:0.8;fill:#000;fill-opacity:0.5}</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;       g.cities circle {stroke:#ff0;stroke-width:1;stroke-opacity:0.8;fill:#F00;fill-opacity:0.8}</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;       g.cities text {fill:#F00 !important;stroke:#FF0;;stroke-width:0.5px}</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;       g.regions circle {stroke:#fff;stroke-width:1;stroke-opacity:0.3;fill:#000;fill-opacity:0.3}</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;       g.regions:hover text {fill:#fff;stroke:#000;stroke-width:0.5px}</span></span></samp>
+<samp class="li2"><span class="sc0"><span class="co3">&nbsp;       g.regions:hover circle {fill-opacity:0.4}</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;       g:hover circle {fill:#FF0;fill-opacity:1;stroke-opacity:1}</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;       g text {fill:#000;font-size:0px;fill-opacity:0;alignment-baseline:middle;text-anchor:middle}</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;       g:hover text {font-size:30px;fill:#000;font-weight:bold;fill-opacity:1}</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;   &lt;/style&gt;</span></span></samp>
+<samp class="li2"><span class="sc0"><span class="co3">EOSVGH</span><span class="sy0">;</span></span></samp>
+<samp class="li1"></samp>
+<samp class="li1"><span class="sc0"><span class="re0">$htmlfooter</span> <span class="sy0">=</span> <span class="st_h">'&lt;/body&gt;&lt;/html&gt;'</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="re0">$svgfooter</span> <span class="sy0">=</span> <span class="st_h">'&lt;/svg&gt;'</span><span class="sy0">;</span></span></samp>
+<samp class="li1"></samp>
+<samp class="li2"><span class="sc0"><a href="http://www.php.net/header"><span class="kw3">header</span></a><span class="br0">&#40;</span><span class="st0">&quot;Content-type: text/xml; charset=utf-8&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co1">// récupération des informations globales pour définir l'image à partir de la base de données</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="kw1">echo</span> <span class="re0">$htmlheader</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0">try <span class="br0">&#123;</span></span></samp>
+<samp class="li1"><span class="sc0">  <span class="re0">$mgc</span> <span class="sy0">=</span> <span class="kw2">new</span> MongoClient<span class="br0">&#40;</span><span class="re0">$dsn</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li2"><span class="sc0">  <span class="re0">$mgo</span> <span class="sy0">=</span> <span class="re0">$mgc</span><span class="sy0">-&gt;</span><span class="me1">selectDB</span><span class="br0">&#40;</span><span class="re0">$dbname</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"></samp>
+<samp class="li1"><span class="sc0">  <span class="co1">// récupération de la box contenant les contours à visualiser</span></span></samp>
+<samp class="li1"><span class="sc0">  <span class="co1">// cette requête extrait les &quot;box&quot; à partir des polygones de contours de la France + la Corse et les limites sont</span></span></samp>
+<samp class="li1"><span class="sc0">  <span class="co1">// déterminées par fonction d'agrégation sur les cordonnées des points déterminant ces &quot;box&quot;.</span></span></samp>
+<samp class="li2"><span class="sc0">  <span class="re0">$map</span> <span class="sy0">=</span> <span class="co3">&lt;&lt;&lt;EOJSBOXMAP</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp; function() {</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;   var res = [180, -180, 90, -90];</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;   for (i=0; i&lt;this.poly.length; i++) {</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;     if (res[0] &gt; this.poly[i][0]) res[0] = this.poly[i][0];</span></span></samp>
+<samp class="li2"><span class="sc0"><span class="co3">&nbsp;     if (res[1] &lt; this.poly[i][0]) res[1] = this.poly[i][0];</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;     if (res[2] &gt; this.poly[i][1]) res[2] = this.poly[i][1];</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;     if (res[3] &lt; this.poly[i][1]) res[3] = this.poly[i][1];</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;   }</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;   emit(1, res);</span></span></samp>
+<samp class="li2"><span class="sc0"><span class="co3">&nbsp; }</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">EOJSBOXMAP</span><span class="sy0">;</span></span></samp>
+<samp class="li1"></samp>
+<samp class="li1"><span class="sc0">  <span class="re0">$reduce</span> <span class="sy0">=</span> <span class="co3">&lt;&lt;&lt;EOJSBOXRED</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp; function(key, vals) {</span></span></samp>
+<samp class="li2"><span class="sc0"><span class="co3">&nbsp;   var res = [180, -180, 90, -90];</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;  vals.forEach(function(val) {</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;     if (res[0] &gt; val[0]) res[0] = val[0];</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;     if (res[1] &lt; val[1]) res[1] = val[1];</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;     if (res[2] &gt; val[2]) res[2] = val[2];</span></span></samp>
+<samp class="li2"><span class="sc0"><span class="co3">&nbsp;     if (res[3] &lt; val[3]) res[3] = val[3];</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;  });</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;  return {minmax: res};</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp; }</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">EOJSBOXRED</span><span class="sy0">;</span></span></samp>
+<samp class="li2"></samp>
+<samp class="li1"><span class="sc0">  <span class="re0">$box</span> <span class="sy0">=</span> <span class="re0">$mgo</span><span class="sy0">-&gt;</span><span class="me1">command</span><span class="br0">&#40;</span><a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span></span></samp>
+<samp class="li1"><span class="sc0">    <span class="st_h">'mapreduce'</span> <span class="sy0">=&gt;</span> <span class="st_h">'contours'</span><span class="sy0">,</span></span></samp>
+<samp class="li1"><span class="sc0">    <span class="st_h">'map'</span> <span class="sy0">=&gt;</span> <span class="re0">$map</span><span class="sy0">,</span></span></samp>
+<samp class="li1"><span class="sc0">    <span class="st_h">'reduce'</span> <span class="sy0">=&gt;</span> <span class="re0">$reduce</span><span class="sy0">,</span></span></samp>
+<samp class="li2"><span class="sc0">    <span class="st_h">'out'</span> <span class="sy0">=&gt;</span> <a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span><span class="st_h">'inline'</span> <span class="sy0">=&gt;</span> <span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0">  <span class="co1">//  print_r($box);exit;</span></span></samp>
+<samp class="li1"><span class="sc0">  <span class="re0">$minmax</span> <span class="sy0">=</span> <span class="re0">$box</span><span class="br0">&#91;</span><span class="st_h">'results'</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="st_h">'value'</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="st_h">'minmax'</span><span class="br0">&#93;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"></samp>
+<samp class="li1"><span class="sc0">  <a href="http://www.php.net/list"><span class="kw3">list</span></a><span class="br0">&#40;</span><span class="re0">$lon_min</span><span class="sy0">,</span> <span class="re0">$lon_max</span><span class="sy0">,</span> <span class="re0">$lat_min</span><span class="sy0">,</span> <span class="re0">$lat_max</span><span class="br0">&#41;</span> <span class="sy0">=</span> <span class="re0">$minmax</span><span class="sy0">;</span></span></samp>
+<samp class="li2"><span class="sc0">  <span class="co1">// création des constantes (pour éviter une déclaration avec &quot;global&quot;).</span></span></samp>
+<samp class="li1"><span class="sc0">  <a href="http://www.php.net/define"><span class="kw3">define</span></a><span class="br0">&#40;</span><span class="st_h">'RATIO'</span><span class="sy0">,</span> <span class="re0">$height</span><span class="sy0">/</span><span class="br0">&#40;</span><span class="re0">$lat_max</span> <span class="sy0">-</span> <span class="re0">$lat_min</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0">  <a href="http://www.php.net/define"><span class="kw3">define</span></a><span class="br0">&#40;</span><span class="st_h">'LAT_MOY'</span><span class="sy0">,</span> <span class="br0">&#40;</span><span class="re0">$lat_max</span> <span class="sy0">+</span> <span class="re0">$lat_min</span><span class="br0">&#41;</span><span class="sy0">/</span><span class="nu0">2</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0">  <a href="http://www.php.net/define"><span class="kw3">define</span></a><span class="br0">&#40;</span><span class="st_h">'TX'</span><span class="sy0">,</span> <span class="sy0">-</span><span class="re0">$lon_min</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0">  <a href="http://www.php.net/define"><span class="kw3">define</span></a><span class="br0">&#40;</span><span class="st_h">'TY'</span><span class="sy0">,</span> <span class="re0">$lat_max</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li2"><span class="sc0">  <a href="http://www.php.net/list"><span class="kw3">list</span></a><span class="br0">&#40;</span><span class="re0">$width</span><span class="sy0">,</span><span class="re0">$unused</span><span class="br0">&#41;</span> <span class="sy0">=</span> projection<span class="br0">&#40;</span><span class="re0">$lon_max</span><span class="sy0">,</span> LAT_MOY<span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="br0">&#125;</span> catch <span class="br0">&#40;</span>exception <span class="re0">$exep</span><span class="br0">&#41;</span> <span class="br0">&#123;</span></span></samp>
+<samp class="li1"><span class="sc0">  <a href="http://www.php.net/printf"><span class="kw3">printf</span></a><span class="br0">&#40;</span><span class="st0">&quot;&lt;p&gt;Erreur : <span class="es6">%s</span>&lt;/p&gt;<span class="es1">\n</span>&quot;</span><span class="sy0">,</span> <a href="http://www.php.net/htmlspecialchars"><span class="kw3">htmlspecialchars</span></a><span class="br0">&#40;</span><span class="re0">$exep</span><span class="sy0">-&gt;</span><span class="me1">getMessage</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0">  <span class="kw1">echo</span> <span class="re0">$htmlfooter</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0">  <a href="http://www.php.net/exit"><span class="kw3">exit</span></a><span class="sy0">;</span></span></samp>
+<samp class="li2"><span class="sc0"><span class="br0">&#125;</span></span></samp>
+<samp class="li1"></samp>
+<samp class="li1"><span class="sc0"><a href="http://www.php.net/printf"><span class="kw3">printf</span></a><span class="br0">&#40;</span><span class="re0">$svgheader</span><span class="sy0">,</span> <span class="re0">$width</span><span class="sy0">,</span> <span class="re0">$height</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"></samp>
+<samp class="li1"><span class="sc0"><span class="co1">// dessin de la France avec les eaux territoriales (Corse comprise)</span></span></samp>
+<samp class="li2"><span class="sc0"><span class="re0">$coll</span> <span class="sy0">=</span> <span class="kw2">new</span> MongoCollection<span class="br0">&#40;</span><span class="re0">$mgo</span><span class="sy0">,</span> <span class="st_h">'contours'</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="re0">$curseur</span> <span class="sy0">=</span> <span class="re0">$coll</span><span class="sy0">-&gt;</span><span class="me1">find</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="kw1">foreach</span><span class="br0">&#40;</span><span class="re0">$curseur</span> <span class="kw1">as</span> <span class="re0">$doc</span><span class="br0">&#41;</span> <span class="br0">&#123;</span></span></samp>
+<samp class="li1"><span class="sc0">  <span class="kw1">echo</span> <span class="st_h">'&lt;polygon style=&quot;fill:#CCF&quot; points=&quot;'</span><span class="sy0">.</span><span class="st0">&quot;<span class="es1">\n</span>&quot;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0">  <span class="re0">$contour</span> <span class="sy0">=</span> <span class="re0">$doc</span><span class="br0">&#91;</span><span class="st_h">'poly'</span><span class="br0">&#93;</span><span class="sy0">;</span></span></samp>
+<samp class="li2"><span class="sc0">  <span class="co1">//print_r($contour);exit;</span></span></samp>
+<samp class="li1"><span class="sc0">  <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$contour</span> <span class="kw1">as</span> <span class="re0">$ptb</span><span class="br0">&#41;</span> <span class="br0">&#123;</span></span></samp>
+<samp class="li1"><span class="sc0">    <a href="http://www.php.net/list"><span class="kw3">list</span></a><span class="br0">&#40;</span><span class="re0">$lon</span><span class="sy0">,</span> <span class="re0">$lat</span><span class="br0">&#41;</span> <span class="sy0">=</span> <span class="re0">$ptb</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0">    <a href="http://www.php.net/list"><span class="kw3">list</span></a><span class="br0">&#40;</span><span class="re0">$px</span><span class="sy0">,</span> <span class="re0">$py</span><span class="br0">&#41;</span> <span class="sy0">=</span> projection<span class="br0">&#40;</span><span class="re0">$lon</span><span class="sy0">,</span> <span class="re0">$lat</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0">    <a href="http://www.php.net/printf"><span class="kw3">printf</span></a><span class="br0">&#40;</span><span class="st_h">' %.3lf %.3lf'</span><span class="sy0">,</span> <span class="re0">$px</span><span class="sy0">,</span> <span class="re0">$py</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li2"><span class="sc0">  <span class="br0">&#125;</span></span></samp>
+<samp class="li1"><span class="sc0">  <span class="kw1">echo</span> <span class="st_h">'&quot;/&gt;'</span><span class="sy0">.</span><span class="st0">&quot;<span class="es1">\n</span>&quot;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="br0">&#125;</span></span></samp>
+<samp class="li1"></samp>
+<samp class="li1"><span class="sc0"><span class="co1">// dessin des contours des départements qui peuvent être multiples (îles, enclaves)</span></span></samp>
+<samp class="li2"><span class="sc0"><span class="co1">// on aurait pu faire plus simple comme l'illustrent les lignes ci dessous:</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co1">//    $coll = new MongoCollection($mgo, 'departements');</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co1">//    $curseur = $coll-&gt;find();</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co1">// mais il est plus habile de placer d'abord les départements à contour simple puis ceux à contours doubles, puis triples...</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co1">// afin de ne pas masquer les enclaves telle que ceci apparaît entre les Pyrénées-Atlentiques et les Hautes-Pyrénées.</span></span></samp>
+<samp class="li2"><span class="sc0"><span class="co1">// pour s'en rendre compte il suffit d'inverser l'ordre de sortie en changeant le signe de this.contours.length</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co1">// dans l'appel de 'sort' ce qui aura pour effet de retourner l'ordre de tri fixé ici en ordre croissant et dépendant</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co1">// du nombre de polygones par contour.</span></span></samp>
+<samp class="li1"></samp>
+<samp class="li1"><span class="sc0"><span class="re0">$coll</span> <span class="sy0">=</span> <span class="kw2">new</span> MongoCollection<span class="br0">&#40;</span><span class="re0">$mgo</span><span class="sy0">,</span> <span class="st_h">'departements'</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li2"><span class="sc0"><span class="re0">$curseur</span> <span class="sy0">=</span> <span class="re0">$coll</span><span class="sy0">-&gt;</span><span class="me1">find</span><span class="br0">&#40;</span><a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span><span class="st_h">'contours'</span><span class="sy0">=&gt;</span> <a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span><span class="st_h">'$exists'</span> <span class="sy0">=&gt;</span> <span class="kw4">true</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span><a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span><span class="st_h">'contours'</span> <span class="sy0">=&gt;</span> <span class="nu0">1</span> <span class="sy0">,</span><span class="st_h">'_id_region'</span> <span class="sy0">=&gt;</span> <span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">-&gt;</span><a href="http://www.php.net/sort"><span class="kw3">sort</span></a><span class="br0">&#40;</span><a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span><span class="st0">&quot;contours&quot;</span> <span class="sy0">=&gt;</span> <span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"></samp>
+<samp class="li1"><span class="sc0"><span class="kw1">foreach</span><span class="br0">&#40;</span><span class="re0">$curseur</span> <span class="kw1">as</span> <span class="re0">$crs</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>   <span class="co1">// boucle sur l'ensemble des résultats</span></span></samp>
+<samp class="li1"><span class="sc0">  <span class="co1">// si la région existe on prend la couleur attibuée sinon on génère une couleur de région aléatoire.</span></span></samp>
+<samp class="li1"><span class="sc0">  <span class="re0">$idr</span> <span class="sy0">=</span> <span class="re0">$crs</span><span class="br0">&#91;</span><span class="st_h">'_id_region'</span><span class="br0">&#93;</span><span class="sy0">;</span></span></samp>
+<samp class="li2"><span class="sc0">  <span class="kw1">if</span> <span class="br0">&#40;</span><a href="http://www.php.net/empty"><span class="kw3">empty</span></a><span class="br0">&#40;</span><span class="re0">$colr</span><span class="br0">&#91;</span><span class="re0">$idr</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span></span></samp>
+<samp class="li1"><span class="sc0">    <span class="re0">$colr</span><span class="br0">&#91;</span><span class="re0">$idr</span><span class="br0">&#93;</span> <span class="sy0">=</span> <a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span><a href="http://www.php.net/rand"><span class="kw3">rand</span></a><span class="br0">&#40;</span><span class="nu0">5</span><span class="sy0">,</span><span class="nu0">14</span><span class="br0">&#41;</span><span class="sy0">,</span> <a href="http://www.php.net/rand"><span class="kw3">rand</span></a><span class="br0">&#40;</span><span class="nu0">5</span><span class="sy0">,</span><span class="nu0">14</span><span class="br0">&#41;</span><span class="sy0">,</span> <a href="http://www.php.net/rand"><span class="kw3">rand</span></a><span class="br0">&#40;</span><span class="nu0">5</span><span class="sy0">,</span><span class="nu0">14</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0">  <span class="br0">&#125;</span></span></samp>
+<samp class="li1"><span class="sc0">  <span class="co1">// la couleur du département a une composante régionale forte + une compsante départementale faible et aléatoire</span></span></samp>
+<samp class="li1"><span class="sc0">  <span class="re0">$color</span> <span class="sy0">=</span> <a href="http://www.php.net/sprintf"><span class="kw3">sprintf</span></a><span class="br0">&#40;</span><span class="st_h">'#%1x%1x%1x'</span><span class="sy0">,</span> <a href="http://www.php.net/rand"><span class="kw3">rand</span></a><span class="br0">&#40;</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#41;</span><span class="sy0">+</span><span class="re0">$colr</span><span class="br0">&#91;</span><span class="re0">$idr</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span> <a href="http://www.php.net/rand"><span class="kw3">rand</span></a><span class="br0">&#40;</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#41;</span><span class="sy0">+</span><span class="re0">$colr</span><span class="br0">&#91;</span><span class="re0">$idr</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">,</span> <a href="http://www.php.net/rand"><span class="kw3">rand</span></a><span class="br0">&#40;</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#41;</span><span class="sy0">+</span><span class="re0">$colr</span><span class="br0">&#91;</span><span class="re0">$idr</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li2"><span class="sc0">  <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$crs</span><span class="br0">&#91;</span><span class="st_h">'contours'</span><span class="br0">&#93;</span> <span class="kw1">as</span> <span class="re0">$contour</span><span class="br0">&#41;</span> <span class="br0">&#123;</span></span></samp>
+<samp class="li1"><span class="sc0">    <a href="http://www.php.net/printf"><span class="kw3">printf</span></a><span class="br0">&#40;</span><span class="st_h">'&lt;polygon fill=&quot;%s&quot; points=&quot;'</span><span class="sy0">.</span><span class="st0">&quot;<span class="es1">\n</span>&quot;</span><span class="sy0">,</span> <span class="re0">$color</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0">    <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="re0">$contour</span> <span class="kw1">as</span> <span class="re0">$ptb</span><span class="br0">&#41;</span> <span class="br0">&#123;</span></span></samp>
+<samp class="li1"><span class="sc0">      <a href="http://www.php.net/list"><span class="kw3">list</span></a><span class="br0">&#40;</span><span class="re0">$lon</span><span class="sy0">,</span> <span class="re0">$lat</span><span class="br0">&#41;</span> <span class="sy0">=</span> <span class="re0">$ptb</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0">      <a href="http://www.php.net/list"><span class="kw3">list</span></a><span class="br0">&#40;</span><span class="re0">$px</span><span class="sy0">,</span> <span class="re0">$py</span><span class="br0">&#41;</span> <span class="sy0">=</span> projection<span class="br0">&#40;</span><span class="re0">$lon</span><span class="sy0">,</span> <span class="re0">$lat</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li2"><span class="sc0">      <a href="http://www.php.net/printf"><span class="kw3">printf</span></a><span class="br0">&#40;</span><span class="st_h">' %.3lf %.3lf'</span><span class="sy0">,</span> <span class="re0">$px</span><span class="sy0">,</span> <span class="re0">$py</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0">    <span class="br0">&#125;</span></span></samp>
+<samp class="li1"><span class="sc0">    <span class="kw1">echo</span> <span class="st_h">'&quot;/&gt;'</span><span class="sy0">.</span><span class="st0">&quot;<span class="es1">\n</span>&quot;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0">  <span class="br0">&#125;</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="br0">&#125;</span></span></samp>
+<samp class="li2"></samp>
+<samp class="li1"><span class="sc0"><span class="co1">// affichage des noms des régions sous lss villes les plus importantes de chaque région</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="re0">$listvilles</span> <span class="sy0">=</span> <span class="co3">&lt;&lt;&lt;'EOLSTVIL'</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">function() {</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp; var res = new Array();</span></span></samp>
+<samp class="li2"><span class="sc0"><span class="co3">&nbsp; db.regions.find().sort({nom:1}).forEach(</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;   function(rgn) {</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;     var dpts = new Array();</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;     db.departements.find({_id_region: rgn._id}).forEach(</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;       function(dpt) {dpts.push(dpt._id)}</span></span></samp>
+<samp class="li2"><span class="sc0"><span class="co3">&nbsp;     )</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;     db.villes.find({_id_dept: {$in: dpts}}).sort({pop:-1}).limit(1).forEach(</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;       function(cvil) {res.push({region: rgn.nom, nom: cvil.nom, lon: cvil.lon, lat: cvil.lat})}</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp;     )})</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">&nbsp; return res;</span></span></samp>
+<samp class="li2"><span class="sc0"><span class="co3">}</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="co3">EOLSTVIL</span><span class="sy0">;</span></span></samp>
+<samp class="li1"></samp>
+<samp class="li1"><span class="sc0"><span class="co1">// exécution de la requête sur le serveur</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="re0">$cl_reg</span> <span class="sy0">=</span> <span class="re0">$mgo</span><span class="sy0">-&gt;</span><span class="me1">execute</span><span class="br0">&#40;</span><span class="re0">$listvilles</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li2"></samp>
+<samp class="li1"><span class="sc0"><span class="co1">// analyse du résultat</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="kw1">if</span><span class="br0">&#40;</span><span class="re0">$cl_reg</span><span class="br0">&#91;</span><span class="st_h">'ok'</span><span class="br0">&#93;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span></span></samp>
+<samp class="li1"><span class="sc0">  <span class="kw1">foreach</span><span class="br0">&#40;</span><span class="re0">$cl_reg</span><span class="br0">&#91;</span><span class="st_h">'retval'</span><span class="br0">&#93;</span> <span class="kw1">as</span> <span class="re0">$doc</span><span class="br0">&#41;</span> <span class="br0">&#123;</span></span></samp>
+<samp class="li1"><span class="sc0">    <a href="http://www.php.net/list"><span class="kw3">list</span></a><span class="br0">&#40;</span><span class="re0">$px</span><span class="sy0">,</span> <span class="re0">$py</span><span class="br0">&#41;</span> <span class="sy0">=</span> projection<span class="br0">&#40;</span><span class="re0">$doc</span><span class="br0">&#91;</span><span class="st_h">'lon'</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="re0">$doc</span><span class="br0">&#91;</span><span class="st_h">'lat'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li2"><span class="sc0">    <a href="http://www.php.net/printf"><span class="kw3">printf</span></a><span class="br0">&#40;</span><span class="st_h">'&lt;g class=&quot;regions&quot;&gt;&lt;text x=&quot;%1.3lf&quot; y=&quot;%1.3lf&quot;&gt;%s&lt;/text&gt;'</span><span class="sy0">.</span><span class="st0">&quot;<span class="es1">\n</span>&quot;</span><span class="sy0">,</span> <span class="re0">$px</span><span class="sy0">,</span> <span class="re0">$py</span><span class="sy0">,</span> <span class="re0">$doc</span><span class="br0">&#91;</span><span class="st_h">'region'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0">    <a href="http://www.php.net/printf"><span class="kw3">printf</span></a><span class="br0">&#40;</span><span class="st_h">'&lt;circle cx=&quot;%1.3lf&quot; cy=&quot;%1.3lf&quot; r=&quot;15&quot;/&gt;&lt;/g&gt;'</span><span class="sy0">.</span><span class="st0">&quot;<span class="es1">\n</span>&quot;</span><span class="sy0">,</span> <span class="re0">$px</span><span class="sy0">,</span> <span class="re0">$py</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0">  <span class="br0">&#125;</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="br0">&#125;</span></span></samp>
+<samp class="li1"></samp>
+<samp class="li2"><span class="sc0"><span class="co1">// affichage des villes les plus importantes de chaque département mais de population &lt; 200000 habitants</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="re0">$coll</span> <span class="sy0">=</span> <span class="kw2">new</span> MongoCollection<span class="br0">&#40;</span><span class="re0">$mgo</span><span class="sy0">,</span> <span class="st_h">'villes'</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="re0">$cities</span> <span class="sy0">=</span> <span class="re0">$coll</span><span class="sy0">-&gt;</span><a href="http://www.php.net/aggregate"><span class="kw3">aggregate</span></a><span class="br0">&#40;</span><a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span><a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span><span class="st_h">'$sort'</span> <span class="sy0">=&gt;</span> <a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span><span class="st_h">'pop'</span> <span class="sy0">=&gt;</span> <span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span></span></samp>
+<samp class="li1"><span class="sc0">				 <a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span><span class="st_h">'$match'</span> <span class="sy0">=&gt;</span> <a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span><span class="st_h">'pop'</span> <span class="sy0">=&gt;</span> <a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span><span class="st_h">'$lt'</span> <span class="sy0">=&gt;</span> <span class="nu0">200000</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span></span></samp>
+<samp class="li1"><span class="sc0">				 <a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span><span class="st_h">'$group'</span> <span class="sy0">=&gt;</span> <a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span><span class="st_h">'_id'</span> <span class="sy0">=&gt;</span> <span class="st_h">'$_id_dept'</span><span class="sy0">,</span></span></samp>
+<samp class="li2"><span class="sc0">							 <span class="st_h">'pop'</span> <span class="sy0">=&gt;</span> <a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span><span class="st_h">'$last'</span> <span class="sy0">=&gt;</span> <span class="st_h">'$pop'</span><span class="br0">&#41;</span><span class="sy0">,</span></span></samp>
+<samp class="li1"><span class="sc0">							 <span class="st_h">'nom'</span> <span class="sy0">=&gt;</span> <a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span><span class="st_h">'$last'</span> <span class="sy0">=&gt;</span> <span class="st_h">'$nom'</span><span class="br0">&#41;</span><span class="sy0">,</span></span></samp>
+<samp class="li1"><span class="sc0">							 <span class="st_h">'lon'</span> <span class="sy0">=&gt;</span> <a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span><span class="st_h">'$last'</span> <span class="sy0">=&gt;</span> <span class="st_h">'$lon'</span><span class="br0">&#41;</span><span class="sy0">,</span></span></samp>
+<samp class="li1"><span class="sc0">							 <span class="st_h">'lat'</span> <span class="sy0">=&gt;</span> <a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span><span class="st_h">'$last'</span> <span class="sy0">=&gt;</span> <span class="st_h">'$lat'</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span></span></samp>
+<samp class="li1"><span class="sc0">				 <a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span><span class="st_h">'$sort'</span> <span class="sy0">=&gt;</span> <a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span><span class="st_h">'pop'</span> <span class="sy0">=&gt;</span> <span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li2"></samp>
+<samp class="li1"><span class="sc0"><span class="kw1">foreach</span><span class="br0">&#40;</span><span class="re0">$cities</span><span class="br0">&#91;</span><span class="st_h">'result'</span><span class="br0">&#93;</span> <span class="kw1">as</span> <span class="re0">$doc</span><span class="br0">&#41;</span> <span class="br0">&#123;</span></span></samp>
+<samp class="li1"><span class="sc0">  <a href="http://www.php.net/list"><span class="kw3">list</span></a><span class="br0">&#40;</span><span class="re0">$px</span><span class="sy0">,</span> <span class="re0">$py</span><span class="br0">&#41;</span> <span class="sy0">=</span> projection<span class="br0">&#40;</span><span class="re0">$doc</span><span class="br0">&#91;</span><span class="st_h">'lon'</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="re0">$doc</span><span class="br0">&#91;</span><span class="st_h">'lat'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0">  <a href="http://www.php.net/printf"><span class="kw3">printf</span></a><span class="br0">&#40;</span><span class="st_h">'&lt;g&gt;&lt;text x=&quot;%1.3lf&quot; y=&quot;%1.3lf&quot;&gt;%s&lt;/text&gt;'</span><span class="sy0">.</span><span class="st0">&quot;<span class="es1">\n</span>&quot;</span><span class="sy0">,</span> <span class="re0">$px</span><span class="sy0">,</span> <span class="re0">$py</span><span class="sy0">,</span> <span class="re0">$doc</span><span class="br0">&#91;</span><span class="st_h">'nom'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0">  <a href="http://www.php.net/printf"><span class="kw3">printf</span></a><span class="br0">&#40;</span><span class="st_h">'&lt;circle cx=&quot;%1.3lf&quot; cy=&quot;%1.3lf&quot; r=&quot;5&quot;/&gt;&lt;/g&gt;'</span><span class="sy0">.</span><span class="st0">&quot;<span class="es1">\n</span>&quot;</span><span class="sy0">,</span> <span class="re0">$px</span><span class="sy0">,</span> <span class="re0">$py</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li2"><span class="sc0"><span class="br0">&#125;</span></span></samp>
+<samp class="li1"></samp>
+<samp class="li1"><span class="sc0"><span class="co1">// affichage des villes de population &gt;= 200000 habitants</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="re0">$coll</span> <span class="sy0">=</span> <span class="kw2">new</span> MongoCollection<span class="br0">&#40;</span><span class="re0">$mgo</span><span class="sy0">,</span> <span class="st_h">'villes'</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="re0">$curseur</span> <span class="sy0">=</span> <span class="re0">$coll</span><span class="sy0">-&gt;</span><span class="me1">find</span><span class="br0">&#40;</span><a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span><span class="st_h">'pop'</span> <span class="sy0">=&gt;</span> <a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span><span class="st_h">'$gte'</span> <span class="sy0">=&gt;</span> <span class="nu0">200000</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li2"><span class="sc0"><span class="kw1">foreach</span><span class="br0">&#40;</span><span class="re0">$curseur</span> <span class="kw1">as</span> <span class="re0">$doc</span><span class="br0">&#41;</span> <span class="br0">&#123;</span></span></samp>
+<samp class="li1"><span class="sc0">  <a href="http://www.php.net/list"><span class="kw3">list</span></a><span class="br0">&#40;</span><span class="re0">$px</span><span class="sy0">,</span> <span class="re0">$py</span><span class="br0">&#41;</span> <span class="sy0">=</span> projection<span class="br0">&#40;</span><span class="re0">$doc</span><span class="br0">&#91;</span><span class="st_h">'lon'</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="re0">$doc</span><span class="br0">&#91;</span><span class="st_h">'lat'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0">  <a href="http://www.php.net/printf"><span class="kw3">printf</span></a><span class="br0">&#40;</span><span class="st_h">'&lt;g class=&quot;cities&quot;&gt;&lt;text x=&quot;%1.3lf&quot; y=&quot;%1.3lf&quot;&gt;%s&lt;/text&gt;'</span><span class="sy0">.</span><span class="st0">&quot;<span class="es1">\n</span>&quot;</span><span class="sy0">,</span> <span class="re0">$px</span><span class="sy0">,</span> <span class="re0">$py</span><span class="sy0">,</span> <span class="re0">$doc</span><span class="br0">&#91;</span><span class="st_h">'nom'</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0">  <a href="http://www.php.net/printf"><span class="kw3">printf</span></a><span class="br0">&#40;</span><span class="st_h">'&lt;circle cx=&quot;%1.3lf&quot; cy=&quot;%1.3lf&quot; r=&quot;4&quot;/&gt;&lt;/g&gt;'</span><span class="sy0">.</span><span class="st0">&quot;<span class="es1">\n</span>&quot;</span><span class="sy0">,</span> <span class="re0">$px</span><span class="sy0">,</span> <span class="re0">$py</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="br0">&#125;</span></span></samp>
+<samp class="li2"></samp>
+<samp class="li1"><span class="sc0"><span class="kw1">echo</span> <span class="re0">$svgfooter</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="kw1">echo</span> <span class="re0">$htmlfooter</span><span class="sy0">;</span></span></samp>
+<samp class="li1"><span class="sc0"><span class="sy1">?&gt;</span></span></samp>
+</pre><h5><a href="35_interfaces/030_show_france_with_array.php">voir le résultat</a></h5>
+</div>
+</div>
+<div class="validator">
+  pages validées par
+  <a href="http://validator.w3.org/check?uri=referer"><img src="images/valid_xhtml.svg" alt="Valid XHTML 1.1" title="xHTML 1.1 validé !"/></a>
+  <a href="http://jigsaw.w3.org/css-validator/check/referer"><img src="images/valid_css.svg" alt="CSS validé !" title="CSS validé !"/></a>
+</div>
+</body>
+</html>

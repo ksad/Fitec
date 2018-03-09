@@ -1,0 +1,378 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>Exercices sur l'extraction de données MongoDB</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="css/code.css"/>
+  <link rel="stylesheet" type="text/css" media="screen" href="css/screen.css"/>
+  <link rel="stylesheet" type="text/css" media="print" href="css/print.css"/>
+  <link rel="stylesheet" type="text/css" href="css/style.css"/>
+  <link rel="alternate stylesheet" type="text/css" media="screen" title="question" href="css/question.css"/>
+  <link rel="stylesheet" type="text/css" media="screen" title="solution" href="css/solution.css"/>
+  <link type="image/x-icon" rel="shortcut icon" href="images/icon.png"/>
+  
+</head>
+<body><h1>Exercices sur l'extraction de données MongoDB</h1>
+<div class="exo">
+<h2>effectuer une recherche simple avec filtrage</h2>
+    
+
+<p>Écrire une requête telle que celle-ci :</p>
+<ul>
+  <li>extrait de la collection <samp>villes</samp> celles dont :<ul>
+     <li>la population est :<ul>
+        <li>supérieure ou égale à 20000 habitants,</li>
+        <li>inférieure à 100000 habitants,</li></ul></li>
+     <li>le nom commence par l'une des lettres <samp>W</samp>, <samp>X</samp>, <samp>Y</samp> ou <samp>Z</samp>,</li></ul></li>
+  <li>ne présente que les champs <samp>nom</samp> et <samp>pop</samp>.</li>
+</ul>
+<div class="solution">
+  <p>La requête à exécuter dans <em>mongo shell</em> est :</p>
+  <pre class="mongo_shl"><kbd>db.villes.find({</kbd>
+<kbd class="next">   pop: {$gte: 20000,</kbd>
+<kbd class="next">         $lt: 100000},</kbd>
+<kbd class="next">   nom: {$regex: /^[w-z]/i}},</kbd>
+<kbd class="next">   {pop:1, nom:1, _id:0});</kbd>
+{ "nom" : "Wattrelos", "pop" : 41829 }
+{ "nom" : "Yerres", "pop" : 27136 }
+</pre>
+
+</div>
+</div>
+<div class="exo">
+<h2>effectuer une recherche avec filtrage et tri</h2>
+
+<p>Écrire une requête telle que celle-ci :</p>
+<ul>
+  <li>extrait de la collection <samp>villes</samp> celles dont :<ul>
+     <li>la latitude est :<ul>
+        <li>supérieure ou égale à 45.0°,</li>
+        <li>inférieure à 46.0°,</li></ul></li>
+     <li>le nom se termine par <samp>e</samp> ou par <samp>es</samp>,</li></ul></li>
+  <li>ne présente que les champs <samp>nom</samp> et <samp>lat</samp>,</li>
+  <li>fasse le tri sur le critère de population décroissante.</li>
+</ul>
+<div class="solution">
+  <p>La requête à exécuter dans <em>mongo shell</em> est :</p>
+  <pre class="mongo_shl"><kbd>db.villes.find({</kbd>
+<kbd class="next">   lat: {$gte: 45.0,</kbd>
+<kbd class="next">         $lt: 46.0},</kbd>
+<kbd class="next">   nom: {$regex: /es?$/i}},</kbd>
+<kbd class="next">   {lat:1, nom:1, _id:0}).sort({pop:-1});</kbd>
+{ "nom" : "Saint-Étienne", "pop" : 172696, "lat" : 45.4333 }
+{ "nom" : "Grenoble", "pop" : 156659, "lat" : 45.1667 }
+{ "nom" : "Villeurbanne", "pop" : 141106, "lat" : 45.766667 }
+{ "nom" : "Limoges", "pop" : 140138, "lat" : 45.85 }
+{ "nom" : "Brive-la-Gaillarde", "pop" : 49675, "lat" : 45.15 }
+{ "nom" : "Angoulême", "pop" : 43112, "lat" : 45.65 }
+{ "nom" : "Caluire-et-Cuire", "pop" : 40869, "lat" : 45.8 }
+{ "nom" : "Échirolles", "pop" : 35688, "lat" : 45.1333 }
+{ "nom" : "Saint-Martin-d'Hères", "pop" : 35565, "lat" : 45.166667 }
+<em>...</em></pre>
+
+</div>
+</div>
+<div class="exo">
+<h2>effectuer une recherche avec limite et modification de l'origine</h2>
+    
+<p>Écrire une requête telle que celle-ci :</p>
+<ul>
+  <li>extrait de la collection <samp>villes</samp> celles dont la population est un nombre exact de centaines d'habitants,</li>
+  <li>fasse le tri sur le critère de population décroissante,</li>
+  <li>ne présente que champs <samp>pop</samp> et <samp>nom</samp>,</li>
+  <li>et ne présente que les 10 premiers résultats au delà du second.</li>
+</ul>
+<div class="solution">
+  <p>La requête à exécuter dans <em>mongo shell</em> est :</p>
+  <pre class="mongo_shl"><kbd>db.villes.find({</kbd>
+<kbd class="next">   pop: {$mod: [100,0]}},</kbd>
+<kbd class="next">   {pop:1, nom:1, _id:0}).sort({pop:-1}).skip(2).limit(10);</kbd>
+{ "nom" : "Colomiers", "pop" : 33200 }
+{ "nom" : "Le Petit-Quevilly", "pop" : 22600 }
+{ "nom" : "Hem", "pop" : 20200 }
+{ "nom" : "Lourdes", "pop" : 16300 }
+{ "nom" : "Val-de-Reuil", "pop" : 13500 }
+{ "nom" : "Beaucaire", "pop" : 13400 }
+{ "nom" : "Plouzané", "pop" : 11400 }
+{ "nom" : "Erstein", "pop" : 8600 }
+{ "nom" : "Quéven", "pop" : 8400 }
+{ "nom" : "Trets", "pop" : 7900 }</pre>
+
+</div>
+</div>
+<div class="exo">
+<h2>effectuer une recherche simultanée dans 2 collections</h2>
+    
+<h3>Objectif : réaliser l'équivalent d'une jointure coté client.</h3>
+<p>Écrire une requête telle que celle-ci :</p>
+<ul>
+  <li>extrait à partir de des collections <samp>villes</samp> et <samp>departements</samp> :<ul>
+     <li>les villes les plus importantes de chaque département,</li>
+     <li>le nom et le code du département associé à chacune des villes,</li></ul></li>
+  <li>le tri se fera selon le code du département,</li>
+</ul>
+<div class="solution">
+  <p>La requête à exécuter dans <em>mongo shell</em> est :</p>
+  <pre class="mongo_shl"><kbd>db.departements.find().sort({code:1}).forEach(</kbd>
+<kbd class="next">  function(dpt) {</kbd>
+<kbd class="next">    var cvil = db.villes.findOne( { $query: {_id_dept: dpt._id}, $orderby: { pop : -1 } } )</kbd>
+<kbd class="next">    if (cvil) print(dpt.code, dpt.nom, '-', cvil.nom)</kbd>
+<kbd class="next">    });</kbd>
+01 Ain - Bourg-en-Bresse
+02 Aisne - Saint-Quentin
+03 Allier - Montluçon
+04 Alpes de Haute Provence - Manosque
+05 Hautes Alpes - Gap
+06 Alpes Maritimes - Nice
+<em>...</em></pre>
+
+</div>
+</div>
+<div class="exo">
+<h2>effectuer une recherche simultanée dans 3 collections coté serveur</h2>
+    
+<h3>Objectif : réaliser l'équivalent d'une jointure coté serveur.</h3>
+<p>À partir de l'exercice précédent écrire une requête telle que celle-ci :</p>
+<ul>
+  <li>soit entièrement réalisée coté serveur,</li>
+  <li>soit chronométrée,</li>
+  <li>extrait à partir de des collections <samp>villes</samp>, <samp>departements</samp> et <samp>regions</samp> :<ul>
+     <li>les villes les plus importantes de chaque région,</li>
+     <li>le nom et le code du département associé à chacune des villes,</li>
+     <li>le nom de la région associée à chacune des villes,</li></ul></li>
+  <li>le tri se fera selon le code de la région.</li>
+</ul>
+<div class="solution">
+  <p>La requête à exécuter dans <em>mongo shell</em> est :</p>
+  <pre class="mongo_shl"><kbd>var before = new Date();</kbd>             <em>// pour chronométrage</em>
+<kbd>var result = db.eval(function() {</kbd>    <em>// partie réalisée par le serveur</em>
+<kbd class="next">  var res = new Array();</kbd>
+<kbd class="next">  db.regions.find().sort({nom:1}).forEach(</kbd>
+<kbd class="next">    function(rgn) {</kbd>
+<kbd class="next">      var dpts = new Array();</kbd>
+<kbd class="next">      db.departements.find({_id_region: rgn._id}).forEach(</kbd>
+<kbd class="next">        function(dpt) {dpts.push(dpt._id)}</kbd>
+<kbd class="next">      )</kbd>
+<kbd class="next">      var cvil = db.villes.findOne({ $query: {_id_dept: {$in: dpts}}, $orderby: {pop: -1 }});</kbd>
+<kbd class="next">      if (cvil) res.push([rgn.nom, cvil.nom, cvil.pop]);</kbd>
+<kbd class="next">      })</kbd>
+<kbd class="next">  return res;</kbd>
+<kbd class="next">})</kbd>
+<kbd>var after = new Date()</kbd>               <em>// fin chronométrage</em>
+           
+<kbd>for(var i=0; i&lt;result.length; i++) {</kbd> <em>// partie réalisée par le client</em>
+<kbd class="next">  var strg = '';</kbd>
+<kbd class="next">  for(var j=0; j&lt;result[i].length; j++) {</kbd>
+<kbd class="next">    strg += result[i][j]+',';</kbd>
+<kbd class="next">  }</kbd>
+<kbd class="next">  print(strg);</kbd>
+<kbd class="next">}</kbd>
+Alsace,Strasbourg,272116,
+Aquitaine,Bordeaux,235891,
+Auvergne,Clermont-Ferrand,139006,
+Basse-Normandie,Caen,109899,
+Bourgogne,Dijon,151576,
+Bretagne,Rennes,206655,
+Centre,Tours,135480,
+Champagne Ardenne,Reims,181468,
+Corse,Ajaccio,65153,
+DOM/TOM,Saint-Denis,144238,
+Franche Comté,Besançon,117599,
+Haute Normandie,Le Havre,178769,
+Ile de France,Paris,2211297,
+Languedoc Roussillon,Montpellier,252998,
+Limousin,Limoges,140138,
+Lorraine,Metz,122838,
+Midi Pyrénées,Toulouse,439553,
+Nord Pas de Calais,Lille,225784,
+Pays de la Loire,Nantes,283288,
+Picardie,Amiens,134381,
+Poitou Charentes,Poitiers,89282,
+Provence Alpes Côte d'azur,Marseille,851420,
+Rhône Alpes,Lyon,474946,
+<kbd>print(after - before)</kbd> <em>// affichage de la durée traitement serveur</em>
+384</pre>
+
+  <p>Une autre possibilité consiste à passer par les procédures stockées coté serveur dans la collection <samp>db.system.js</samp>,
+    pour cela il suffit de procéder ainsi :</p>
+  <pre class="mongo_shl"><em>// écriture de la procédure stockée</em>
+<kbd>db.system.js.save({</kbd>
+<kbd class="next">       _id: 'chef_lieux',</kbd>
+<kbd class="next">       value: function() {</kbd>
+<kbd class="next">         var res = new Array();</kbd>
+<kbd class="next">         db.regions.find().sort({nom:1}).forEach(</kbd>
+<kbd class="next">             function(rgn) {</kbd>
+<kbd class="next">                 var dpts = new Array();</kbd>
+<kbd class="next">                 db.departements.find({_id_region: rgn._id}).forEach(</kbd>
+<kbd class="next">                     function(dpt) {dpts.push(dpt._id)}</kbd>
+<kbd class="next">                 )</kbd>
+<kbd class="next">                 var cvil = db.villes.findOne({ $query: {_id_dept: {$in: dpts}}, $orderby: {pop: -1 }});</kbd>
+<kbd class="next">                 if (cvil) res.push([rgn.nom, cvil.nom, cvil.pop])</kbd>
+<kbd class="next">                 })</kbd>
+<kbd class="next">         return res;</kbd>
+<kbd class="next">       }</kbd>
+<kbd class="next">})</kbd>
+WriteResult({ "nMatched" : 0, "nUpserted" : 1, "nModified" : 0, "_id" : "chef_lieux" })
+
+<em>Exécution de la fonction avec chronométrage</em>
+<kbd>var before = new Date();</kbd>                                              <em>// pour chronométrage</em>
+<kbd>var result = db.eval(db.system.js.findOne({_id: 'chef_lieux'}).value)</kbd> <em>// exécution</em>
+<kbd>var after = new Date()</kbd>                                                <em>// fin chronométrage</em>
+           
+<kbd>for(var i=0; i&lt;result.length; i++) {</kbd> <em>// partie réalisée par le client</em>
+<kbd class="next">  var strg = '';</kbd>
+<kbd class="next">  for(var j=0; j&lt;result[i].length; j++) {</kbd>
+<kbd class="next">    strg += result[i][j]+',';</kbd>
+<kbd class="next">  }</kbd>
+<kbd class="next">  print(strg);</kbd>
+<kbd class="next">}</kbd>
+Alsace,Strasbourg,272116,
+Aquitaine,Bordeaux,235891,
+Auvergne,Clermont-Ferrand,139006,
+<em>...</em>
+<kbd>print(after - before)</kbd>
+402</pre>
+
+</div>
+</div>
+<div class="exo">
+<h2>appliquer une fonction d'agrégation</h2>
+    
+<h3>Objectif : réaliser une agrégation.</h3>
+<p>Afin de déterminer le classement en population de chaque département nous allons écrire une requête telle que celle-ci :</p>
+<ul>
+  <li>calcule la somme des populations de toutes les villes situées au sein d'un même département,</li>
+  <li>affiche les départements par ordre décroissant selon leur population totale en présentant pour chacun d'eux :<ul>
+    <li>le code,</li>
+    <li>la population totale,</li>
+    <li>le nom.</li></ul></li>
+</ul>
+<div class="solution">
+  <p>La requête à exécuter dans <em>mongo shell</em> est :</p>
+  <pre class="mongo_shl"><kbd>var curseur = db.villes.aggregate([</kbd>
+<kbd class="next">    {$match: {}},</kbd>
+<kbd class="next">    {$group: {_id: '$_id_dept', total: {$sum: '$pop'}}},</kbd>
+<kbd class="next">    {$sort: {total: -1}}</kbd>
+<kbd class="next">])</kbd>
+<em>// l'itération manuelle sur le curseur permet d'extraire le code du département</em>
+<kbd>while (curseur.hasNext()) {</kbd>
+<kbd class="next">    var doc = curseur.next();</kbd>
+<kbd class="next">    var cde = db.departements.findOne({_id: doc._id},{code:1, nom:1, _id:0});</kbd>
+<kbd class="next">    print(cde.code+' -&gt; '+doc.total+' ('+cde.nom+')');</kbd>
+<kbd class="next">}</kbd>
+59 -> 2542179 (Nord)
+75 -> 2211297 (Seine)
+13 -> 1860625 (Bouches du Rhône)
+69 -> 1582842 (Rhône)
+92 -> 1529919 (Hauts de Seine)
+93 -> 1481690 (Seine Saint Denis)
+62 -> 1416293 (Pas de Calais)
+78 -> 1292912 (Yvelines)
+33 -> 1232545 (Gironde)
+94 -> 1211256 (Val de Marne)
+76 -> 1195367 (Seine Maritime)
+44 -> 1101013 (Loire Atlantique)
+77 -> 1093261 (Seine et Marne)
+91 -> 1065330 (Essonne)
+95 -> 1037918 (Val d'Oise)
+31 -> 1018786 (Haute Garonne)
+06 -> 1018727 (Alpes Maritimes)
+<em>...</em></pre>
+
+</div>
+</div>
+<div class="exo">
+<h2>appliquer un <q>map/reduce</q></h2>
+    
+  <h3>Objectif : travailler sur un jeu de valeurs par la fonction <samp>mapReduce()</samp>.</h3>
+<p>Afin de déterminer l'espace total occupé par la carte de France à partir des contours des départements nous allons écrire une requête telle que celle-ci :</p>
+<ul>
+  <li>calcule pour chaque département la boîte englobante (latitude min, latitude max, longitude min, longitude max),</li>
+  <li>parcoure l'ensemble des départements et affiche la boîte globale les encadrant tous.</li>
+</ul>
+<div class="solution">
+  <p>La requête à exécuter dans <em>mongo shell</em> est :</p>
+  <pre class="mongo_shl"><em>// création de la fonction de mapping</em>
+<kbd>var map = function() {</kbd>
+<kbd class="next">    var res = {</kbd>
+<kbd class="next">      minlon: 180,</kbd>
+<kbd class="next">      maxlon: -180,</kbd>
+<kbd class="next">      minlat: 90,</kbd>
+<kbd class="next">      maxlat: -90</kbd>
+<kbd class="next">    }</kbd>
+<kbd class="next">    for (i=0; i&lt;this.contours.length; i++) {</kbd>
+<kbd class="next">      for (j=0; j&lt;this.contours[i].length; j++) {</kbd>
+<kbd class="next">        if (res.minlon &gt; this.contours[i][j][0]) res.minlon = this.contours[i][j][0];</kbd>
+<kbd class="next">        if (res.maxlon &lt; this.contours[i][j][0]) res.maxlon = this.contours[i][j][0];</kbd>
+<kbd class="next">        if (res.minlat &gt; this.contours[i][j][1]) res.minlat = this.contours[i][j][1];</kbd>
+<kbd class="next">        if (res.maxlat &lt; this.contours[i][j][1]) res.maxlat = this.contours[i][j][1];</kbd>
+<kbd class="next">      }</kbd>
+<kbd class="next">    }</kbd>
+<kbd class="next">    emit(1, res);</kbd>
+<kbd class="next">  }</kbd>
+
+<em>// création de la fonction de reduction</em>
+<kbd>var reduce = function(key, vals) {</kbd>
+<kbd class="next">    var res = {</kbd>
+<kbd class="next">      minlon: 180,</kbd>
+<kbd class="next">      maxlon: -180,</kbd>
+<kbd class="next">      minlat: 90,</kbd>
+<kbd class="next">      maxlat: -90</kbd>
+<kbd class="next">    }</kbd>
+<kbd class="next">   vals.forEach(function(val) {</kbd>
+<kbd class="next">      if (res.minlon &gt; val.minlon) res.minlon = val.minlon;</kbd>
+<kbd class="next">      if (res.maxlon &lt; val.maxlon) res.maxlon = val.maxlon;</kbd>
+<kbd class="next">      if (res.minlat &gt; val.minlat) res.minlat = val.minlat;</kbd>
+<kbd class="next">      if (res.maxlat &lt; val.maxlat) res.maxlat = val.maxlat;</kbd>
+<kbd class="next">		   });</kbd>
+<kbd class="next">   return {minmax: res};</kbd>
+<kbd class="next">  }</kbd>
+
+
+<em>// exécution de la requête utilisant les fonctions précédemment définies</em>
+<kbd>var res =  db.departements.mapReduce(map,</kbd>
+<kbd class="next">                                   reduce,</kbd>
+<kbd class="next">                                   {</kbd>
+<kbd class="next">                                      out: {inline: 1},</kbd>
+<kbd class="next">                                      query: {contours: {$exists: true}}</kbd>
+<kbd class="next">                                   }</kbd>
+<kbd class="next">                       );</kbd>
+
+<em>// récupération du résultat utile</em>
+<kbd>var box = res.results[0].value.minmax;</kbd>
+
+<em>// affichage du résultat formaté</em>
+<kbd>print('longitude minimale '+box.minlon+', longitude maximale '+box.maxlon+', latitude minimale '+box.minlat+', latitude maximale '+box.maxlat)</kbd>
+longitude minimale -5.13, longitude maximale 9.56, latitude minimale 41.363, latitude maximale 51.09</pre>
+
+</div>
+</div>
+<div class="exo">
+<h2>extraire toutes les propriétés présentes dans une collection</h2>
+    
+  <p>Objectif : à l'aide d'un <samp>mapReduce()</samp> extraire l'ensemble des noms des propriétés de tous les documents de la collection
+    <samp>villes</samp>.</p>
+<div class="solution">
+<h3>Code à produire  :</h3>
+<pre class="file color html4strict" title="(colorisé en HTML)"><samp class="li1"></samp>
+</pre><h3>réponse</h3>
+  <p>La requête à exécuter dans <em>mongo shell</em> est :</p>
+  <pre class="mongo_shl"><kbd>var collection = 'villes';</kbd>
+<kbd class="next">mr = db.runCommand({
+    mapreduce: collection,
+    map: function() { for (var key in this) { emit(key, null); } },
+    reduce: function(key, stuff) { return null; },
+    out: 'keys'
+})
+db.keys.find();</kbd>
+
+<h5><a href="30_recherche/070_list_fields2.html">voir le résultat</a></h5>
+</div>
+</div>
+<div class="validator">
+  pages validées par
+  <a href="http://validator.w3.org/check?uri=referer"><img src="images/valid_xhtml.svg" alt="Valid XHTML 1.1" title="xHTML 1.1 validé !"/></a>
+  <a href="http://jigsaw.w3.org/css-validator/check/referer"><img src="images/valid_css.svg" alt="CSS validé !" title="CSS validé !"/></a>
+</div>
+</body>
+</html>

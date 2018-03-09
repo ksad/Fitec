@@ -1,0 +1,84 @@
+/* The following rule is necessary to have all slides appear in print! DO NOT REMOVE IT! */
+body {font-size: 10pt; background: white;}
+* {color: black;}
+
+h1 {
+ margin-top:25.5mm;
+ padding:10cm 0;
+ border:4px solid #888;
+ font-size:8mm;
+ text-align:center;
+}
+.validator {display:none}
+
+@page {
+ margin:10mm 15mm;
+ @top-center {
+   color:#000;
+   font-size:3mm;
+   content: 'page 'counter(page)'/'counter(pages);
+ }
+ @bottom-center {
+  color:#000;
+  font-size:2.5mm;
+  content:"Documentation réalisée en xHTML par Marc Souviron, 12 rue Nazarth 31000 Toulouse
+Tél : 05‑61‑32‑94‑50  GSM : 06‑72‑93‑67‑88  Email : marc.souviron@vous‑et‑nous.com";
+ }
+}
+
+body {
+ background-color:#FFF;
+ font-size:3.5mm;
+}
+
+
+div.exo:before {
+ margin:0.5em 1em;
+ font-size:120%;
+ float:right;
+ content: "Exercice " counter(title_num, decimal);
+ background-color:#AAA;
+ padding:0.1em 1em;
+ color:#FFF;
+}
+
+body {counter-reset: title_num 0}
+div.exo {counter-increment: title_num}
+
+* {
+ color:#000;
+ border-color:#000;
+ font-size:3.5mm;
+}
+
+div.exo {
+ overflow:auto;
+ width:auto;
+ border:#000 solid 1px !important;
+ margin-bottom:1mm;
+ page-break-inside: avoid;
+ padding:0.5em 1em;
+}
+
+div.exo .solution:before {
+ margin:0 40%;
+ text-align:center;
+ display:block;
+ font-size:130%;
+ content: 'Solution';
+ background-color:#FFF;
+ color:#000;
+}
+
+div.exo .solution {
+ border-top:solid 2px #888;
+}
+
+div.exo pre {
+/* white-space:pre-wrap;*/
+}
+
+div.exo pre q {display:none}
+
+div.exo pre em {color:#777; font-size:80%}
+

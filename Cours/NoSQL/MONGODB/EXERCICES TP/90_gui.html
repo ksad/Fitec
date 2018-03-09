@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>Exercices sur les interfaces graphiques MongoDB</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="css/code.css"/>
+  <link rel="stylesheet" type="text/css" media="screen" href="css/screen.css"/>
+  <link rel="stylesheet" type="text/css" media="print" href="css/print.css"/>
+  <link rel="stylesheet" type="text/css" href="css/style.css"/>
+  <link rel="alternate stylesheet" type="text/css" media="screen" title="question" href="css/question.css"/>
+  <link rel="stylesheet" type="text/css" media="screen" title="solution" href="css/solution.css"/>
+  <link type="image/x-icon" rel="shortcut icon" href="images/icon.png"/>
+  
+</head>
+<body><h1>Exercices sur les interfaces graphiques MongoDB</h1>
+<div class="exo">
+<h2>interface d'administration <kbd>phpmongo</kbd></h2>
+<h3>Objectif : tester l'interface d'administration <kbd>phpmongo</kbd></h3>
+<p>À partir du fichier <em>PHP</em> <a href="90_gui/moadmin.php.src">ici présent</a> réaliser la connexion au serveur <em>MongoDB</em>.</p>
+<div class="solution">
+<pre class="file color php" title="(colorisé en PHP)"><samp class="li1"><span class="sc4"><span class="kw2">&lt;?php</span></span></samp>
+<samp class="li1"><span class="sc4"><span class="co1">//$accessControl = array('marc' =&gt; 'toto');</span></span></samp>
+<samp class="li1"></samp>
+<samp class="li1"><span class="sc4"><span class="co4">/**</span></span></samp>
+<samp class="li2"><span class="sc4"><span class="co4">&nbsp;* To connect to a remote or authenticated Mongo instance, define the connection string in the MONGO_CONNECTION constant</span></span></samp>
+<samp class="li1"><span class="sc4"><span class="co4">&nbsp;* mongodb://[username:password@]host1[:port1][,host2[:port2:],...]</span></span></samp>
+<samp class="li1"><span class="sc4"><span class="co4">&nbsp;* If you do not know what this means then it is not relevant to your application and you can safely leave it as-is</span></span></samp>
+<samp class="li1"><span class="sc4"><span class="co4">&nbsp;*/</span></span></samp>
+<samp class="li1"><span class="sc4"><a href="http://www.php.net/define"><span class="kw3">define</span></a><span class="br0">&#40;</span><span class="st_h">'MONGO_CONNECTION'</span><span class="sy0">,</span> <span class="st_h">'mongodb://monRoot:topSecret@127.0.0.1:27017'</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li2"></samp>
+<samp class="li1"><span class="sc4"><span class="co4">/**</span></span></samp>
+<samp class="li1"><span class="sc4"><span class="co4">&nbsp;* Set to true when connecting to a Mongo replicaSet</span></span></samp>
+<samp class="li1"><span class="sc4"><span class="co4">&nbsp;* If you do not know what this means then it is not relevant to your application and you can safely leave it as-is</span></span></samp>
+<samp class="li1"><span class="sc4"><span class="co4">&nbsp;*/</span></span></samp>
+<samp class="li2"><span class="sc4"><a href="http://www.php.net/define"><span class="kw3">define</span></a><span class="br0">&#40;</span><span class="st_h">'REPLICA_SET'</span><span class="sy0">,</span> <span class="kw4">false</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"></samp>
+<samp class="li1"><span class="sc4"><span class="co4">/**</span></span></samp>
+<samp class="li1"><span class="sc4"><span class="co4">&nbsp;* Default limit for number of objects to display per page - set to 0 for no limit</span></span></samp>
+<samp class="li1"><span class="sc4"><span class="co4">&nbsp;*/</span></span></samp>
+<samp class="li2"><span class="sc4"><a href="http://www.php.net/define"><span class="kw3">define</span></a><span class="br0">&#40;</span><span class="st_h">'OBJECT_LIMIT'</span><span class="sy0">,</span> <span class="nu0">100</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"></samp>
+<samp class="li1"><span class="sc4"><span class="co4">/**</span></span></samp>
+<samp class="li1"><span class="sc4"><span class="co4">&nbsp;* Contributing-developers of the phpMoAdmin project should set this to true, everyone else can leave this as false</span></span></samp>
+<samp class="li1"><span class="sc4"><span class="co4">&nbsp;*/</span></span></samp>
+<samp class="li2"><span class="sc4"><a href="http://www.php.net/define"><span class="kw3">define</span></a><span class="br0">&#40;</span><span class="st_h">'DEBUG_MODE'</span><span class="sy0">,</span> <span class="kw4">false</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+<samp class="li1"></samp>
+<samp class="li1"></samp>
+<samp class="li1"><span class="sc4"><span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;moadmin.php.src&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span></span></samp>
+</pre><h5><a href="90_gui/10_moadmin.php.html">voir le résultat</a></h5>
+</div>
+</div>
+<div class="exo">
+<h2>interface d'administration <kbd>robomongo</kbd></h2>
+
+<h3>Objectif : tester l'interface d'administration <kbd>robomongo</kbd></h3>
+<p><kbd>robomongo</kbd> est une interface graphique permettant de piloter des base de données de type <em>MongoDB</em>. Dans cet exercice nous allons découvrir le
+  fonctionnement de cette interface après l'avoir installée à partir du site officiel. Pour cela nous procéderons ainsi :</p>
+<ol>
+  <li>à partir de l'archive <em>PHP</em> <a href="http://robomongo.org/files/linux/robomongo-0.8.5-x86_64.rpm">robomongo.org/files/linux/robomongo-0.8.5-x86_64.rpm</a>
+    destinée aux distributions de type <em>RedHat</em> nous réaliserons l'installation du système d'administration <kbd>Robomongo</kbd>.</li>
+  <li>nos Testerons ensuite cette interface sur l'instance de <kbd>mongod</kbd> en service.</li>
+</ol>
+<div class="solution">
+<ol>
+  <li>Pour réaliser l'installation exécuter la commande suivante :
+    <pre class="shl_root"><kbd>rpm -ivh http://robomongo.org/files/linux/robomongo-0.8.5-x86_64.rpm</kbd></pre></li>
+
+  <li>Pour tester l'interface exécuter la commande suivante :
+    <pre class="shl"><kbd>robomongo</kbd></pre></li>
+</ol>
+
+</div>
+</div>
+<div class="validator">
+  pages validées par
+  <a href="http://validator.w3.org/check?uri=referer"><img src="images/valid_xhtml.svg" alt="Valid XHTML 1.1" title="xHTML 1.1 validé !"/></a>
+  <a href="http://jigsaw.w3.org/css-validator/check/referer"><img src="images/valid_css.svg" alt="CSS validé !" title="CSS validé !"/></a>
+</div>
+</body>
+</html>

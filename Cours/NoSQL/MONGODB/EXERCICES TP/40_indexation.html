@@ -1,0 +1,508 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>Exercices sur l'indexation</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="css/code.css"/>
+  <link rel="stylesheet" type="text/css" media="screen" href="css/screen.css"/>
+  <link rel="stylesheet" type="text/css" media="print" href="css/print.css"/>
+  <link rel="stylesheet" type="text/css" href="css/style.css"/>
+  <link rel="alternate stylesheet" type="text/css" media="screen" title="question" href="css/question.css"/>
+  <link rel="stylesheet" type="text/css" media="screen" title="solution" href="css/solution.css"/>
+  <link type="image/x-icon" rel="shortcut icon" href="images/icon.png"/>
+  
+</head>
+<body><h1>Exercices sur l'indexation</h1>
+<div class="exo">
+<h2>Exécution d'une requête avec indexation</h2>
+
+<h2>Objectif : tester la performance du positionnement d'un index sur une collection</h2>
+<p>À partir de la base de données <samp>geo_france</samp> nous allons provoquer une requête <q>gourmande</q> en ressources CPU. Pour cela nous procéderons de la
+  façon suivante :</p>
+<ol>
+  <li>afin de simplifier le test nous allons créer une fonction anonyme destinée à :<ul>
+      <li>rechercher les villes dont le nom existe également préfixé par la chaîne de caractères <em>saint-</em>,</li>
+      <li>chronométrer celle-ci,</li>
+      <li>donner le nombre de valeurs trouvées,</li></ul></li>
+  <li>nous rechercherons avec cette requête le nombre de villes correspondant à ce critère,</li>
+  <li>nous construirons ensuite un index sur la propriété <samp>nom</samp>,</li>
+  <li>nous retenterons enfin de réaliser la requête en espérant atteindre rapidement le résultat.</li>
+</ol>
+<p>Que remarque-t-on ?</p>
+<div class="solution">
+<p>La liste des instructions à produire :</p>
+<ol> 
+  <li>Création d'une variable contenant la requête à exécuter :
+    <pre class="mongo_shl"><kbd>var request = function() {</kbd>
+<kbd class="next">var res = new Array();</kbd>      <em>// création du tableau de récupération des résultats</em>
+<kbd class="next">var before = new Date();</kbd>    <em>// enregistrement de l'instant de départ</em>
+<kbd class="next">  db.villes.distinct('nom', {nom: {$regex: /^saint-/i}}).forEach(</kbd>
+<kbd class="next">    function(nom) { </kbd>
+<kbd class="next">      var nomc = nom.substr(6);</kbd>
+<kbd class="next">      var nomf = db.villes.findOne({nom: nomc});</kbd>
+<kbd class="next">      if (nomf) res.push(nomf);</kbd>
+<kbd class="next">    })</kbd>
+<kbd class="next">var dur = new Date() - before;</kbd>     <em>// enregistrement de la durée totale</em>
+<kbd class="next">print('nombre : '+res.length+' / durée : '+dur+' ms');</kbd>
+<kbd class="next">}</kbd></pre></li>
+
+  <li>Execution de la requête sans index :
+    <pre class="mongo_shl"><kbd>request();</kbd>
+nombre : 62 / durée : 81639 ms</pre></li>
+
+  <li>Création de l'index sur la propriété <samp>nom</samp> :
+    <pre class="mongo_shl"><kbd>db.villes.createIndex({nom: 1}, {name: 'noms_idx'});</kbd>
+{
+	"createdCollectionAutomatically" : false,
+	"numIndexesBefore" : 2,
+	"numIndexesAfter" : 3,
+	"ok" : 1
+}</pre></li>
+
+  <li>Execution de la requête avec index :
+    <pre class="mongo_shl"><kbd>request();</kbd>
+nombre : 62 / durée : 766 ms</pre></li>
+</ol>
+
+<p>La requête sans index prends plusieurs minutes et la génération de l'index ne prends qu'une seconde. Étonnamment efficace !</p>
+
+</div>
+</div>
+<div class="exo">
+<h2>analyse d'une requête par <samp>explain()</samp></h2>
+
+<h2>Objectif : tester la méthode <samp>explain()</samp> sur une requête avec et sans index</h2>
+<p>À partir du contexte de l'exercice précédent faire une analyse selon ce scénario :</p>
+<ol>
+  <li>analyse d'une requête en présence des index,</li>
+  <li>destruction des index,</li>
+  <li>analyse d'une requête après destruction des index.</li>
+</ol>
+<div class="solution">
+<p>la liste des instructions à produire :</p>
+<ol> 
+  <li>Analyse en présence des index :
+    <pre class="mongo_shl"><kbd>db.villes.find({nom: 'Lyon'}).explain("executionStats").executionStats;</kbd>
+{
+	"executionSuccess" : true,
+	"nReturned" : 1,
+	"executionTimeMillis" : 0,
+	"totalKeysExamined" : 1,
+	"totalDocsExamined" : 1,
+	"executionStages" : {
+		"stage" : "SORT",
+		"nReturned" : 1,
+		"executionTimeMillisEstimate" : 0,
+		"works" : 6,
+		"advanced" : 1,
+		"needTime" : 2,
+		"needFetch" : 0,
+		"saveState" : 0,
+		"restoreState" : 0,
+		"isEOF" : 1,
+		"invalidates" : 0,
+		"sortPattern" : {
+			"lat" : 1
+		},
+		"memUsage" : 159,
+		"memLimit" : 33554432,
+		"inputStage" : {
+			"stage" : "KEEP_MUTATIONS",
+			"nReturned" : 1,
+			"executionTimeMillisEstimate" : 0,
+			"works" : 2,
+			"advanced" : 1,
+			"needTime" : 0,
+			"needFetch" : 0,
+			"saveState" : 0,
+			"restoreState" : 0,
+			"isEOF" : 1,
+			"invalidates" : 0,
+			"inputStage" : {
+				"stage" : "FETCH",
+				"nReturned" : 1,
+				"executionTimeMillisEstimate" : 0,
+				"works" : 2,
+				"advanced" : 1,
+				"needTime" : 0,
+				"needFetch" : 0,
+				"saveState" : 0,
+				"restoreState" : 0,
+				"isEOF" : 1,
+				"invalidates" : 0,
+				"docsExamined" : 1,
+				"alreadyHasObj" : 0,
+				"inputStage" : {
+					"stage" : "IXSCAN",
+					"nReturned" : 1,
+					<strong>"executionTimeMillisEstimate" : 0,</strong>
+					"works" : 2,
+					"advanced" : 1,
+					"needTime" : 0,
+					"needFetch" : 0,
+					"saveState" : 0,
+					"restoreState" : 0,
+					"isEOF" : 1,
+					"invalidates" : 0,
+					"keyPattern" : {
+						"nom" : 1
+					},
+					<strong>"indexName" : "noms_idx",</strong>
+					"isMultiKey" : false,
+					"direction" : "forward",
+					"indexBounds" : {
+						"nom" : [
+							"[\"Lyon\", \"Lyon\"]"
+						]
+					},
+					"keysExamined" : 1,
+					"dupsTested" : 0,
+					"dupsDropped" : 0,
+					"seenInvalidated" : 0,
+					"matchTested" : 0
+				}
+			}
+		}
+	}
+}</pre></li>
+
+  <li>Destruction des index :
+    <pre class="mongo_shl"><kbd>db.villes.dropIndex('noms_idx');</kbd>
+{ "nIndexesWas" : 3, "ok" : 1 }</pre></li>
+
+  <li>Analyse sans les index :
+    <pre class="mongo_shl"><kbd>db.villes.find({nom: 'Lyon'}).explain("executionStats").executionStats;</kbd>
+{
+	"executionSuccess" : true,
+	"nReturned" : 1,
+	"executionTimeMillis" : 75,
+	"totalKeysExamined" : 36686,
+	"totalDocsExamined" : 36686,
+	"executionStages" : {
+		"stage" : "FETCH",
+		"filter" : {
+			"nom" : {
+				"$eq" : "Lyon"
+			}
+		},
+		"nReturned" : 1,
+		"executionTimeMillisEstimate" : 70,
+		"works" : 36687,
+		"advanced" : 1,
+		"needTime" : 36685,
+		"needFetch" : 0,
+		"saveState" : 287,
+		"restoreState" : 287,
+		"isEOF" : 1,
+		"invalidates" : 0,
+		"docsExamined" : 36686,
+		"alreadyHasObj" : 0,
+		"inputStage" : {
+			"stage" : "IXSCAN",
+			"nReturned" : 36686,
+			<strong>"executionTimeMillisEstimate" : 40,</strong>
+			"works" : 36686,
+			"advanced" : 36686,
+			"needTime" : 0,
+			"needFetch" : 0,
+			"saveState" : 287,
+			"restoreState" : 287,
+			"isEOF" : 1,
+			"invalidates" : 0,
+			"keyPattern" : {
+				"lat" : 1
+			},
+			"indexName" : "lat_1",
+			"isMultiKey" : false,
+			"direction" : "forward",
+			"indexBounds" : {
+				"lat" : [
+					"[MinKey, MaxKey]"
+				]
+			},
+			"keysExamined" : 36686,
+			"dupsTested" : 0,
+			"dupsDropped" : 0,
+			"seenInvalidated" : 0,
+			"matchTested" : 0
+		}
+	}
+}</pre></li>
+</ol>
+
+</div>
+</div>
+<div class="exo">
+<h2>index sur champs numériques</h2>
+
+<h2>Objectif : tester le comportement des index sur un champ numérique</h2>
+<p>Pour cela nous allons :</p>
+<ol>
+  <li>créer uns fonction d'indexation <samp>timing(<em>requête</em>)</samp> afin de mesurer le temps réellement nécessaire à une exécution de requête,</li>
+  <li>indexer le champ <samp>lat</samp> de la collection villes,</li>
+  <li>lancer une analyse sur une requête utilisant le champ <samp>lat</samp> en recherche et en tri et mesurer le temps d'exécution de cette requête,</li>
+  <li>lancer une analyse sur une requête utilisant le champ <samp>lat</samp> en recherche et le champ <samp>lon</samp> en tri,</li>
+  <li>lancer une analyse sur une requête utilisant le champ <samp>lon</samp> en recherche et en tri,</li>
+  <li>lancer une analyse sur une requête utilisant le champ <samp>lon</samp> en recherche et le champ <samp>lat</samp> en tri,</li>
+</ol>
+<div class="solution">
+<p>la liste des instructions à produire :</p>
+<ol> 
+  <li>Création d'une fonction de chronométrage :
+    <pre class="mongo_shl"><kbd>function timing(func) {</kbd>
+<kbd class="next">var before = new Date();</kbd>    <em>// enregistrement de l'instant de départ</em>
+<kbd class="next">  func()</kbd>
+<kbd class="next">var dur = new Date() - before;</kbd>     <em>// enregistrement de la durée totale</em>
+<kbd class="next">print('durée : '+dur+' ms');</kbd>
+<kbd class="next">}</kbd></pre></li>
+
+  <li>Création de l'index sur la propriété <samp>lat</samp> :
+    <pre class="mongo_shl"><kbd>db.villes.createIndex({lat: 1}, {name: 'lat_idx'});</kbd>
+{
+	"createdCollectionAutomatically" : false,
+	"numIndexesBefore" : 2,
+	"numIndexesAfter" : 3,
+	"ok" : 1
+}</pre></li>
+
+  <li>Analyse d'une requête sur le critère de <samp>lat</samp> :
+    <pre class="mongo_shl"><kbd>db.villes.find({lat: {$gte: 45}}).sort({lat: 1}).explain("executionStats").executionStats.executionTimeMillis;</kbd>
+22
+<em>// mesure par exécution de la requête</em>
+<kbd>timing(function() {
+  var curseur = db.villes.find({lat: {$gte: 45}}).sort({lat: 1});
+  print(curseur.next().nom);
+})</kbd>
+Arsac
+durée : 1 ms</pre></li>
+
+  <li>Analyse d'une requête sur le critère de <samp>lat</samp> triée sur <samp>lon</samp> :
+    <pre class="mongo_shl"><kbd>db.villes.find({lat: {$gte: 45}}).sort({lon: 1}).explain("executionStats").executionStats.executionTimeMillis;</kbd>
+160
+<em>// mesure par exécution de la requête</em>
+<kbd>timing(function() {</kbd>
+<kbd class="next">  var curseur = db.villes.find({lat: {$gte: 45}}).sort({lon: 1});</kbd>
+<kbd class="next">  print(curseur.next().nom);</kbd>
+<kbd class="next">})</kbd>
+Ouessant
+durée : 116 ms</pre></li>
+
+  <li>Analyse d'une requête sur le critère de <samp>lon</samp> :
+    <pre class="mongo_shl"><kbd>db.villes.find({lon: {$gte: 2}}).sort({lon: 1}).explain("executionStats").executionStats.executionTimeMillis;</kbd>
+103
+<em>// mesure par exécution de la requête</em>
+<kbd>timing(function() {</kbd>
+<kbd class="next">  var curseur = db.villes.find({lon: {$gte: 2}}).sort({lon: 1});</kbd>
+<kbd class="next">  print(curseur.next().nom);</kbd>
+<kbd class="next">})</kbd>
+Ailly-le-Haut-Clocher
+durée : 123 ms</pre></li>
+
+  <li>Analyse d'une requête sur le critère de <samp>lon</samp> triée sur <samp>lat</samp> :
+    <pre class="mongo_shl"><kbd>db.villes.find({lon: {$gte: 2}}).sort({lat: 1}).explain("executionStats").executionStats.executionTimeMillis;</kbd>
+81
+<em>// mesure par exécution de la requête</em>
+<kbd>timing(function() {</kbd>
+<kbd class="next">  var curseur = db.villes.find({lon: {$gte: 2}}).sort({lat: 1});</kbd>
+<kbd class="next">  print(curseur.next().nom);</kbd>
+<kbd class="next">})</kbd>
+Saint-Joseph
+durée : 1 ms</pre></li>
+</ol>
+
+</div>
+</div>
+<div class="exo">
+<h2>recherche en mode texte indexé</h2>
+
+<h2>Objectif : tester la recherche en mode texte naturel</h2>
+<p>Pour cela nous allons :</p>
+<ol>
+  <li>indexer le champ <samp>nom</samp> de la collection villes en mode <samp>text</samp>,</li>
+  <li>lancer une requête afin d'obtenir les villes dont le nom contient les mots <samp>marie</samp>, <samp>pierre</samp> ou <samp>jean</samp>
+    mais pas le mot <samp>saint</samp> triées selon la pertinence du résultat,</li>
+  <li>lancer une analyse de cette requête.</li>
+</ol>
+<div class="solution">
+<p>la liste des instructions à produire :</p>
+<ol> 
+  <li>Création de l'index sur la propriété <samp>nom</samp> :
+    <pre class="mongo_shl"><kbd>db.villes.createIndex({nom: 'text'}, {name: 'nom_textidx', default_language: 'french'});</kbd>
+{
+	"createdCollectionAutomatically" : false,
+	"numIndexesBefore" : 1,
+	"numIndexesAfter" : 2,
+	"ok" : 1
+}</pre></li>
+
+  <li>Requête en mode texte des villes dont le nom contient les mots <samp>marie</samp>, <samp>pierre</samp> ou <samp>jean</samp> mais pas le mot <samp>saint</samp>
+    triées selon la pertinence du résultat :
+    <pre class="mongo_shl"><kbd>db.villes.find(
+    {$text: {$search: '-saint marie pierre jean'}},
+    {pertinence: {$meta: 'textScore'}, nom: 1, cp:1, _id:0}
+  ).sort({pertinence:{$meta: 'textScore'}});</kbd>
+{ "nom" : "Aux Marais", "cp" : "60000", "pertinence" : 1 }
+{ "nom" : "La Pierre", "cp" : "38570", "pertinence" : 1 }
+{ "nom" : "Les Mars", "cp" : "23700", "pertinence" : 1 }
+{ "nom" : "Marant", "cp" : "62170", "pertinence" : 1 }
+{ "nom" : "Marie", "cp" : "06420", "pertinence" : 1 }
+{ "nom" : "Mars", "cp" : "07320", "pertinence" : 1 }
+{ "nom" : "Mars", "cp" : "30120", "pertinence" : 1 }
+{ "nom" : "Mars", "cp" : "42750", "pertinence" : 1 }
+{ "nom" : "Pierres", "cp" : "14410", "pertinence" : 1 }
+<em>...</em></pre></li>
+
+  <li>Analyse de la requête précédente :
+    <pre class="mongo_shl"><kbd>db.villes.find(
+    {$text: {$search: '-saint marie pierre jean'}},
+    {pertinence: {$meta: 'textScore'}, nom: 1, cp:1, _id:0}
+  ).sort({pertinence:{$meta: 'textScore'}}).explain("executionStats");</kbd>
+{
+	"queryPlanner" : {
+		"plannerVersion" : 1,
+		"namespace" : "geo_france.villes",
+		"indexFilterSet" : false,
+		"parsedQuery" : {
+			"$text" : {
+				"$search" : "-saint marie pierre jean",
+				"$language" : ""
+			}
+		},
+		"winningPlan" : {
+			"stage" : "PROJECTION",
+			"transformBy" : {
+				"pertinence" : {
+					"$meta" : "textScore"
+				},
+				"nom" : 1,
+				"cp" : 1,
+				"_id" : 0
+			},
+			"inputStage" : {
+				"stage" : "SORT",
+				"sortPattern" : {
+					"pertinence" : {
+						"$meta" : "textScore"
+					}
+				},
+				"inputStage" : {
+					"stage" : "TEXT",
+					"indexPrefix" : {
+						
+					},
+					"indexName" : "mom_textidx",
+					"parsedTextQuery" : {
+						"terms" : [
+							"mar",
+							"pierr",
+							"jean"
+						],
+						"negatedTerms" : [
+							"saint"
+						],
+						"phrases" : [ ],
+						"negatedPhrases" : [ ]
+					}
+				}
+			}
+		},
+		"rejectedPlans" : [ ]
+	},
+	"executionStats" : {
+		"executionSuccess" : true,
+		"nReturned" : 50,
+		"executionTimeMillis" : 4,
+		"totalKeysExamined" : 480,
+		"totalDocsExamined" : 478,
+		"executionStages" : {
+			"stage" : "PROJECTION",
+			"nReturned" : 50,
+			"executionTimeMillisEstimate" : 0,
+			"works" : 1015,
+			"advanced" : 50,
+			"needTime" : 964,
+			"needFetch" : 0,
+			"saveState" : 7,
+			"restoreState" : 7,
+			"isEOF" : 1,
+			"invalidates" : 0,
+			"transformBy" : {
+				"pertinence" : {
+					"$meta" : "textScore"
+				},
+				"nom" : 1,
+				"cp" : 1,
+				"_id" : 0
+			},
+			"inputStage" : {
+				"stage" : "SORT",
+				"nReturned" : 50,
+				"executionTimeMillisEstimate" : 0,
+				"works" : 1015,
+				"advanced" : 50,
+				"needTime" : 963,
+				"needFetch" : 0,
+				"saveState" : 7,
+				"restoreState" : 7,
+				"isEOF" : 1,
+				"invalidates" : 0,
+				"sortPattern" : {
+					"pertinence" : {
+						"$meta" : "textScore"
+					}
+				},
+				"memUsage" : 6030,
+				"memLimit" : 33554432,
+				"inputStage" : {
+					"stage" : "TEXT",
+					"nReturned" : 50,
+					"executionTimeMillisEstimate" : 0,
+					"works" : 963,
+					"advanced" : 50,
+					"needTime" : 912,
+					"needFetch" : 0,
+					"saveState" : 7,
+					"restoreState" : 7,
+					"isEOF" : 1,
+					"invalidates" : 0,
+					"keysExamined" : 480,
+					"docsExamined" : 478,
+					"indexPrefix" : {
+						
+					},
+					"indexName" : "mom_textidx",
+					"parsedTextQuery" : {
+						"terms" : [
+							"mar",
+							"pierr",
+							"jean"
+						],
+						"negatedTerms" : [
+							"saint"
+						],
+						"phrases" : [ ],
+						"negatedPhrases" : [ ]
+					}
+				}
+			}
+		}
+	},
+	"serverInfo" : {
+		"host" : "ysengrin",
+		"port" : 27017,
+		"version" : "3.0.3",
+		"gitVersion" : "b40106b36eecd1b4407eb1ad1af6bc60593c6105"
+	},
+	"ok" : 1
+}</pre></li>
+</ol>
+
+</div>
+</div>
+<div class="validator">
+  pages validées par
+  <a href="http://validator.w3.org/check?uri=referer"><img src="images/valid_xhtml.svg" alt="Valid XHTML 1.1" title="xHTML 1.1 validé !"/></a>
+  <a href="http://jigsaw.w3.org/css-validator/check/referer"><img src="images/valid_css.svg" alt="CSS validé !" title="CSS validé !"/></a>
+</div>
+</body>
+</html>

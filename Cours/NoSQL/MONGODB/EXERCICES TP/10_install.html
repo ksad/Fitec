@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>Exercices sur la mise en place de MongoDB</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="css/code.css"/>
+  <link rel="stylesheet" type="text/css" media="screen" href="css/screen.css"/>
+  <link rel="stylesheet" type="text/css" media="print" href="css/print.css"/>
+  <link rel="stylesheet" type="text/css" href="css/style.css"/>
+  <link rel="alternate stylesheet" type="text/css" media="screen" title="question" href="css/question.css"/>
+  <link rel="stylesheet" type="text/css" media="screen" title="solution" href="css/solution.css"/>
+  <link type="image/x-icon" rel="shortcut icon" href="images/icon.png"/>
+  
+</head>
+<body><h1>Exercices de mise en place d'une base de données <em>MongoDB</em></h1>
+
+<blockquote>
+  <p>Dans cette série d'exercices nous allons mettre en place une base de données <em>MongoDB</em>.</p>
+  <p>Pour cela nous allons :</p>
+  <ul>
+    <li>installer le système de base de données <em>MongoDB</em>,</li>
+    <li>créer une base de données,</li>
+    <li>tester la connexion sur celle-ci par la commande <kbd>mongo</kbd>.</li>
+  </ul>
+</blockquote>
+<div class="exo">
+<h2>Installation de <em>MongDB</em> sous <em>Linux</em></h2>
+
+<h2>Objectif : installer et configurer <em>MongoDB</em> sur un système <em>Linux</em> afin de pouvoir l'utiliser pour la suite des exercices</h2>
+<p>Dans cet exercice nous allons donc :</p>
+<ol>
+  <li>installer <em>MongoDB</em>,</li>
+  <li>le configurer afin que celui-ci soit accessible par le réseau local et par l'interface <q>loopback</q> (127.0.0.1) sur le port 27017 (port par défaut),</li>
+  <li>lancer le service <kbd>mongod</kbd>,</li>
+</ol>
+<div class="solution">
+<ol>
+  <li>Pour installer le gestionnaire de bases de données <em>MongoDB</em> :<ul>
+    <li>sous <em>Debian</em> :
+      <pre class="shl_root"><kbd>apt-get install mongodb-org</kbd></pre></li>
+    <li>sous <em>RedHat</em> :
+      d'abord créer le fichier <samp>/etc/yum.repos.d/mongodb.repos</samp> dont le contenu est :
+      <pre class="file">[mongodb-org-3.0]
+name=MongoDB Repository
+baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/3.0/x86_64/
+gpgcheck=0
+enabled=1</pre>
+      puis lancer l'installation par <kbd>yum</kbd> :
+      <pre class="shl_root"><kbd>yum install mongodb-org</kbd></pre></li></ul></li>
+
+  <li>Pour modifier sa configuration afin de le rendre accessible via le réseau il faut modifier la configuration présente dans le fichier
+    <samp>/etc/mongodb.conf</samp> afin que les lignes ci dessous soient présentes :
+    <pre class="file">bind_ip = 127.0.0.1,10.0.0.60  <em># 10.0.0.60 est l'adresse de mon interface réseau obtenue par <kbd>ifconfig eth0</kbd></em>
+port = 27017</pre></li>
+  <li>Pour terminer il faut lancer le service <kbd>mongod</kbd> :
+    <pre class="shl_root"><kbd>service mongod start</kbd>
+Starting mongod (via systemctl):</pre></li>
+
+</ol>
+<blockquote>
+<p>Dans le cas ou le système envoi des erreurs du type :</p>
+<pre>
+ Server has startup warnings: 
+2015-08-24T19:59:56.191+0200 I CONTROL  [initandlisten] 
+2015-08-24T19:59:56.191+0200 I CONTROL  [initandlisten] ** WARNING: /sys/kernel/mm/transparent_hugepage/enabled is 'always'.
+2015-08-24T19:59:56.191+0200 I CONTROL  [initandlisten] **        We suggest setting it to 'never'
+2015-08-24T19:59:56.191+0200 I CONTROL  [initandlisten] 
+2015-08-24T19:59:56.191+0200 I CONTROL  [initandlisten] ** WARNING: /sys/kernel/mm/transparent_hugepage/defrag is 'always'.
+2015-08-24T19:59:56.191+0200 I CONTROL  [initandlisten] **        We suggest setting it to 'never'
+2015-08-24T19:59:56.191+0200 I CONTROL  [initandlisten] 
+2015-08-24T19:59:56.191+0200 I CONTROL  [initandlisten] ** WARNING: soft rlimits too low. rlimits set to 30282 processes, 64000 files. Number of processes should be at least 32000 : 0.5 times number of files.
+2015-08-24T19:59:56.191+0200 I CONTROL  [initandlisten]</pre>
+<p>il faudra :</p>
+<ol>
+  <li>désactiver les modes <q>hugepage</q> du kernel par les instructions suivantes :
+    <pre class="shl_root"><kbd>echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled</kbd>
+<kbd>echo never &gt; /sys/kernel/mm/transparent_hugepage/defrag</kbd></pre></li>
+  <li>enlever les limites du nombre de processus par la création du fichier <samp>/etc/security/limits.d/99-mongodb-nproc.conf</samp> contenant :
+    <pre class="file" title="/etc/security/limits.d/99-mongodb-nproc.conf">mongod soft nproc unlimited
+mongod hard nproc unlimited</pre></li>
+  <li>redémarrer le service par la commande :
+    <pre class="shl_root"><kbd>service mongod restart</kbd>
+stopping mongod: [<span class="info">ok</span>]
+starting mongod: [<span class="info">ok</span>]</pre></li>
+</ol>
+</blockquote>
+
+</div>
+</div>
+<div class="exo">
+<h2>Installation de <em>MongDB</em> sous <em>Windows</em> </h2>
+
+<h2>Objectif : installer et configurer <em>MongoDB</em> sur un système <em>Windows</em> afin de pouvoir l'utiliser pour la suite des exercices</h2>
+<p>Dans cet exercice nous allons donc :</p>
+<ol>
+  <li>installer <em>MongoDB</em>,</li>
+  <li>le configurer afin que celui-ci soit accessible par le réseau local et par l'interface <q>loopback</q> (127.0.0.1) sur le port 27017 (port par défaut),</li>
+</ol>
+<div class="solution">
+<ol>
+  <li>Pour installer le gestionnaire de bases de données <em>MongoDB</em> il faut :<ol>
+    <li> récupérer le fichier d'installation <a href="https://fastdl.mongodb.org/win32/mongodb-win32-x86_64-2008plus-ssl-3.0.3-signed.msi?_ga=1.253023433.1912502233.1427907118">fastdl.mongodb.org/win32/mongodb-win32-x86_64-2008plus-ssl-3.0.3-signed.msi?_ga=1.253023433.1912502233.1427907118</a>,</li>
+    <li>l'installer,</li>
+    <li>créer un répertoire de travail par exemple <samp>C:\MongoDB</samp>,</li>
+    <li>créer un répertoire de destination des journaux par exemple <samp>C:\MongoDB\logs</samp>,</li>
+    <li>créer un répertoire de destination des données par exemple <samp>C:\MongoDB\data</samp>,</li></ol></li>
+
+
+  <li>Pour modifier sa configuration afin de le rendre accessible via le réseau il faut :<ol>
+    <li>créer le fichier de configuration dont le nom est par exemple <samp>C:\MongoDB\mongod.conf</samp> et dont le contenu est :
+      <pre class="file">dbpath="C:\MongoDB\data"
+logpath="C:\MongoDB\log\mongod.log"
+bind_ip = 127.0.0.1,10.0.0.60  <em># 10.0.0.60 est l'adresse de mon interface réseau obtenue par <kbd>ifconfig eth0</kbd></em>
+port = 27017</pre></li>
+    <li>créer le service permettant de lancer le le serveur <kbd>mongod</kbd> avec les paramètres en correspondance avec les éléments créés :
+      <pre class="dos"><kbd>sc.exe create MongoDB binPath= "\"C:\Program Files\MongoDB/Server\3.0\bin\mongod.exe\" --service --config=\"C:\MongoDB\mongod.conf\"" DisplayName= "MongoDB" start= "auto"</kbd>
+Création du service MongoDB réussie</pre></li>
+    <li>lancer le service :
+      <pre class="dos"><kbd>net start MongoDB</kbd>
+Le service MongoDB démarre
+Le service MongoDB à démarré</pre></li></ol></li>
+</ol>
+
+</div>
+</div>
+<div class="exo">
+<h2>Création et destruction de bases de données</h2>
+
+<h2>Objectif : créer une nouvelle base de données à utiliser pour la suite des exercices</h2>
+<p>Dans cet exercice nous allons tester la création et la destruction de bases de données. Pour cela :</p>
+<ol>
+  <li>nous créerons :<ul>
+      <li>la base de données <samp>test_mongo</samp>,</li>
+      <li>la base de données <samp>test_extra</samp>,</li></ul></li>
+  <li>nous afficherons la liste des bases de données présentes sur le système,</li>
+  <li>nous supprimerons la base de données <samp>test_extra</samp>,</li>
+  <li>nous afficherons une nouvelle fois la liste des bases de données présentes.</li>
+</ol>
+<div class="solution">
+<ol>
+  <li>Pour créer la base de données :<ul>
+      <li>pour <samp>test_mongo</samp> lancer la commande :
+	<pre class="mongo_shl"><kbd>use test_mongo</kbd> <em>// la connexion suffit à rendre la création possible</em>
+MongoDB shell version: 2.0.6
+connecting to: test_mongo
+<kbd title="&gt; ">show dbs</kbd> <em>// affichage des bases de données existantes. <samp>test_mongo</samp> n'existe pas encore !</em>
+local	(empty)
+<kbd title="&gt; ">db.test_obj.insert({_id: 1})</kbd> <em>// La création d'un objet suffit pour créer la base de données</em>
+<kbd title="&gt; ">db.test_obj.drop()</kbd> <em>// destruction de l'objet précédemment créé</em>
+true
+<kbd title="&gt; ">show dbs</kbd> <em>// affichage des bases de données existantes. <samp>test_mongo</samp> existe bien</em>
+local      (empty)
+test_mongo 0.203125GB</pre></li>
+      <li>pour <samp>test_extra</samp> lancer la commande :
+	<pre class="shl"><kbd>mongo test_extra --eval 'db.test_obj.insert({_id: 1})'</kbd>
+MongoDB shell version: 2.0.6
+connecting to: test_extra
+WriteResult({ "nInserted" : 1 })</pre></li></ul></li>
+
+  <li>Pour afficher les bases de données présentes :
+      <pre class="shl"><kbd>echo show dbs | mongo</kbd>
+local      (empty)
+test_mongo 0.203125GB
+test_extra 0.203125GB</pre></li>
+
+  <li>Pour supprimer la base <samp>test_extra</samp> :
+<pre class="shl"><kbd>mongo test_extra --eval 'db.dropDatabase()'</kbd>
+[object bson_object]</pre></li>
+
+  <li>Pour afficher la liste des bases de données :
+<pre class="shl"><kbd>echo show dbs | mongo</kbd>
+local      (empty)
+test_mongo 0.203125GB</pre></li>
+
+</ol>
+
+</div>
+</div>
+<div class="validator">
+  pages validées par
+  <a href="http://validator.w3.org/check?uri=referer"><img src="images/valid_xhtml.svg" alt="Valid XHTML 1.1" title="xHTML 1.1 validé !"/></a>
+  <a href="http://jigsaw.w3.org/css-validator/check/referer"><img src="images/valid_css.svg" alt="CSS validé !" title="CSS validé !"/></a>
+</div>
+</body>
+</html>

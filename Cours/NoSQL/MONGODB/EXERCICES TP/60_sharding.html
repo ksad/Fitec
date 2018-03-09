@@ -1,0 +1,280 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>Exercices sur le sharding</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="css/code.css"/>
+  <link rel="stylesheet" type="text/css" media="screen" href="css/screen.css"/>
+  <link rel="stylesheet" type="text/css" media="print" href="css/print.css"/>
+  <link rel="stylesheet" type="text/css" href="css/style.css"/>
+  <link rel="alternate stylesheet" type="text/css" media="screen" title="question" href="css/question.css"/>
+  <link rel="stylesheet" type="text/css" media="screen" title="solution" href="css/solution.css"/>
+  <link type="image/x-icon" rel="shortcut icon" href="images/icon.png"/>
+  
+</head>
+<body><h1>Exercices sur le sharding</h1>
+<div class="exo">
+<h2>mise en place du serveur de configuration</h2>
+
+<h2>Objectif : configurer et lancer un serveur de configuration destiné au <q>sharding</q></h2>
+<p>Le premier élément nécessaire pour réaliser du <q>sharding</q> est un serveur de configuration, nous allons donc :</p>
+<ol>
+  <li>préparer le répertoire de destination des données en <samp>~/mongo/shard/config_1</samp>,</li>
+  <li>préparer le fichier de configuration <samp>~/mongo/shard/config_1/mongod.conf</samp> afin d'indiquer au serveur :<ul>
+      <li>le chemin des données dans <samp>~/mongo/shard/config_1/mongodb_data</samp>,</li>
+      <li>le chemin des journaux <samp>~/mongo/log/mongod_config_1.log</samp>,</li>
+      <li>l'adresse <em>IP</em> et le port <em>TCP</em> qui seront <samp>10.0.0.6:27010</samp>,</li>
+      <li>la configuration soit <strong>conforme à celle d'une instance de configuration</strong>,</li></ul></li>
+  <li>lancer ensuite manuellement ce serveur.</li>
+</ol>
+<div class="solution">
+<p>la liste des commandes à exécuter :</p>
+<ol> 
+  <li>création du répertoire :
+    <pre class="shl"><kbd>mkdir -p ~/mongo/shard/config_1/mongodb_data</kbd></pre></li>
+
+  <li>Configuration du serveur de configuration à partir du fichier <samp>~/mongo/shard/config_1/mongod.conf</samp> dont le contenu est :
+    <pre class="file" title="~/mongo/shard/config_1/mongod.conf"><em># répertoire des données</em>
+dbpath=/home/usera/mongo/shard/config_1/mongodb_data
+
+<em># fichier des logs en mode insertion</em>
+logpath=/home/usera/mongo/log/mongod_config_1.log
+logappend=true
+
+<em># adresse IP et port TCP d'écoute</em>
+bind_ip = 10.0.0.6
+port = 27010
+
+<em># pour indiquer que c'est une configuration de sharding</em>
+<strong>configsvr=true</strong></pre></li>
+
+  <li>lancement du serveur :
+    <pre class="shl"><kbd>mongod --config ~/mongo/shard/config_1/mongod.conf &amp;</kbd></pre></li>
+</ol>
+
+</div>
+</div>
+<div class="exo">
+<h2>activation du routeur de <q>sharding</q></h2>
+
+<h2>Objectif : Activer le routage du sharding par le serveur <kbd>mongos</kbd></h2>
+<p>Maintenant que le routeur est opérationnel nous allons activer le routage vers les <q>shards</q>. Pour cela nous allons :</p>
+<ol>
+  <li>préparer le répertoire de destination de la configuration en <samp>~/mongo/shard/routeur_1</samp>,</li>
+  <li>préparer le fichier de configuration <samp>~/mongo/shard/routeur_1/mongos.conf</samp> afin d'indiquer au serveur :<ul>
+      <li>le chemin des journaux <samp>~/mongo/log/routeur_1.log</samp>,</li>
+      <li>l'adresse <em>IP</em> et le port <em>TCP</em> qui est <samp>10.0.0.6:27014</samp>,</li>
+      <li>l'adresse <em>IP</em> et le port <em>TCP</em> du serveur de configuration qui est <samp>10.0.0.6:27010</samp>,</li></ul></li>
+  <li>lancer ensuite manuellement ce serveur,</li>
+  <li>lancer une connexion sur ce serveur puis afficher les informations de son état du point de vue du <q>sharding</q>.</li>
+</ol>
+<div class="solution">
+<p>la liste des commandes à exécuter :</p>
+<ol> 
+  <li>création du répertoire :
+    <pre class="shl"><kbd>mkdir -p ~/mongo/shard/routeur_1</kbd></pre></li>
+
+  <li>Configuration du serveur de configuration à partir du fichier <samp>~/mongo/shard/routeur_1/mongos.conf</samp> dont le contenu est :
+    <pre class="file" title="~/mongo/shard/routeur_1/mongos.conf"><em># fichier des journaux en mode insertion</em>
+logpath=/home/usera/mongo/log/mongos_routeur_1.log
+logappend=true
+
+<em># adresse IP et port TCP d'écoute</em>
+bind_ip = 10.0.0.6
+port = 27014
+
+<em># adresse IP et port TCP du serveur de configuration</em>
+<strong>configdb = 10.0.0.6:27010</strong></pre></li>
+
+  <li>lancement du serveur :
+    <pre class="shl"><kbd>mongos --config ~/mongo/shard/routeur_1/mongos.conf &amp;</kbd></pre></li>
+
+  <li>connexion à ce serveur :
+    <pre class="shl"><kbd>mongo 10.0.0.6:27014</kbd></pre>
+    puis affichage de son état :
+    <pre class="mongo_shl"><kbd>sh.status();</kbd>
+--- Sharding Status --- 
+  sharding version: {
+	"_id" : 1,
+	"minCompatibleVersion" : 5,
+	"currentVersion" : 6,
+	"clusterId" : ObjectId("5570da76d9f2a2cab19a50b3")
+}
+  shards:
+  balancer:
+	Currently enabled:  yes
+	Currently running:  no
+	Failed balancer rounds in last 5 attempts:  0
+	Migration Results for the last 24 hours: 
+		No recent migrations
+  databases:
+	{  "_id" : "admin",  "partitioned" : false,  "primary" : "config" }</pre></li>
+</ol>
+
+</div>
+</div>
+<div class="exo">
+<h2>ajouter les <q>shards</q> au cluster de <q>sharding</q></h2>
+
+<h2>Objectif : Apporter les <q>shards</q> au système préparé en tant que <q>cluster de sharding</q></h2>
+<p>Pour que notre système soit opérationnel il faut lui donner des serveurs <q>shard</q>. Nous allons donc effectuer les opérations suivantes :</p>
+<ol>
+  <li>se connecter au routeur précédemment configuré puis :<ul>
+    <li>lui donner :<ul>
+      <li>le <q>replica set</q> configuré en <samp>10.0.0.6:27021</samp>,</li>
+      <li>un autre serveur en mode non répliqué à configurer en <samp>10.0.0.6:27031</samp> (en s'inspirant de ce qui a été fait pour
+	la génération des serveurs répliqués),</li></ul></li>
+    <li>afficher son état,</li>
+    <li>lancer une requête sur une collection existante (injectée lors de la série d'exercices précédents).</li></ul></li>
+</ol>
+<div class="solution">
+<p>la liste des commandes à exécuter :</p>
+<ul> 
+  <li>connexion sur le routeur :
+    <pre class="shl"><kbd>mongo 10.0.0.6:27014</kbd></pre>
+    puis à partir du <q>mongo shell</q> :<ol>
+      <li>Activation des <q>shards</q> :
+    <pre class="mongo_shl"><em>Activation du premier serveur de <q>shards</q> en mode répliqué</em>
+<kbd>sh.addShard("replica_1/10.0.0.6:27021");</kbd>
+{ "shardAdded" : "replica_1", "ok" : 1 }
+<em>Activation du second serveur de <q>shards</q> non répliqué</em>
+<kbd>sh.addShard("10.0.0.6:27031")</kbd>
+{ "shardAdded" : "shard0000", "ok" : 1 }</pre></li>
+
+      <li>affichage de l'état :
+	<pre class="mongo_shl"><kbd>sh.status();</kbd>
+--- Sharding Status --- 
+  sharding version: {
+	"_id" : 1,
+	"minCompatibleVersion" : 5,
+	"currentVersion" : 6,
+	"clusterId" : ObjectId("5570da76d9f2a2cab19a50b3")
+}
+  shards:
+	{  "_id" : "replica_1",  "host" : "replica_1/10.0.0.6:27021,10.0.0.6:27022,10.0.0.6:27023,10.0.0.6:27024" }
+	{  "_id" : "shard0000",  "host" : "10.0.0.6:27031" }
+  balancer:
+	Currently enabled:  yes
+	Currently running:  no
+	Failed balancer rounds in last 5 attempts:  0
+	Migration Results for the last 24 hours: 
+		No recent migrations
+  databases:
+	{  "_id" : "admin",  "partitioned" : false,  "primary" : "config" }
+{  "_id" : "geo_france",  "partitioned" : false,  "primary" : "replica_1" }</pre></li>
+
+      <li>affichage de l'état :
+	<pre class="mongo_shl"><kbd>use geo_france;</kbd>
+<kbd>db.villes.find();</kbd>
+{ "_id" : 1, "_id_dept" : 62, "nom" : "Aast", "cp" : "64460", "pop" : 163, "lat" : 43.283333, "lon" : -0.083333 }
+{ "_id" : 2, "_id_dept" : 53, "nom" : "Abainville", "cp" : "55130", "pop" : 305, "lat" : 48.5333, "lon" : 5.5 }
+{ "_id" : 3, "_id_dept" : 57, "nom" : "Abancourt", "cp" : "59268", "lat" : 50.234722, "lon" : 3.2141666 }
+{ "_id" : 4, "_id_dept" : 58, "nom" : "Abancourt", "cp" : "60220", "pop" : 582, "lat" : 49.7, "lon" : 1.766667 }
+{ "_id" : 5, "_id_dept" : 52, "nom" : "Abaucourt", "cp" : "54610", "pop" : 273, "lat" : 48.9, "lon" : 6.25 }
+<em>...</em></pre></li></ol></li>
+</ul>
+
+</div>
+</div>
+<div class="exo">
+<h2>activer le <q>shard</q></h2>
+
+<h2>Objectif : Appliquer le <em>shard</em> à une collection et manipuler le stockage des données</h2>
+<p>Pour tester le comportement du <q>shard</q> nous allons effectuer les opérations suivantes :</p>
+<ol>
+  <li>se connecter au routeur précédemment configuré puis :<ul>
+    <li>activer le <samp>shard</samp> sur la base de données <samp>geo_france</samp>,</li>
+    <li>activer le <samp>shard</samp> sur la collection <samp>villes</samp> de la base de données <samp>geo_france</samp> en utilisant l'index <samp>_id</samp>,</li>
+    <li>afficher l'état du système,</li>
+    <li>couper les données en trois morceaux distincts,</li>
+    <li>afficher une nouvelle fois l'état du système,</li>
+    <li>activer la répartition automatique des données,</li>
+    <li>afficher une dernière fois l'état du système.</li></ul></li>
+</ol>
+<div class="solution">
+<p>la liste des commandes à exécuter :</p>
+<ul> 
+  <li>connexion sur le routeur :
+    <pre class="shl"><kbd>mongo 10.0.0.6:27014</kbd></pre>
+    puis à partir du <q>mongo shell</q> :<ol>
+
+      <li>Activation du <q>sharding</q> à la base de données <samp>geo_france</samp> :
+    <pre class="mongo_shl"><kbd>sh.enableSharding("geo_france");</kbd>
+{ "ok" : 1 }</pre></li>
+
+      <li>Activation du <q>sharding</q> à la collection <samp>villes</samp> de la base de données <samp>geo_france</samp> :
+    <pre class="mongo_shl"><kbd>sh.shardCollection("geo_france.villes", {_id: 1});</kbd>
+{ "ok" : 1 }</pre></li>
+
+      <li>affichage de l'état :
+	<pre class="mongo_shl"><kbd>sh.status();</kbd>
+</pre></li>
+
+      <li>coupure des données en 3 morceaux :
+    <pre class="mongo_shl"><kbd>sh.splitAt("geo_france.villes", {_id: 24000})</kbd>
+{ "ok" : 1 }
+<kbd>sh.splitAt("geo_france.villes", {_id: 12000})</kbd>
+{ "ok" : 1 }</pre></li>
+
+      <li>affichage de l'état :
+	<pre class="mongo_shl"><kbd>sh.status();</kbd>
+</pre></li>
+
+      <li>activation de l'équilibrage automatique :
+	<pre class="mongo_shl"><kbd>sh.startBalancer(100,10000);</kbd></pre></li>
+
+      <li>affichage de l'état :
+	<pre class="mongo_shl"><kbd>sh.status();</kbd>
+</pre></li></ol></li>
+
+</ul>
+
+</div>
+</div>
+<div class="exo">
+<h2>insérer des valeurs dans une collection</h2>
+
+<h2>Objectif : tester le comportement lors de l'insertion massive de données</h2>
+<p>Pour tester en volume notre système nous allons effectuer les opérations suivantes :</p>
+<ul>
+  <li>se connecter au routeur précédemment configuré puis :<ol>
+    <li>modifier la taille des <q>shards</q> à 1MB,</li>
+    <li>lancer une boucle assurant l'insertion de 1000000 entrées supplémentaires dans le collection <samp>villes</samp>,</li>
+    <li>vérifier la répartition obtenue.</li></ol></li>
+</ul>
+<div class="solution">
+<p>la liste des commandes à exécuter :</p>
+<ul> 
+  <li>connexion sur le routeur :
+    <pre class="shl"><kbd>mongo 10.0.0.6:27014</kbd></pre>
+    puis à partir du <q>mongo shell</q> :<ol>
+      
+      <li>modification de la taille des <q>shards</q> :
+    <pre class="mongo_shl"><kbd>use geo_france</kbd>
+<kbd>db.settings.save({_id:"chunksize", value: 1});</kbd>
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })</pre></li>
+
+      <li>insertion de 1000000 valeurs à la collection <samp>villes</samp> :
+    <pre class="mongo_shl"><kbd>for (var i=0; i&lt;1000000; i++) {</kbd>
+<kbd class="next">  db.villes.insert({</kbd>
+<kbd class="next">    _id: i+40000,</kbd>
+<kbd class="next">    nom: "valeur de test "+i,</kbd>
+<kbd class="next">    hash: hex_md5("_"+i),</kbd>
+<kbd class="next">    date: new Date()</kbd>
+<kbd class="next">  });</kbd>
+<kbd class="next">}</kbd>
+<kbd>db.villes.count()</kbd></pre></li>
+
+      <li>vérification de la répartition dans les <q>shards</q> :
+	<pre class="mongo_shl"><kbd>sh.status();</kbd></pre></li></ol></li>
+</ul>
+
+</div>
+</div>
+<div class="validator">
+  pages validées par
+  <a href="http://validator.w3.org/check?uri=referer"><img src="images/valid_xhtml.svg" alt="Valid XHTML 1.1" title="xHTML 1.1 validé !"/></a>
+  <a href="http://jigsaw.w3.org/css-validator/check/referer"><img src="images/valid_css.svg" alt="CSS validé !" title="CSS validé !"/></a>
+</div>
+</body>
+</html>

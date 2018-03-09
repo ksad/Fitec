@@ -1,0 +1,27 @@
+pre.mongo_shl kbd::before {content:'> '}
+pre.mongo_shl kbd.next::before {content:'... '}
+pre.mongo_shl kbd.parenth::before {content:'> '}
+pre.mongo_shl kbd.string::before {content:'> '}
+
+pre.mongo_shl kbd[title]::before,
+pre.shl kbd[title]::before,
+pre.shl_root kbd[title]::before {content:attr(title)}
+
+pre.shl kbd.sql::before,
+pre.shl_root kbd.sql::before,
+pre.shl_root kbd.noroot::before,
+pre.shl kbd::before {content:'prompt> '}
+
+pre.shl kbd.next::before {content:'> '}
+
+pre.sql kbd.root::before,
+pre.shl kbd.root::before,
+pre.shl_root kbd::before {content:'prompt# '}
+pre.shl_root kbd.next::before {content:'> '}
+
+pre.dos kbd::before {content:'DOS> '}
+pre.dos kbd.next::before {content:'---> '}
+
+pre.shl::before, pre.shl_root::before {content:'shell'}
+pre.dos::before {content:'DOS'}
+pre.mongo_shl::before {content:'Mongo SHELL'}

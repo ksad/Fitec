@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>Exercices sur la sauvegarde et la restauration de MongoDB</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="css/code.css"/>
+  <link rel="stylesheet" type="text/css" media="screen" href="css/screen.css"/>
+  <link rel="stylesheet" type="text/css" media="print" href="css/print.css"/>
+  <link rel="stylesheet" type="text/css" href="css/style.css"/>
+  <link rel="alternate stylesheet" type="text/css" media="screen" title="question" href="css/question.css"/>
+  <link rel="stylesheet" type="text/css" media="screen" title="solution" href="css/solution.css"/>
+  <link type="image/x-icon" rel="shortcut icon" href="images/icon.png"/>
+  
+</head>
+<body><h1>Exercices sur la sauvegarde et la restauration de MongoDB</h1>
+<div class="exo">
+<h2>effectuer une sauvegarde de toutes les données présentes dans le serveur <em>MongoDB</em></h2>
+
+
+<h2>Objectif : tester la sauvegarde.</h2>
+<p>réaliser à l'aide de la commande <kbd>mongodump</kbd> la sauvegarde de l'ensemble des éléments de la base de données.
+  Le répertoire de destination des sauvegardes sera <samp>/tmp/mongodump_test</samp></p>
+<div class="solution">
+<p>la commande à lancer est :</p>
+<pre class="shl"><kbd>mongodump --out /tmp/mongodump_test</kbd>
+2015-06-14T20:26:22.203+0200	writing geo_france.departements to /tmp/mongodump_test/geo_france/departements.bson
+2015-06-14T20:26:22.204+0200	writing geo_france_mongo.departements to /tmp/mongodump_test/geo_france_mongo/departements.bson
+2015-06-14T20:26:22.205+0200	writing geo_france_mongo.villes to /tmp/mongodump_test/geo_france_mongo/villes.bson
+2015-06-14T20:26:22.205+0200	writing geo_france.villes to /tmp/mongodump_test/geo_france/villes.bson
+<em>...</em>
+2015-06-14T20:26:22.422+0200	done dumping test.mes_addresses</pre>
+
+</div>
+</div>
+<div class="exo">
+<h2>effectuer une restauration partielle les données à partir d'une sauvegarde</h2>
+
+
+<h2>Objectif : tester la restauration.</h2>
+<p>Pour cela nous allons :</p>
+<ol>
+  <li>détruire la base de données <samp>geo_france</samp>,</li>
+  <li>réaliser à l'aide de la commande <kbd>mongorestore</kbd> sa remise en place à partir de l'archive réalisée précédemment  dans le répertoire
+    <samp>/tmp/mongodump_test</samp></li>
+</ol>
+<div class="solution">
+<p>les commandes à lancer sont :</p>
+<ol>
+  <li>pour détruire <samp>geo_france</samp> :
+    <pre class="mongo_shl"><kbd>use geo_france;</kbd>
+<kbd>db.dropDatabase();</kbd>
+{ "dropped" : "geo_france", "ok" : 1 }</pre></li>
+
+  <li>pour remettre en place la base de données à partir de <samp>/tmp/mongodump_test</samp> :
+    <pre class="shl"><kbd>mongorestore --db geo_france /tmp/mongodump_test/geo_france</kbd>
+2015-06-14T20:53:10.062+0200	building a list of collections to restore from /tmp/toto/test dir
+2015-06-14T20:53:10.063+0200	reading metadata file from /tmp/toto/test/villes.metadata.json
+2015-06-14T20:53:10.063+0200	restoring test.villes from file /tmp/toto/test/villes.bson
+<em>...</em>
+done</pre></li>
+</ol>
+
+</div>
+</div>
+<div class="exo">
+<h2>effectuer une exportation au format CSV</h2>
+
+
+<h2>Objectif : tester la conversion collection vers <em>CVS</em>.</h2>
+<p>Pour cela nous allons utiliser la commande <kbd>mongoexport</kbd> dans les buts suivants :</p>
+<ol>
+  <li>d'extraire de la collection <samp>regions</samp> les champs <samp>nom,_id</samp> (dans cet ordre) et d'envoyer le résultat dans le fichier
+    <samp>/tmp/regions.csv</samp>, afficher ensuit son contenu,</li>
+  <li>d'extraire de la collection <samp>departements</samp> les champs <samp>nom,code</samp> en ne conservant que ceux dont le code commence par <samp>3</samp>
+    et d'afficher le résultat à l'écran,</li>
+</ol>
+<div class="solution">
+<p>les commandes à lancer sont :</p>
+<ol>
+  <li>pour afficher la liste des régions au format <em>CSV</em> :
+    <pre class="shl"><kbd>mongoexport --db geo_france --type csv --fields nom,_id --collection regions --out /tmp/regions.csv</kbd>
+2015-06-14T21:04:40.989+0200	connected to: localhost
+2015-06-14T21:04:40.991+0200	exported 23 records
+<kbd>cat /tmp/regions.csv</kbd>
+nom,_id
+Aquitaine,1
+Auvergne,2
+Bourgogne,3
+Bretagne,4
+Centre,5
+Champagne Ardenne,6
+Corse,7
+DOM/TOM,8
+Franche Comté,9
+Ile de France,10
+Languedoc Roussillon,11
+Limousin,12
+Lorraine,13
+Midi Pyrénées,14
+Nord Pas de Calais,15
+Haute Normandie,17
+Pays de la Loire,18
+Picardie,19
+Poitou Charentes,20
+Provence Alpes Côte d'azur,21
+Rhône Alpes,22
+Alsace,23
+Basse-Normandie,24</pre></li>
+
+  <li>pour afficher la liste des départements commençant par <samp>3</samp> au format <em>CSV</em> :
+    <pre class="shl"><kbd>mongoexport --db geo_france --type csv --fields nom,_id --collection departements --query '{code: {$regex: "^3"}}'</kbd>
+2015-06-14T21:20:22.323+0200	connected to: localhost
+nom,_id
+Gard,28
+Haute Garonne,29
+Gers,30
+Gironde,31
+Hérault,32
+Ille et Vilaine,33
+Indre,34
+Indre et Loire,35
+Isère,36
+Jura,37
+2015-06-14T21:20:22.324+0200	exported 10 records</pre></li>
+</ol>
+
+</div>
+</div>
+<div class="exo">
+<h2>effectuer une restauration partielle les données à partir d'un fichier <em>CSV</em></h2>
+
+
+<h2>Objectif : tester l'importation en mode <em>CSV</em>.</h2>
+<p>Pour cela nous allons :</p>
+<ol>
+  <li>détruire la collection <samp>regions</samp> base de données <samp>geo_france</samp>,</li>
+  <li>réaliser à l'aide de la commande <kbd>mongoimport</kbd> sa remise en place à partir du fichier <samp>/tmp/regions.csv</samp> réalisé dans l'exercice précédent.</li>
+</ol>
+<div class="solution">
+<p>les commandes à lancer sont :</p>
+<ol>
+  <li>pour détruire <samp>geo_france.regions</samp> :
+    <pre class="mongo_shl"><kbd>use geo_france;</kbd>
+<kbd>db.regions.drop();</kbd>
+true</pre></li>
+
+  <li>pour remettre en place la collection <samp>regions</samp> à partir de <samp>/tmp/regions.csv</samp> :
+    <pre class="shl"><kbd>mongoimport --db geo_france --collection regions --type csv --headerline --file /tmp/regions.csv</kbd>
+2015-06-14T21:36:16.632+0200	connected to: localhost
+2015-06-14T21:36:16.635+0200	imported 23 documents</pre></li>
+</ol>
+
+</div>
+</div>
+<div class="validator">
+  pages validées par
+  <a href="http://validator.w3.org/check?uri=referer"><img src="images/valid_xhtml.svg" alt="Valid XHTML 1.1" title="xHTML 1.1 validé !"/></a>
+  <a href="http://jigsaw.w3.org/css-validator/check/referer"><img src="images/valid_css.svg" alt="CSS validé !" title="CSS validé !"/></a>
+</div>
+</body>
+</html>

@@ -1,0 +1,378 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>Exercices sur les rôles et les droits</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="css/code.css"/>
+  <link rel="stylesheet" type="text/css" media="screen" href="css/screen.css"/>
+  <link rel="stylesheet" type="text/css" media="print" href="css/print.css"/>
+  <link rel="stylesheet" type="text/css" href="css/style.css"/>
+  <link rel="alternate stylesheet" type="text/css" media="screen" title="question" href="css/question.css"/>
+  <link rel="stylesheet" type="text/css" media="screen" title="solution" href="css/solution.css"/>
+  <link type="image/x-icon" rel="shortcut icon" href="images/icon.png"/>
+  
+</head>
+<body><h1>Exercices sur les rôles et les droits</h1>
+<div class="exo">
+<h2>Création d'un administrateur</h2>
+
+<h2>Objectif : Activer l'authentification et créer un utilisateur ayant tous les droits</h2>
+<p>Pour cela il est demandé de :</p>
+<ol>
+  <li>modifier le fichier de configuration afin que l'authentification soit activée puis activer cette configuration,</li>
+  <li>créer l'utilisateur <samp>monRoot</samp> une fois la base de donnée relancée,</li>
+  <li>tester le comportement de l'authentification.</li>
+</ol>
+
+<div class="solution">
+<p>la liste des instructions à produire :</p>
+<ol>
+  <li>modification du fichier de configuration du fichier <samp>/etc/mongodb.conf</samp> par insertion de la ligne :
+    <pre class="file" title="/etc/mongodb.conf"><em>...</em>
+<em>...</em>
+auth = true</pre>
+    puis redémarrage du service :
+    <pre class="shl_root"><kbd>service mongodb restart</kbd></pre></li>
+
+  <li>connexion sur le serveur en <samp>localhost</samp> :
+    <pre class="shl"><kbd>mongo</kbd>
+MongoDB shell version: 3.0.3
+connecting to: 127.0.0.1:27077/test</pre>
+    puis dans la console <em>mongo shell</em> :
+    <pre class="mongo_shl"><kbd>use admin;</kbd>
+switched to db admin
+<kbd>db.createUser({user: "monRoot", pwd: "topSecret", roles: ['root']});</kbd>
+Successfully added user: { "user" : "monRoot", "roles" : [ "root" ] }</pre></li>
+
+  <li>vérification du comportement :
+    <pre class="mongo_shl"><em>// tentative d'une commande exigeant l'authentification</em>
+<kbd>db.serverCmdLineOpts();</kbd>
+<span class="error">{
+	"ok" : 0,
+	"errmsg" : "not authorized on admin to execute command { getCmdLineOpts: 1.0 }",
+	"code" : 13
+}</span>
+<em>// réalisation de l'authentification</em>
+<kbd>db.auth('monRoot', 'topSecret');</kbd>
+1
+<em>// nouvelle tentative de la commande précédemment en échec</em>
+<kbd>db.serverCmdLineOpts();</kbd>
+<span class="info">{
+	"argv" : [
+		"/usr/bin/mongod",
+		"--unixSocketPrefix=/var/run/mongodb",
+		"--config",
+		"/etc/mongodb.conf",
+		"run"
+	],
+	"parsed" : {
+		"command" : [
+			"run"
+		],
+		"config" : "/etc/mongodb.conf",
+		"net" : {
+			"port" : 27077,
+			"unixDomainSocket" : {
+				"pathPrefix" : "/var/run/mongodb"
+			}
+		},
+		"security" : {
+			"authorization" : "enabled"
+		},
+		"storage" : {
+			"dbPath" : "/var/lib/mongodb",
+			"journal" : {
+				"enabled" : true
+			}
+		},
+		"systemLog" : {
+			"destination" : "file",
+			"logAppend" : true,
+			"path" : "/var/log/mongodb/mongodb.log"
+		}
+	},
+	"ok" : 1
+}</span></pre></li>
+  
+</ol>
+
+</div>
+</div>
+<div class="exo">
+<h2>Création d'un <q>invité</q></h2>
+
+<h2>Objectif : Créer un utilisateur public sans contrôle d'accès</h2>
+<p>Maintenant que notre base de donnée est fermé nous voulons :</p>
+<ol>
+  <li>créer un utilisateur <samp>invite</samp> ayant uniquement les accès en lecture sur toutes les bases de données présentes et à venir,</li>
+  <li>tester le comportement de l'authentification avec cet utilisateur</li>
+  <li>afficher tous les utilisateurs présents sur le système.</li>
+</ol>
+
+<div class="solution">
+<p>la liste des instructions à produire :</p>
+<ol>
+  <li>connexion sur le serveur en étant authentifié :
+    <pre class="shl"><kbd>mongo -u monRoot -p topSecret localhost/admin</kbd>
+MongoDB shell version: 3.0.3</pre>
+    puis dans la console <em>mongo shell</em> :
+    <pre class="mongo_shl"><kbd>db.createUser({user: 'invite', pwd: 'secret', roles: ['readAnyDatabase']});</kbd>
+Successfully added user: { "user" : "invite", "roles" : [ "readAnyDatabase" ] }</pre></li>
+
+  <li>vérification du comportement :
+    <pre class="mongo_shl"><em>// réalisation de l'authentification en "invite"</em>
+<kbd>db.auth('invite', 'secret');</kbd>
+1
+<em>passage dans une base de données utilisateur</em>
+<kbd>use geo_france;</kbd>
+switched to db geo_france
+<em>// tentative d'écriture en échec</em>
+<kbd>db.villes.insert({nom: 'moi'});</kbd>
+<span class="error">WriteResult({
+	"writeError" : {
+		"code" : 13,
+		"errmsg" : "not authorized on geo_france to execute command { insert: \"villes\", documents: [ { _id: ObjectId('5576fd47f1f5908e61df9f17'), nom: \"moi\" } ], ordered: true }"
+	}
+})</span>
+<em>// tentative de lecture autorisée</em>
+<kbd>db.villes.find();</kbd>
+<span class="info">
+{ "_id" : 1, "_id_dept" : 62, "nom" : "Aast", "cp" : "64460", "pop" : 163, "lat" : 43.283333, "lon" : -0.083333 }
+{ "_id" : 2, "_id_dept" : 53, "nom" : "Abainville", "cp" : "55130", "pop" : 305, "lat" : 48.5333, "lon" : 5.5 }
+{ "_id" : 3, "_id_dept" : 57, "nom" : "Abancourt", "cp" : "59268", "lat" : 50.234722, "lon" : 3.2141666 }
+{ "_id" : 4, "_id_dept" : 58, "nom" : "Abancourt", "cp" : "60220", "pop" : 582, "lat" : 49.7, "lon" : 1.766667 }
+{ "_id" : 5, "_id_dept" : 52, "nom" : "Abaucourt", "cp" : "54610", "pop" : 273, "lat" : 48.9, "lon" : 6.25 }
+{ "_id" : 6, "_id_dept" : 53, "nom" : "Abaucourt-Hautecourt", "cp" : "55400", "lat" : 49.1978, "lon" : 5.5406 }
+{ "_id" : 7, "_id_dept" : 23, "nom" : "Abbans-Dessous", "cp" : "25320", "pop" : 151, "lat" : 47.1333, "lon" : 5.88333 }
+{ "_id" : 8, "_id_dept" : 23, "nom" : "Abbans-Dessus", "cp" : "25440", "pop" : 242, "lat" : 47.1167, "lon" : 5.88333 }
+<em>...</em></span></pre></li>
+
+  <li>affichage de l'ensemble des utilisateurs :
+    <pre class="mongo_shl"><kbd>db.getSisterDB('admin').system.users.find();</kbd>
+{ "_id" : "admin.monRoot", "user" : "monRoot", "db" : "admin", "credentials" : { "SCRAM-SHA-1" : { "iterationCount" : 10000, "salt" : "GCU3Sy9ojwvfKxm5GFpj4g==", "storedKey" : "ScQFn8dO7UH6uwM6ZJmmKAGyCkA=", "serverKey" : "ELPF9+9U49T2NHiAedsXmKeFnYU=" } }, "roles" : [ { "role" : "root", "db" : "admin" } ] }
+{ "_id" : "admin.invite", "user" : "invite", "db" : "admin", "credentials" : { "SCRAM-SHA-1" : { "iterationCount" : 10000, "salt" : "1C0iaQfFKQ+r5EkeNHErdw==", "storedKey" : "TmiDtl4IGygOMVY62ESFoU2+TT0=", "serverKey" : "cT2JPlk5sI6Fu37GUB/pbXOyGNA=" } }, "roles" : [ { "role" : "readAnyDatabase", "db" : "admin" } ] }</pre></li>
+</ol>
+
+</div>
+</div>
+<div class="exo">
+<h2>Création d'un rôle spécifique</h2>
+
+<h2>Objectif : Créer un utilisateur disposant d'un rôle particulier</h2>
+<p>Pour donner des droit spécifiques il faut créer un rôle. Nous allons donc :</p>
+<ol>
+  <li>créer un rôle <samp>tout_sur_villes</samp> permettant de réaliser toutes les opérations sur la collection <samp>villes</samp> de la base de données
+    <samp>geo_france</samp>,</li>
+  <li>créer un utilisateur <samp>jules</samp> disposant de ce rôle ainsi que des droits de lecture sur toutes les collections de la base de données
+    <samp>geo_france</samp>,</li>
+  <li>tester le comportement de l'authentification avec cet utilisateur,</li>
+  <li>afficher les rôles présents sur le système,</li>
+  <li>afficher l'utilisateur et les rôles utilisés pour la connexion courante.</li>
+</ol>
+
+<div class="solution">
+<p>la liste des instructions à produire :</p>
+<ol>
+  <li>connexion sur le serveur en étant authentifié :
+    <pre class="shl"><kbd>mongo -u monRoot -p topSecret localhost/admin</kbd>
+MongoDB shell version: 3.0.3</pre>
+    puis dans la console <em>mongo shell</em> :
+    <pre class="mongo_shl"><kbd>db.runCommand({ createRole: "tout_sur_villes",</kbd>
+<kbd class="next"> privileges: [</kbd>
+<kbd class="next">   {</kbd>
+<kbd class="next">     resource: { db: "geo_france",</kbd>
+<kbd class="next">                 collection: "villes" },</kbd>
+<kbd class="next">     actions: [ "find", "update", "insert", "remove" ]</kbd>
+<kbd class="next">   }</kbd>
+<kbd class="next"> ],</kbd>
+<kbd class="next">roles: [{role: "read", db: "geo_france"}]});</kbd>
+{ "ok" : 1 }</pre></li>
+
+  <li>pour la création de l'utilisateur <samp>jules</samp> saisir dans la console <em>mongo shell</em> :
+    <pre class="mongo_shl"><kbd>db.createUser({user: 'jules', pwd: 'cesar', roles: ['tout_sur_villes']});</kbd>
+Successfully added user: { "user" : "jules", "roles" : [ "tout_sur_villes" ] }</pre></li>
+
+  <li>vérification du comportement :
+    <pre class="mongo_shl"><em>// réalisation de l'authentification en "invite"</em>
+<kbd>db.auth('jules', 'cesar');</kbd>
+1
+<em>passage dans la base de données <samp>geo_france</samp></em>
+<kbd>use geo_france;</kbd>
+switched to db geo_france
+<em>// tentative d'écriture en échec</em>
+<kbd>db.departements.insert({lieu: 'Chez moi'});</kbd>
+<span class="error">WriteResult({
+	"writeError" : {
+		"code" : 13,
+		"errmsg" : "not authorized on geo_france to execute command { insert: \"departements\", documents: [ { _id: ObjectId('5581be8e3c69b4e4685e98bf'), lieu: \"Chez moi\" } ], ordered: true }"
+	}
+})</span>
+<em>// tentative de lecture autorisée</em>
+<kbd>db.villes.insert({lieu: 'quelque part'});</kbd>
+<span class="info">WriteResult({ "nInserted" : 1 })</span></pre></li>
+
+  <li>affichage de l'ensemble des rôles :
+    <pre class="mongo_shl"><kbd>db.auth('monRoot', 'topSecret');</kbd>
+1
+<kbd>db.getSisterDB('admin').getRoles();</kbd>
+[
+	{
+		"role" : "tout_sur_villes",
+		"db" : "admin",
+		"isBuiltin" : false,
+		"roles" : [
+			{
+				"role" : "read",
+				"db" : "admin"
+			}
+		],
+		"inheritedRoles" : [
+			{
+				"role" : "read",
+				"db" : "admin"
+			}
+		]
+	}
+]</pre></li>
+
+  <li>affichage de l'utilisateur et des rôles de la connexion courante :
+    <pre class="mongo_shl"><kbd>db.runCommand({connectionStatus : 1});</kbd>
+{
+	"authInfo" : {
+		"authenticatedUsers" : [
+			{
+				"user" : "jules",
+				"db" : "admin"
+			}
+		],
+		"authenticatedUserRoles" : [
+			{
+				"role" : "read",
+				"db" : "geo_france"
+			},
+			{
+				"role" : "tout_sur_villes",
+				"db" : "admin"
+			}
+		]
+	},
+	"ok" : 1
+}</pre></li>
+</ol>
+
+</div>
+</div>
+<div class="exo">
+<h2>Création d'un rôle dans une base de données spécifique</h2>
+
+<h2>Objectif : Créer un utilisateur dans la base de données <samp>geo_france</samp> et disposant des droits d'écriture</h2>
+<p>Pour cela nous allons :</p>
+<ol>
+  <li>créer le rôle <samp>lucien</samp> dans la base de données <samp>geo_france</samp> en lui attribuant le rôle <samp>readWrite</samp>,</li>
+  <li>vérifier le comportement par :<ul>
+      <li>connexion en utilisant ce rôle,</li>
+      <li>tentative d'écriture dans <samp>geo_france</samp>,</li>
+      <li>tentative d'écriture dans <samp>test</samp>,</li></ul></li>
+  <li>afficher les rôles présents sur le système,</li>
+  <li>afficher l'utilisateur et les rôles utilisés pour la connexion courante.</li>
+</ol>
+
+<div class="solution">
+<p>la liste des instructions à produire :</p>
+<ol>
+  <li>connexion sur le serveur en étant authentifié :
+    <pre class="shl"><kbd>mongo -u monRoot -p topSecret localhost/admin</kbd>
+MongoDB shell version: 3.0.3</pre>
+    puis dans la console <em>mongo shell</em> :
+    <pre class="mongo_shl"><kbd>db.getSiblingDB('geo_france').runCommand({</kbd>
+<kbd class="next"> createUser: "lucien",</kbd>
+<kbd class="next"> roles: ['readWrite'],</kbd>
+<kbd class="next"> pwd: 'lulu'</kbd>
+<kbd class="next">});</kbd>
+{ "ok" : 1 }</pre></li>
+
+  <li>vérification du comportement :
+    <pre class="mongo_shl"><em>// réalisation de la déconnexion en administrateur</em>
+<kbd>db.logout();</kbd>
+{ "ok" : 1 }
+<em>// réalisation de l'authentification en "lucien"</em>
+<kbd>db.getSiblingDB('geo_france').auth('lucien', 'lulu');</kbd>
+1
+<em>passage dans la base de données <samp>geo_france</samp></em>
+<kbd>use geo_france;</kbd>
+switched to db geo_france
+<em>// tentative d'écriture en succès</em>
+<kbd>db.departements.insert({lieu: 'Chez moi'});</kbd>
+<span class="info">WriteResult({
+WriteResult({ "nInserted" : 1 });</span>
+<em>passage dans la base de données <samp>test</samp></em>
+<kbd>use test;</kbd>
+switched to test
+<em>// tentative d'écriture interdite</em>
+<kbd>db.villes.insert({lieu: 'Chez moi'});</kbd>
+<span class="error">WriteResult({
+	"writeError" : {
+		"code" : 13,
+		"errmsg" : "not authorized on test to execute command { insert: \"departements\", documents: [ { _id: ObjectId('55cd2e4021d44fb5a8a91621'), lieu: \"Chez moi\" } ], ordered: true }"
+	}
+})</span></pre></li>
+
+  <li>affichage de l'ensemble des utilisateurs :
+    <pre class="mongo_shl"><kbd>db.auth('monRoot', 'topSecret');</kbd>
+1
+<kbd>db.getSisterDB('admin').getUsers();</kbd>
+[
+	{
+		"_id" : "admin.monRoot",
+		"user" : "monRoot",
+		"db" : "admin",
+		"roles" : [
+			{
+				"role" : "root",
+				"db" : "admin"
+			}
+		]
+	},
+	{
+		"_id" : "admin.jules",
+		"user" : "jules",
+		"db" : "admin",
+		"roles" : [
+			{
+				"role" : "tout_sur_villes",
+				"db" : "admin"
+			}
+		]
+	}
+]]</pre></li>
+
+  <li>affichage de l'utilisateur et des rôles de la connexion courante :
+    <pre class="mongo_shl"><kbd>db.runCommand({connectionStatus : 1});</kbd>
+{
+	"authInfo" : {
+		"authenticatedUsers" : [
+			{
+				"user" : "lucien",
+				"db" : "geo_france"
+			}
+		],
+		"authenticatedUserRoles" : [
+			{
+				"role" : "readWrite",
+				"db" : "geo_france"
+			}
+		]
+	},
+	"ok" : 1
+}</pre></li>
+</ol>
+
+</div>
+</div>
+<div class="validator">
+  pages validées par
+  <a href="http://validator.w3.org/check?uri=referer"><img src="images/valid_xhtml.svg" alt="Valid XHTML 1.1" title="xHTML 1.1 validé !"/></a>
+  <a href="http://jigsaw.w3.org/css-validator/check/referer"><img src="images/valid_css.svg" alt="CSS validé !" title="CSS validé !"/></a>
+</div>
+</body>
+</html>

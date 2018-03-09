@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>Explication sur le fonctionnement des exercices</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="css/code.css"/>
+  <link rel="stylesheet" type="text/css" media="screen" href="css/screen.css"/>
+  <link rel="stylesheet" type="text/css" media="print" href="css/print.css"/>
+  <link rel="stylesheet" type="text/css" href="css/style.css"/>
+  <link rel="stylesheet" type="text/css" media="screen" title="question" href="css/question.css"/>
+  <link rel="alternate stylesheet" type="text/css" media="screen" title="solution" href="css/solution.css"/>
+  <link type="image/x-icon" rel="shortcut icon" href="images/icon.png"/>
+  
+</head>
+<body><h1>Explications sur le fonctionnement des exercices</h1>
+
+<blockquote>
+  <h2>L'affichage en mode <q>question/solution</q></h2>
+  <p>Dans ce système les exercices sont présentés sous deux formes :</p>
+  <ul>
+    <li>la forme <q>question</q> qui est utilisée par défaut lors de la formation :<ul>
+      <li>les <span class="show_question">questions apparaissent en noir sur fond clair</span> au dessus d'un cadre opaque,</li>
+      <li>la solution est dans le cadre opaque qui devient visible tant que l'on clique sur celui-ci,</li></ul></li>
+    <li>la forme <q>solution</q> qui est utilisée par défaut <strong>dans l'archive fournie à la fin de la formation</strong> :<ul>
+      <li>les <span class="show_solution">questions apparaissent en blanc sur fond sombre</span> au dessus d'un cadre destiné à la solution,</li>
+      <li>la solution est souvent affichée en accord avec la colorisation syntaxique du langage utilisé. Dans certains cas des liens
+	menant sur des sites publics apparaissent sur les noms de fonctions comme par exemple la fonction <a href="http://php.net/printf"><kbd>printf()</kbd></a> du langage
+	<em>PHP</em> conduisant à <a href="http://php.net/printf">php.net/printf</a>.</li></ul></li>
+  </ul>
+  <p>Le passage du mode <q>question</q> au mode <q>solution</q> se fait par choix de feuilles de style <em>CSS</em> alternatives, et <strong>tout navigateur civilisé</strong>
+    doit permettre un accès à ce choix :</p>
+  <ul>
+    <li>sous <em>firefox</em> il faut aller dans la barre des menus, puis <kbd>affichage➤style de la page➤solution</kbd>,</li>
+    <li>sous <em>chrome</em> il faut installer l'extension
+      <a href="https://chrome.google.com/webstore/detail/alt-css/deaodobjfcolfhkecnnghdclnlmfjdje"><em>alt-css</em> ici présente</a>.</li>
+  </ul>
+  
+  <h2>Le chiffrement des solutions</h2>
+  <p>Afin que la solution ne soit pas trop facile d'accès, celle ci peut être <strong>chiffrée côté serveur</strong> par l'algorithme <em>rot13</em> connu aussi sous le nom
+    de <a href="http://fr.wikipedia.org/wiki/Chiffrement_par_d%C3%A9calage">chiffre de César</a> car il fut utilisé par <q>Jules César</q> dans ses correspondances secrètes.<br/>
+    Dans ce cas vous avez trois possibilités :</p>
+  <ul>
+    <li>attendre que la solution soit déchiffrée,</li>
+    <li>ou bien tenter vous même le déchiffrement <em>rot13</em>,</li>
+    <li>ou mieux, <strong>résoudre vous-même l'exercice !</strong></li>
+  </ul>
+</blockquote>
+
+<h2>Les exercices présentés ci dessous donnent quelques autres explications...</h2>
+<div class="exo">
+<h2>Premier aperçu d'un exercice</h2>
+
+<h2>Quelques informations complémentaires sur la forme des solutions présentées</h2>
+<ul>
+  <li>Nous allons pour la plupart du temps écrire du code. Pour de telles solutions plusieurs contextes se présentent :<ul>
+    <li>contexte d'envoi de commande en console <em>root</em>. La commande apparaîtra alors sous cette forme
+      (<strong>observer le prompt et le cadre dans sa partie supérieure</strong>) :
+	<pre class="shl_root"><kbd>service httpd restart</kbd>
+* Restarting web server apache2</pre>
+	La partie commande est <samp class="shl_root"><kbd>de cette forme</kbd></samp> tandis que le résultat est <code>de cette forme</code>.<br/> 
+	La commande peut apparaître écrite dans plusieurs lignes consécutives, ceci n'est pas un problème pour les opérations de copier/coller car
+	<strong>les éléments de prompt ne font pas partie du contenu du document</strong> (du moins en utilisant un navigateur civilisé). Pour vous
+	en rendre compte essayez de copier/coller le contenu de la commande ci-dessous :
+	<pre class="shl_root"><kbd>ls -la /usr\</kbd>
+<kbd class="next"> /bin\</kbd>
+<kbd class="next"> /etc\</kbd>
+<kbd class="next"> var</kbd>
+drwxr-xr-x  11 root root  4096 août  22  2014 .
+drwxr-xr-x  33 root root  4096 mars  28 10:52 ..
+drwxr-xr-x   2 root root 69632 juin   7 02:36 bin
+drwxr-xr-x   2 root root  4096 août  22  2014 games
+drwxr-xr-x  41 root root 16384 juin   7 00:31 include
+<em>...</em></pre></li>
+      
+      <li>contexte d'envoi de commandes en console <em>utilisateur</em>. La commande apparaîtra alors sous cette forme
+	(<strong>ici aussi il faut observer le prompt</strong>) :
+	<pre class="shl"><kbd>ls -la ~</kbd>
+drwx------ 42 root root       4096 juin   7 01:49 .
+drwxr-xr-x 33 root root       4096 mars  28 10:52 ..
+-rw-------  1 root root      59761 juin   8 01:08 .bash_history
+-rw-r--r--  1 root root       3106 févr. 20  2014 .bashrc
+drwxr-xr-x  3 root root       4096 août  22  2013 build
+drwxr-xr-x  2 root root       4096 avril 26 14:21 Bureau
+drwx------  7 root root       4096 avril 26 14:21 .cache
+<em>...</em></pre></li>
+
+      <li>contexte d'envoi de commandes en console <em>mongo shell</em>. La commande apparaîtra alors sous cette forme
+	(<strong>et là aussi il faut observer le prompt et le cadre dans sa partie supérieure</strong>) :
+	<pre class="mongo_shl"><kbd>db.mes_adresses.find(</kbd>
+<kbd class="next">         {ville: {$in: ['Paris','Lyon']}},</kbd>
+<kbd class="next">         {_id: 0,ville: 0})</kbd>
+{ "place" : "Garibaldi" }
+{ "boulevard" : "SaintGermain" }</pre></li>
+      
+    <li>contexte de modification de fichier appliqué à <samp>/etc/mongod/test.conf</samp>
+      (le contour du cadre est différent et sa bordure supérieure indique qu'il s'agit d'un fichier) :
+    <pre class="file" title="/etc/mongod/test.conf">bind_ip = 127.0.0.1,<strong>10.0.0.60</strong> <em># la dernière adresse est celle de notre machine</em>
+<strong>port = 27019</strong>   <em># cette valeur est modifiée</em>
+auth=false <em># valeur par défaut</em></pre></li></ul></li>
+</ul>
+</div>
+<div class="exo">
+<h2>aperçu d'un exercice en mode <q>question</q></h2>
+
+<p>Voici un exercice tel que présenté avec une question et une solution sans chiffrement.</p>
+<ul>
+  <li>Afficher les bases de données actuellement présentes sur le système.</li>
+</ul>
+<div class="solution">
+<p>Pour cela lancer la commande :</p>
+<ul>
+  <li>Soit depuis le <em>shell</em> :
+    <pre class="shl"><kbd>mongo --eval "</kbd>
+<kbd class="next">   var res=db.adminCommand('listDatabases').databases;</kbd>
+<kbd class="next">   for (var i=0;i&lt;res.length;i++) print(res[i].name)"</kbd>
+MongoDB shell version: 3.0.3
+connecting to: test
+test2
+local
+test_mongo
+geo_france
+test
+admin</pre></li>
+
+  <li>Soit depuis le <em>mongo shell</em> :
+    <pre class="mongo_shl"><kbd>show databases</kbd>
+admin       0.078GB
+geo_france  0.078GB
+local       0.078GB
+test        0.078GB
+test2       0.203GB
+test_mongo  0.203GB</pre></li>
+</ul>
+
+</div>
+</div>
+<div class="exo">
+<h2>aperçu d'un exercice en mode <q>chiffré</q></h2>
+
+<p>Voici l'exercice précédent tel que présenté avec une question et une solution avec chiffrement.</p>
+<ul>
+  <li>Afficher les bases de données actuellement présentes sur le système.</li>
+</ul>
+<div class="solution_crypt">
+<p>Cbhe pryn ynapre yn pbzznaqr :</p>
+<ul>
+  <li>Fbvg qrchvf yr <em>furyy</em> :
+    <pre class="shl"><kbd>zbatb --riny "</kbd>
+<kbd class="next">   ine erf=qo.nqzvaPbzznaq('yvfgQngnonfrf').qngnonfrf;</kbd>
+<kbd class="next">   sbe (ine v=5;v&lt;erf.yratgu;v++) cevag(erf[v].anzr)"</kbd>
+ZbatbQO furyy irefvba: 8.5.8
+pbaarpgvat gb: grfg
+grfg7
+ybpny
+grfg_zbatb
+trb_senapr
+grfg
+nqzva</pre></li>
+
+  <li>Fbvg qrchvf yr <em>zbatb furyy</em> :
+    <pre class="mongo_shl"><kbd>fubj qngnonfrf</kbd>
+nqzva       5.523TO
+trb_senapr  5.523TO
+ybpny       5.523TO
+grfg        5.523TO
+grfg7       5.758TO
+grfg_zbatb  5.758TO</pre></li>
+</ul>
+
+</div>
+</div>
+<div class="validator">
+  pages validées par
+  <a href="http://validator.w3.org/check?uri=referer"><img src="images/valid_xhtml.svg" alt="Valid XHTML 1.1" title="xHTML 1.1 validé !"/></a>
+  <a href="http://jigsaw.w3.org/css-validator/check/referer"><img src="images/valid_css.svg" alt="CSS validé !" title="CSS validé !"/></a>
+</div>
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>Exercices CRUD sur MongoDB</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="css/code.css"/>
+  <link rel="stylesheet" type="text/css" media="screen" href="css/screen.css"/>
+  <link rel="stylesheet" type="text/css" media="print" href="css/print.css"/>
+  <link rel="stylesheet" type="text/css" href="css/style.css"/>
+  <link rel="alternate stylesheet" type="text/css" media="screen" title="question" href="css/question.css"/>
+  <link rel="stylesheet" type="text/css" media="screen" title="solution" href="css/solution.css"/>
+  <link type="image/x-icon" rel="shortcut icon" href="images/icon.png"/>
+  
+</head>
+<body><h1>Exercices sur les opérations <q>CRUD</q> appliquées à <em>MongoDB</em></h1>
+<blockquote>
+  <p>Dans cette série d'exercices nous allons nous familiariser avec les opérations courantes de manipulation de données qui sont :</p>
+  <ul>
+    <li>la création de données (<q>Create</q>),</li>
+    <li>la lecture de données (<q>Read</q>),</li>
+    <li>la modification de données (<q>Update</q>),</li>
+    <li>la suppression de données (<q>Delete</q>).</li>
+  </ul>
+  <p>Pour finir nous peuplerons la base de données à partir de fichiers permettant de faire des requêtes concrètes.</p>
+</blockquote>
+<div class="exo">
+<h2>Test de la création de documents dans <em>MongoDB</em></h2>
+
+<h2>Objectif : insérer puis vérifier des enregistrements dans la base de données</h2>
+<p>Pour cela nous allons :</p>
+<ol>
+  <li>créer un premier document au sens <em>MongoDB</em>. Celui-ci sera tel que :<ol>
+    <li>il appartienne à la collection <samp>test_mongo</samp> de la base de données <samp>test</samp>,</li>
+    <li>son identité (attribut <samp>_id</samp>) sera automatiquement générée,</li>
+    <li>il possède en plus :<ul>
+      <li>un attribut <samp>nom</samp> de type textuel,</li>
+      <li>un attribut <samp>âge</samp> de type numérique entier,</li></ul></li></ol></li>
+  <li>créer un second document au sens <em>MongoDB</em>. Celui-ci sera tel que :<ol>
+    <li>il appartienne à la collection <samp>test_mongo</samp> de la base de données <samp>test</samp>,</li>
+    <li>son identité (attribut <samp>_id</samp>) soit forcée,</li>
+    <li>il possède en plus :<ul>
+      <li>un attribut <samp>nom</samp> de type textuel,</li>
+      <li>un attribut <samp>prénom</samp> de type textuel,</li>
+      <li>un attribut <samp>âge</samp> de type numérique entier,</li></ul></li></ol></li>
+  <li>vérifier le contenu de la base de données ainsi générée.</li>
+</ol>
+<div class="solution">
+<blockquote>
+  <p>Pour les opérations suivantes il faut se connecter sur la base de données. Ceci peut se faire par la commande 
+    <samp>mongo test</samp></p>
+</blockquote>
+<ol>
+  <li>Création des documents :<ul>
+    <li>premier document :
+      <pre class="mongo_shl"><kbd>db.test_mongo.insert({</kbd>
+<kbd class="next">  nom: "Souviron",</kbd>
+<kbd class="next">  âge: 57</kbd>
+<kbd class="next">});</kbd></pre></li>
+    <li>second document :
+      <pre class="mongo_shl"><kbd>db.test_mongo.insert({</kbd>
+<kbd class="next">  _id: 1,</kbd>
+<kbd class="next">  nom: "Souviron",</kbd>
+<kbd class="next">  prénom: "Marc",</kbd>
+<kbd class="next">  âge: 57.5</kbd>
+<kbd class="next">});</kbd></pre></li>
+  </ul></li>
+  <li>vérification du contenu :
+    <pre class="mongo_shl"><kbd>db.test_mongo.find();</kbd>
+{ "_id" : ObjectId("551f1bf822683427519948b0"), "nom" : "Souviron", "âge" : 57 }
+{ "_id" : 1, "nom" : "Souviron", "prénom" : "Marc", "âge" : 57.5 }</pre></li>
+</ol>
+
+</div>
+</div>
+<div class="exo">
+<h2>Test de la modification de documents dans <em>MongoDB</em></h2>
+
+<h2>Objectif : modifier puis vérifier des enregistrements dans la base de données</h2>
+<p>Pour cela nous allons :</p>
+<ol>
+  <li>modifier le premier document précédemment inséré afin que celui-ci présente :<ol>
+    <li>un attribut <samp>téléphone</samp> de type textuel,</li>
+    <li>un attribut <samp>adresse</samp> de type textuel,</li></ol></li>
+  <li>modifier le second document précédemment inséré afin que celui-ci présente :<ol>
+    <li>un attribut <samp>email</samp> de type textuel,</li>
+    <li>un attribut <samp>code postal</samp> de type entier,</li></ol></li>
+  <li>vérifier le contenu de la base de données ainsi modifiée.</li>
+</ol>
+<div class="solution">
+<blockquote>
+  <p>Pour les opérations suivantes il faut se connecter sur la base de données. Ceci peut se faire par la commande 
+    <samp>mongo test</samp></p>
+</blockquote>
+<ol>
+  <li>Modification des documents :<ul>
+    <li>premier document :
+      <pre class="mongo_shl"><kbd>db.test_mongo.update(</kbd>
+<kbd class="next"> {"âge":57},</kbd>
+<kbd class="next"> {$set: {"téléphone":"12-34-56-78-90",</kbd>
+<kbd class="next">         adresse: "12 allées de chênes"}</kbd>
+<kbd class="next"> });</kbd></pre></li>
+    <li>second document :
+      <pre class="mongo_shl"><kbd>db.test_mongo.update(</kbd>
+<kbd class="next"> {_id:1},</kbd>
+<kbd class="next"> {$set: {email: "moi@mon.domaine.net",</kbd>
+<kbd class="next">         "code postal": 31000}</kbd>
+<kbd class="next"> });</kbd></pre></li>
+  </ul></li>
+  <li>vérification du contenu :
+    <pre class="mongo_shl"><kbd>db.test_mongo.find();</kbd>
+{ "âge" : 57, "_id" : ObjectId("551f20d764cf4fa48036bd20"), "adresse" : "12 allées de chênes", "nom" : "Souviron", "téléphone" : "12-34-56-78-90" }
+{ "âge" : 57.5, "_id" : 1, "code postal" : 31000, "email" : "moi@mon.domaine.net", "nom" : "Souviron", "prénom" : "Marc" }</pre></li>
+</ol>
+
+</div>
+</div>
+<div class="exo">
+<h2>Test de la suppression de documents dans <em>MongoDB</em></h2>
+
+<h2>Objectif : supprimer des documents puis vérifier le contenu de la base de données</h2>
+<p>Pour cela nous allons :</p>
+<ol>
+  <li>supprimer le premier document précédemment inséré,</li>
+  <li>vérifier le contenu de la collection <samp>test_mongo</samp>,</li>
+  <li>supprimer le second document précédemment inséré,</li>
+  <li>vérifier le contenu de la base de données par affichage des collections et de leur contenu,</li>
+  <li>supprimer la collection <samp>test_mongo</samp>,</li>
+  <li>vérifier à nouveau le contenu de la base de données.</li>
+</ol>
+<div class="solution">
+<blockquote>
+  <p>Pour les opérations suivantes il faut se connecter sur la base de données. Ceci peut se faire par la commande 
+    <samp>mongo test</samp></p>
+</blockquote>
+<ol>
+  <li>Suppression du premier document :
+      <pre class="mongo_shl"><kbd>db.test_mongo.remove({"âge": 57});</kbd></pre></li>
+  <li>vérification du contenu :
+    <pre class="mongo_shl"><kbd>db.test_mongo.find();</kbd>
+{ "âge" : 57.5, "_id" : 1, "code postal" : 31000, "email" : "moi@mon.domaine.net", "nom" : "Souviron", "prénom" : "Marc" }</pre></li>
+  <li>Suppression du second document :
+      <pre class="mongo_shl"><kbd>db.test_mongo.remove({_id: 1});</kbd></pre></li>
+  <li>vérification du contenu :
+    <pre class="mongo_shl"><kbd>db.test_mongo.find();</kbd> <em>// aucun résultat car collection vide</em>
+<kbd>show collections</kbd>
+system.indexes
+test_mongo <em>// mais la collection existe toujours</em></pre></li>
+  <li>Suppression de la collection <samp>test_mongo</samp> :
+    <pre class="mongo_shl"><kbd>db.test_mongo.drop();</kbd>
+true</pre></li>
+  <li>vérification de la liste des collections présentes :
+    <pre class="mongo_shl"><kbd>show collections</kbd>
+system.indexes</pre></li>
+</ol>
+
+</div>
+</div>
+<div class="exo">
+<h2>Création et exploitation d'une base de données grandeur nature</h2>
+
+<h2>Objectif : préparer une base de données <em>MongoDB</em> afin de réaliser des requêtes concrètes</h2>
+<p>nous disposons de 4 fichiers contenant des informations sur le découpage administratif français :</p>
+<ul>
+  <li>le fichier <a href="20_populate/collection_villes.js">collection_villes.js</a> fournit la collection <samp>villes</samp> qui contient les champs <ol>
+      <li><samp>_id</samp> correspondant à un identifiant unique,</li>
+      <li><samp>_id_dept</samp> correspondant à l'identifiant du département ou se situe la ville,</li>
+      <li><samp>nom</samp> correspondant au nom de la ville,</li>
+      <li><samp>cp</samp> correspondant à l'ensemble des codes postaux de la ville séparés par des <samp>-</samp> si nécessaire,</li>
+      <li><samp>pop</samp> correspondant à la population de la commune en nombre d'habitants,</li>
+      <li><samp>lat</samp> correspondant à la latitude de la ville exprimée en degrés (représentation décimale),</li>
+      <li><samp>lon</samp> correspondant à la longitude de la ville exprimée en degrés (représentation décimale),</li></ol></li>
+  <li>le fichier <a href="20_populate/collection_departements.js">collection_departements.js</a> fournit la collection <samp>departements</samp> qui
+    contient les champs :<ol>
+      <li><samp>_id</samp> correspondant à un identifiant unique,</li>
+      <li><samp>_id_region</samp> correspondant à l'identifiant de la région,</li>
+      <li><samp>code</samp> correspondant au numéro du département,</li>
+      <li><samp>nom</samp> correspondant au nom du département,</li></ol></li>
+  <li>le fichier <a href="20_populate/collection_regions.js">collection_regions.js</a> fournit la collection <samp>regions</samp> qui contient les champs :<ol>
+      <li><samp>_id</samp> correspondant à l'identifiant unique de la région,</li>
+      <li><samp>nom</samp> correspondant au nom de la région.</li></ol></li>
+  <li>le fichier <a href="20_populate/collection_contours.js">collection_contours.js</a> fournit la collection <samp>contours</samp> qui contient les contours
+    de la France continentale et de la Corse décrit par les champs suivants :<ol>
+      <li><samp>_id</samp> de type entier correspondant à un identifiant du contour :<ul>
+	  <li>1 → France continentale,</li>
+	  <li>2 → Corse,</li></ul></li>
+      <li><samp>nom</samp> de type texte correspondant au nom du contour,</li>
+      <li><samp>poly</samp> de type tableau de tableaux de flottants correspondant à l'ensemble des sommets du polygone du contour renseignés par des coordonnées
+	sous forme de couples <samp>[<em>longitude</em>, <em>latitude</em>]</samp>.</li></ol></li>
+  <li>Un dernier fichier <a href="20_populate/collection_departements_contours.js">collection_departements_contours.js</a> ajoute à la collection
+    <samp>departements</samp> les polygones des contours.<br/>
+    Cette insertion est réalisée par une succession d'instructions <samp>update</samp> basées sur la valeur du champ <samp>code</samp> et positionnant le champ
+    <samp>contours</samp> exprimé en tableau de tableaux de points <samp>[<em>longitude</em>, <em>latitude</em>]</samp>.<br/>
+    La raison de la présence éventuelle de multiples contours par département est due au fait que certains départements ne sont pas connexes (îles, enclaves).</li>
+</ul>
+<p>À partir de ces fichiers nous allons réaliser les actions suivantes :</p>
+<ul>
+  <li>créer une base de données <samp>geo_france</samp> destinée à recevoir ces collections,</li>
+  <li>charger ces 4 collections dans <samp>geo_france</samp>.</li>
+  <li>Une fois les fichiers chargés, nous afficherons :<ul>
+      <li>la liste des collections présentes,</li>
+      <li>le nombre d'éléments contenus dans chacune d'elles,</li>
+      <li>l'espace occupé par chacune d'elles.</li></ul></li>
+</ul>
+<div class="solution">
+<ul>
+  <li>Création de la base de données <samp>geo_france</samp> et insertion des collections dans celle-ci :<ul>
+      <li><pre class="shl"><kbd>mongo geo_france <em>chemin/vers</em>/collection_regions.js</kbd></pre></li>
+      <li><pre class="shl"><kbd>mongo geo_france <em>chemin/vers</em>/collection_departements.js</kbd></pre></li>
+      <li><pre class="shl"><kbd>mongo geo_france <em>chemin/vers</em>/collection_villes.js</kbd></pre></li>
+      <li><pre class="shl"><kbd>mongo geo_france <em>chemin/vers</em>/collection_contours.js</kbd></pre></li>
+      <li><pre class="shl"><kbd>mongo geo_france <em>chemin/vers</em>/collection_departements_contours.js</kbd></pre></li></ul></li>
+  <li>affichage du contenu de la base de données par <ul>
+    <li>récupération des noms des collections présentes :
+      <pre class="mongo_shl"><kbd>use geo_france;</kbd>
+switched to db geo_france
+<kbd>show collections;</kbd>
+contours
+departements
+regions
+system.indexes
+villes</pre></li>
+    <li>Affichage du nombre d'éléments contenus dans chaque collection (commandes à exécuter à partir de la console <kbd>mongo geo_france</kbd>) :<ul>
+      <li><pre class="mongo_shl"><kbd>db.villes.count()</kbd>
+36676</pre></li>
+      <li><pre class="mongo_shl"><kbd>db.departements.count()</kbd>
+101</pre></li>
+      <li><pre class="mongo_shl"><kbd>db.regions.count()</kbd>
+23</pre></li>
+      <li><pre class="mongo_shl"><kbd>db.contours.count()</kbd>
+2</pre></li></ul></li>
+    <li>Affichage de l'espace occupé par chaque collection (commandes à exécuter à partir de la console <kbd>mongo geo_france</kbd>) :<ul>
+      <li><pre class="mongo_shl"><kbd>db.villes.dataSize()</kbd>
+5528896</pre></li>
+      <li><pre class="mongo_shl"><kbd>db.departements.dataSize()</kbd>
+993328</pre></li>
+      <li><pre class="mongo_shl"><kbd>db.regions.dataSize()</kbd>
+1168</pre></li>
+      <li><pre class="mongo_shl"><kbd>db.contours.dataSize()</kbd>
+19808</pre></li></ul></li></ul></li>
+</ul>
+
+</div>
+</div>
+<div class="validator">
+  pages validées par
+  <a href="http://validator.w3.org/check?uri=referer"><img src="images/valid_xhtml.svg" alt="Valid XHTML 1.1" title="xHTML 1.1 validé !"/></a>
+  <a href="http://jigsaw.w3.org/css-validator/check/referer"><img src="images/valid_css.svg" alt="CSS validé !" title="CSS validé !"/></a>
+</div>
+</body>
+</html>

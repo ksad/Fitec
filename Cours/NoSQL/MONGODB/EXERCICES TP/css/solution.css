@@ -1,0 +1,114 @@
+body {
+ background-color:#666;
+ color:#FFF;
+}
+
+div.exo:before {
+ color:#F77;
+}
+
+samp {
+ background-color:#CCC;
+ color:#400;
+}
+
+kbd {
+ background-color:#FFF;
+ color:#000;
+}
+
+blockquote {background-color:#880;}
+
+a {color:#473;}
+a:visited {color:#66F;}
+a:hover {color:#F80;}
+
+div.solution_crypt {
+ background-color:#944;
+ color:#BBB;
+}
+
+div.solution {
+ background-color:#444;
+ color:#BBB;
+}
+
+div.solution_crypt *,
+div.solution * {visibility:visible;}
+
+div.solution:hover {
+ background-color:#004;
+ color:#FFF;
+}
+
+div.solution_crypt:hover {
+ background-color:#400;
+ color:#FFF;
+}
+
+div.exo {
+ border-color:#444;
+ background-color:#000;
+}
+
+div.pref {
+ color:#CFF;
+ background-color:#777;
+}
+
+::selection {
+ background-color:#F40;
+ color:#FFF;
+}
+
+pre kbd::selection {
+ background-color:#000;
+ color:#F00;
+}
+
+pre kbd strong {
+    font-weight:bolder;
+    color:#900;
+}
+
+pre>em {color:#ACF}
+pre>samp {background-color:#444;color:#FFF}
+pre:hover>samp {background-color:#000}
+pre>samp:hover {background-color:#003}
+pre:hover>samp:before {background-color:#4F4}
+pre>samp:hover:before {background-color:#F22;color:#FF0}
+
+pre.test1 {background-color:#232;border-color:#4F4}
+pre.test2 {background-color:#323;border-color:#F4F}
+pre.test3 {background-color:#332;border-color:#FF4}
+pre.test4 {background-color:#233;border-color:#4FF}
+pre.test5 {background-color:#223;border-color:#44F}
+pre.test1::before {background-color:#4F4}
+pre.test2::before {background-color:#F4F}
+pre.test3::before {background-color:#FF4}
+pre.test4::before {background-color:#4FF}
+pre.test5::before {background-color:#44F}
+
+pre kbd::before {
+    color:#CCC;
+    background-color:#333;
+}
+
+table {
+  background-color:#222;
+}
+table th,
+table td {
+  border-color:#844;
+}
+table th {
+  background-color:#300;
+}
+div.show {
+ background-color:#CCF;
+ color:#000;
+}
+
+div.show table {
+ color:#FFF;
+}

@@ -1,0 +1,175 @@
+/* ADA */
+.code .adakeyword {color: black; font-weight: bold;}
+.code .adatext {color:#004;}
+.code .adastring {color:#00c;}
+.code .adacomment {color:#ff7f00; font-style:italic;}
+.code .adasymbol {color:black;}
+.code .adanumber {color:#20d;}
+.code .adapreproc {color:#553f00; background:#ffffa8;}
+
+/* C/C++ */
+.code .ckeyword,
+.code .ctypevar {color: #008; font-weight: bold;}
+.code .ctext {color:black;}
+.code .cstring {color:#808;}
+.code .ccomment {color:#060; font-style:italic;}
+.code .csymbol {color:black; font-weight: bold;}
+.code .cnumber {color:#088;}
+.code .cpreproc {color:#880;}
+.code .cfunction {color:#654;}
+
+/* C# */
+.code .csharpkeyword,
+.code .csharptypevar {color: #008; font-weight: bold;}
+.code .csharptext {color:black;}
+.code .csharpstring {color:#808;}
+.code .csharpcomment {color:#060; font-style:italic;}
+.code .csharpsymbol {color:black; font-weight: bold;}
+.code .csharpnumber {color:#088;}
+
+/* CSS */
+.code .csskeyword {color: black; font-weight: normal;}
+.code .csstext { color: darkred; }
+.code .csscomment {color:#080; }
+.code .csssymbol {color:darkblue; }
+.code .cssnumber {color:#808;}
+.code .cssfunction { color: #808; }
+
+/* DELPHI */
+.code .delphikeyword {color: black; font-weight: bold;}
+.code .delphitypevar {color: #606;}
+.code .delphitext {color:#606;}
+.code .delphistring {color:#008;}
+.code .delphicomment {color:#ff7f00; font-style:italic;}
+.code .delphisymbol {color:black; font-weight: bold;}
+.code .delphinumber {color:#008;}
+.code .delphipreproc {color:#553f00; background:#ffffa8;}
+.code .delphifunction {color:#606;}
+
+/* HTML */
+.code .htmlkeyword {color:#008;}
+.code .htmltext {color:black;}
+.code .htmlstring {color:#808;}
+.code .htmlcomment {color:#ff7f00; font-style:italic;}
+.code .htmlsymbol {color:black;}
+.code .htmlnumber {color:#808;}
+.code .htmlpreproc {color:#654;}
+.code .htmlfunction {color:#088;}
+
+/* INI */
+.code .initext {color:#004;}
+.code .inistring {color:#00c;}
+.code .inicomment {color:#ff7f00; font-style:italic;}
+.code .inisymbol {color:black;}
+.code .ininumber {color:#20d;}
+.code .inipreproc {color:#553f00; background:#ffffa8;}
+
+/* JAVA */
+.code .javakeyword {color: #707; font-weight: bold;}
+.code .javatypevar {color: #707; font-weight: bold;}
+.code .javatext {color: black;}
+.code .javastring {color:#00c;}
+.code .javacomment {color:#C80; font-style:italic;}
+.code .javadoc {color:#395DBD; font-style:normal; }
+.code .javasymbol {color:black;}
+.code .javanumber {color:black;}
+
+/* JAVASCRIPT */
+.code .javascriptkeyword {color: #008; font-weight: bold;}
+.code .javascripttypevar {color:#840;}
+.code .javascripttext {color:black;}
+.code .javascriptstring {color:#808;}
+.code .javascriptcomment {color:#060; font-style:italic;}
+.code .javascriptsymbol {color:black;}
+.code .javascriptnumber {color:#088;}
+.code .javascriptfunction {color:#048;}
+
+/* LUA */
+.code .luakeyword {color: #c5c;}
+.code .luatypevar {color:#006;}
+.code .luatext {color:black;}
+.code .luastring {color:#777;}
+.code .luacomment {color:#0a0;}
+.code .luadoc {color:#0a0; }
+.code .luasymbol {color:black;}
+.code .luanumber {color:#20d;}
+.code .luapreproc {color:#006;}
+.code .luafunction {color:#007f7f;}
+
+/* OCAML */
+.code .ocamlkeyword {color: black; font-weight: bold;}
+.code .ocamltypevar {color:#066;}
+.code .ocamltext {color:#004;}
+.code .ocamlstring {color:#00c;}
+.code .ocamlcomment {color:#ff7f00; font-style:italic;}
+.code .ocamlsymbol {color:black;}
+.code .ocamlnumber {color:#20d;}
+.code .ocamlpreproc {color:#553f00; background:#ffffa8;}
+
+/* PHP */
+a.phpfunction:link, A.phpfunction:visited {color:#005177; font-weight:bold; text-decoration:underline;}
+a.phpfunction:hover {color:#c33; text-decoration:underline;}
+
+/* SQL */
+.code .sqlkeyword {color: black; font-weight: bold;}
+.code .sqltext {color:#004;}
+.code .sqlstring {color:#00c;}
+.code .sqlcomment {color:#ff7f00; font-style:italic;}
+.code .sqlsymbol {color:black;}
+.code .sqlnumber {color:#20d;}
+.code .sqlfunction {color:#7f007f;}
+
+/* VB */
+.code .vbkeyword {color: #03f;}
+.code .vbtypevar {color:#36c;}
+.code .vbtext {color: black;}
+.code .vbstring {color:#9C309C;}
+.code .vbcomment {color:#639A31;}
+.code .vbsymbol {color:black;}
+.code .vbnumber {color:black;}
+
+.code .linenumber {font-style:normal; font-weight:normal; color:#666; margin-right:0.4em;}
+.code * {line-height:1em}
+.code {
+ border:0.2em solid #F80;
+ padding:0.2em 1em;
+ background:#FFF;
+ color:#000;
+ overflow:auto;
+}
+
+.codeheader {
+ border-bottom:0.2em dashed #966;
+ margin-bottom:1em;
+ font-weight:bold;
+}
+
+#navcontainer {
+ margin-left:auto;
+ margin-right:auto;
+ margin-bottom:2em;
+ border-top:0.2em solid #999;
+ z-index:1;
+}
+#navcontainer ul {
+ list-style-type:none;
+ text-align:center;
+ margin-top:-0.5em;
+ padding:0;
+ position:relative;
+ z-index:2;
+}
+#navcontainer li {
+ display:inline;
+ text-align:center;
+ margin: 0 5px;
+}
+#navcontainer li a {
+ padding: 1px 7px;
+ color:#666;
+ background-color:#fff;
+ border:1px solid #ccc;
+ text-decoration: none;
+}
+#navcontainer li a:hover { color: #000; background: #def; border: 1px solid #9ab; }
+#navcontainer li a#current { color: #000; background: #abc; border: 1px solid #678; }
