@@ -25,8 +25,7 @@ today_date = datetime.datetime.strptime(start_today_date, "%Y-%m-%d %H:%M:%S")
 today_timestamp = calendar.timegm(today_date.utctimetuple())
 '''
 
-#slack_token = os.environ["SLACK_API_TOKEN"]
-slack_token = "xoxp-307477982724-306897818768-327511631061-2ffbce3faa9213c8942421d01d74b9bd"
+slack_token = os.environ["SLACK_API_TOKEN"]
 sc = SlackClient(slack_token)
 
 def read_slack_message(channel):
