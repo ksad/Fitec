@@ -65,15 +65,15 @@ if response["ok"]:
 							if 'KARIM' in str(i) :
 								print bcolors.WARNING + bcolors.BOLD + str(i) + bcolors.ENDC + ' ' * ((tablen - len(i)))
 								ip_karim = re.search(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}', str(i)).group()
-								os.system('sed -i "12s/.*/\\tHostname "'+ip_karim+'"/" ~/.ssh/config && sed -i "4s/.*/"'+ip_karim+'"\\tnode-karim/" /etc/hosts')
+								os.system('sed -i "12s/.*/\\tHostname "'+ip_karim+'"/" ~/.ssh/config && sed -i "4s/.*/"'+ip_karim+'"\\tnode-karim\\tip-172-31-18-9.eu-west-1.compute.internal/" /etc/hosts')
 							elif user1 in str(i):
 								print bcolors.WARNING + bcolors.BOLD + str(i) + bcolors.ENDC + ' ' * ((tablen - len(i)))
 								ip_user1 = re.search(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}', str(i)).group()
-								os.system('sed -i "17s/.*/\\tHostname "'+ip_user1+'"/" ~/.ssh/config && sed -i "5s/.*/"'+ip_user1+'"\\tnode-mariane/" /etc/hosts')
+								os.system('sed -i "17s/.*/\\tHostname "'+ip_user1+'"/" ~/.ssh/config && sed -i "5s/.*/"'+ip_user1+'"\\tnode-mariane\\tip-172-31-22-190.eu-west-1.compute.internal/" /etc/hosts')
 							elif user2 in str(i) :
 								print bcolors.WARNING + bcolors.BOLD + str(i) + bcolors.ENDC + ' ' * ((tablen - len(i)))
 								ip_user2 = re.search(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}', str(i)).group()
-								os.system('sed -i "22s/.*/\\tHostname "'+ip_user2+'"/" ~/.ssh/config && sed -i "6s/.*/"'+ip_user2+'"\\tmaster-felix/" /etc/hosts && sed -i "3s/.*/"'+ip_user2+'"\\tambari-server/" /etc/hosts')
+								os.system('sed -i "22s/.*/\\tHostname "'+ip_user2+'"/" ~/.ssh/config && sed -i "6s/.*/"'+ip_user2+'"\\tmaster-felix\\tip-172-31-31-238.eu-west-1.compute.internal"/ /etc/hosts && sed -i "3s/.*/"'+ip_user2+'"\\tambari-server/" /etc/hosts')
 							else:
 								print str(i)
 					print '-' * tablen
