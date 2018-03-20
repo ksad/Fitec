@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="comformationspringkafkaproducer:war">
+    <output-path>$PROJECT_DIR$/comformationspringkafkaproducer/target</output-path>
+    <root id="archive" name="com.formation.springkafka.producer-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="comformationspringkafkaproducer:war exploded" />
+    </root>
+  </artifact>
+</component>

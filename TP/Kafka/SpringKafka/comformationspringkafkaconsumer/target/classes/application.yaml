@@ -1,0 +1,17 @@
+server:
+  port: 8004
+
+kafka:
+  #host: localhost:9091, localhost:9092, localhost:9093
+  host: ip-172-31-18-9.eu-west-1.compute.internal:6667, ip-172-31-22-190.eu-west-1.compute.internal:6667, ip-172-31-31-238.eu-west-1.compute.internal:6667
+  topic:
+    #car : cars-messages
+    car : cars-inventory
+    default-group-id: default-group-id
+
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: Kafka

@@ -1,0 +1,11 @@
+/home/ksad/MY-DATA/Fitec-Work/TP/Kafka/SpringKafka/comformationspringkafkaconsumer/src/main/java/com/formation/kafka/consumer/consumer/CarConsumer.java
+/home/ksad/MY-DATA/Fitec-Work/TP/Kafka/SpringKafka/comformationspringkafkaconsumer/src/main/java/com/formation/kafka/consumer/configuration/technical/ContainersConfiguration.java
+/home/ksad/MY-DATA/Fitec-Work/TP/Kafka/SpringKafka/comformationspringkafkaconsumer/src/main/java/com/formation/kafka/consumer/configuration/properties/KafkaProperties.java
+/home/ksad/MY-DATA/Fitec-Work/TP/Kafka/SpringKafka/comformationspringkafkaconsumer/src/main/java/com/formation/kafka/consumer/ConsumerApplication.java
+/home/ksad/MY-DATA/Fitec-Work/TP/Kafka/SpringKafka/comformationspringkafkaconsumer/src/main/java/com/formation/kafka/consumer/entity/CarEntity.java
+/home/ksad/MY-DATA/Fitec-Work/TP/Kafka/SpringKafka/comformationspringkafkaconsumer/src/main/java/com/formation/kafka/consumer/configuration/technical/ConsumersConfiguration.java
+/home/ksad/MY-DATA/Fitec-Work/TP/Kafka/SpringKafka/comformationspringkafkaconsumer/src/main/java/com/formation/kafka/consumer/service/impl/CarServiceImpl.java
+/home/ksad/MY-DATA/Fitec-Work/TP/Kafka/SpringKafka/comformationspringkafkaconsumer/src/main/java/com/formation/kafka/consumer/repository/CarRepository.java
+/home/ksad/MY-DATA/Fitec-Work/TP/Kafka/SpringKafka/comformationspringkafkaconsumer/src/main/java/com/formation/kafka/consumer/configuration/properties/TopicProperties.java
+/home/ksad/MY-DATA/Fitec-Work/TP/Kafka/SpringKafka/comformationspringkafkaconsumer/src/main/java/com/formation/kafka/consumer/configuration/technical/BeanConfiguration.java
+/home/ksad/MY-DATA/Fitec-Work/TP/Kafka/SpringKafka/comformationspringkafkaconsumer/src/main/java/com/formation/kafka/consumer/service/CarService.java

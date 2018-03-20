@@ -1,0 +1,15 @@
+kafka:
+  #bootstrap-servers: localhost:9091, localhost:9092, localhost:9093
+  bootstrap-servers: ip-172-31-18-9.eu-west-1.compute.internal:6667, ip-172-31-22-190.eu-west-1.compute.internal:6667, ip-172-31-31-238.eu-west-1.compute.internal:6667
+  topic : cars-inventory
+  #topic : cars-message-local5000
+
+
+swagger:
+  title: Formation KAFKA
+  description: Swagger Documentation api for Formation KAFKA PRODUCER application
+  version: @project.version@
+  enabled: true
+
+server:
+  port: 8078

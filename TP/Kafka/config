@@ -1,0 +1,6 @@
+La configuration des hosts et Topic : 
+comformationspringkafkaproducer/src/main/resources/application.yml : bootstrap-servers: 34.251.183.197:6667,52.16.93.23:6667,52.18.130.24:6667
+comformationspringkafkaconsumer/src/main/resources/application.yaml : host: 34.251.183.197:6667,52.16.93.23:6667,52.18.130.24:6667
+
+mvn clean install --> generate a jar
+java -jar <file_name>

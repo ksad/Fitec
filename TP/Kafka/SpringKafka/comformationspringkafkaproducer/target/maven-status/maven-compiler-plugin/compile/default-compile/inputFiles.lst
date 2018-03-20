@@ -1,0 +1,11 @@
+/home/ksad/MY-DATA/Fitec-Work/TP/Kafka/SpringKafka/comformationspringkafkaproducer/src/main/java/com/formation/kafka/formationkafka/configuration/SenderConfiguration.java
+/home/ksad/MY-DATA/Fitec-Work/TP/Kafka/SpringKafka/comformationspringkafkaproducer/src/main/java/com/formation/kafka/formationkafka/configuration/SwaggerProperties.java
+/home/ksad/MY-DATA/Fitec-Work/TP/Kafka/SpringKafka/comformationspringkafkaproducer/src/main/java/com/formation/kafka/formationkafka/producer/Sender.java
+/home/ksad/MY-DATA/Fitec-Work/TP/Kafka/SpringKafka/comformationspringkafkaproducer/src/main/java/com/formation/kafka/formationkafka/service/impl/CarServiceImpl.java
+/home/ksad/MY-DATA/Fitec-Work/TP/Kafka/SpringKafka/comformationspringkafkaproducer/src/main/java/com/formation/kafka/formationkafka/mapper/CarDtoToCarMessageMapper.java
+/home/ksad/MY-DATA/Fitec-Work/TP/Kafka/SpringKafka/comformationspringkafkaproducer/src/main/java/com/formation/kafka/formationkafka/configuration/SwaggerConfiguration.java
+/home/ksad/MY-DATA/Fitec-Work/TP/Kafka/SpringKafka/comformationspringkafkaproducer/src/main/java/com/formation/kafka/formationkafka/service/CarService.java
+/home/ksad/MY-DATA/Fitec-Work/TP/Kafka/SpringKafka/comformationspringkafkaproducer/src/main/java/com/formation/kafka/formationkafka/controller/CarController.java
+/home/ksad/MY-DATA/Fitec-Work/TP/Kafka/SpringKafka/comformationspringkafkaproducer/src/main/java/com/formation/kafka/formationkafka/configuration/GlobalConfiguration.java
+/home/ksad/MY-DATA/Fitec-Work/TP/Kafka/SpringKafka/comformationspringkafkaproducer/src/main/java/com/formation/kafka/formationkafka/FormationkafkaApplication.java
+/home/ksad/MY-DATA/Fitec-Work/TP/Kafka/SpringKafka/comformationspringkafkaproducer/src/main/java/com/formation/kafka/formationkafka/dto/CarDto.java

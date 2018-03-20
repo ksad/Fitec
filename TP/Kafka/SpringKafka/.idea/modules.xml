@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/comformationspringkafkaconsumer/comformationspringkafkaconsumer.iml" filepath="$PROJECT_DIR$/comformationspringkafkaconsumer/comformationspringkafkaconsumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/comformationspringkafkaproducer/comformationspringkafkaproducer.iml" filepath="$PROJECT_DIR$/comformationspringkafkaproducer/comformationspringkafkaproducer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/comformationspringkafkashared/comformationspringkafkashared.iml" filepath="$PROJECT_DIR$/comformationspringkafkashared/comformationspringkafkashared.iml" />
+      <module fileurl="file://$PROJECT_DIR$/formationspringkafka.iml" filepath="$PROJECT_DIR$/formationspringkafka.iml" />
+    </modules>
+  </component>
+</project>
