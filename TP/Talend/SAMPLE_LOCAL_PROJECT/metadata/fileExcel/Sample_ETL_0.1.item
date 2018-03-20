@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:TalendMetadata="http://www.talend.org/metadata/connection/2010" xmlns:orgomg.cwm.resource.record="http:///orgomg/cwm/resource/record.ecore">
+  <TalendMetadata:FileExcelConnection xmi:id="_kVQhwCt4Eeiy-LDaeaaDmg" name="Sample_ETL" dataPackage="_kVTlECt4Eeiy-LDaeaaDmg" Server="Localhost 127.0.0.1" FilePath="/home/ksad/MY-DATA/Fitec-Work/TP/Talend/data-tp/Salariés.xlsx" Encoding="UTF-8" UseHeader="true" HeaderValue="1" FirstLineCaption="true" SheetName="Salariés" firstColumn="1" thousandSeparator="','" decimalSeparator="'.'" selectAllSheets="true" sheetList="Salariés:w&#xA;">
+    <sheetColumns>A</sheetColumns>
+    <sheetColumns>B</sheetColumns>
+    <sheetColumns>C</sheetColumns>
+    <sheetColumns>D</sheetColumns>
+    <sheetColumns>E</sheetColumns>
+    <sheetColumns>F</sheetColumns>
+  </TalendMetadata:FileExcelConnection>
+  <orgomg.cwm.resource.record:RecordFile xmi:id="_kVTlECt4Eeiy-LDaeaaDmg" name="default" dataManager="_kVQhwCt4Eeiy-LDaeaaDmg">
+    <ownedElement xsi:type="TalendMetadata:MetadataTable" xmi:id="_kVTlESt4Eeiy-LDaeaaDmg" id="_TzxscCt4Eeiy-LDaeaaDmg" label="metadata">
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_kVTlEit4Eeiy-LDaeaaDmg" label="Numero" length="2" talendType="id_Integer" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_kVTlEyt4Eeiy-LDaeaaDmg" label="Nom" length="10" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_kVTlFCt4Eeiy-LDaeaaDmg" label="Prenom" length="9" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_kVTlFSt4Eeiy-LDaeaaDmg" label="CIVILITE" length="1" talendType="id_Integer" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_kVTlFit4Eeiy-LDaeaaDmg" label="CP" length="5" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_kVTlFyt4Eeiy-LDaeaaDmg" label="DATE_NAISSANCE" length="-1" talendType="id_Date" pattern="&quot;dd/MM/yyyy&quot;"/>
+    </ownedElement>
+  </orgomg.cwm.resource.record:RecordFile>
+</xmi:XMI>

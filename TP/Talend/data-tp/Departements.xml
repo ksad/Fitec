@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<departements>
+<departement NUMERO="01">
+<DEPARTEMENT>Ain</DEPARTEMENT>
+<PREFECTURE>Bourg-en-Bresse</PREFECTURE>
+<REGION>Rhône-Alpes</REGION>
+</departement>
+<departement NUMERO="02">
+<DEPARTEMENT>Aisne</DEPARTEMENT>
+<PREFECTURE>Laon</PREFECTURE>
+<REGION>Picardie</REGION>
+</departement>
+<departement NUMERO="03">
+<DEPARTEMENT>Allier</DEPARTEMENT>
+<PREFECTURE>Moulins</PREFECTURE>
+<REGION>Auvergne</REGION>
+</departement>
+<departement NUMERO="04">
+<DEPARTEMENT>Alpes de Hautes-Provence</DEPARTEMENT>
+<PREFECTURE>Digne</PREFECTURE>
+<REGION>Provence-Alpes-Côte d&apos;Azur</REGION>
+</departement>
+<departement NUMERO="05">
+<DEPARTEMENT>Hautes-Alpes</DEPARTEMENT>
+<PREFECTURE>Gap</PREFECTURE>
+<REGION>Provence-Alpes-Côte d&apos;Azur</REGION>
+</departement>
+<departement NUMERO="06">
+<DEPARTEMENT>Alpes-Maritimes</DEPARTEMENT>
+<PREFECTURE>Nice</PREFECTURE>
+<REGION>Provence-Alpes-Côte d&apos;Azur</REGION>
+</departement>
+<departement NUMERO="07">
+<DEPARTEMENT>Ardèche</DEPARTEMENT>
+<PREFECTURE>Privas</PREFECTURE>
+<REGION>Rhône-Alpes</REGION>
+</departement>
+<departement NUMERO="08">
+<DEPARTEMENT>Ardennes</DEPARTEMENT>
+<PREFECTURE>Charleville-Mézières</PREFECTURE>
+<REGION>Champagne-Ardenne</REGION>
+</departement>
+<departement NUMERO="09">
+<DEPARTEMENT>Ariège</DEPARTEMENT>
+<PREFECTURE>Foix</PREFECTURE>
+<REGION>Midi-Pyrénées</REGION>
+</departement>
+<departement NUMERO="10">
+<DEPARTEMENT>Aube</DEPARTEMENT>
+<PREFECTURE>Troyes</PREFECTURE>
+<REGION>Champagne-Ardenne</REGION>
+</departement>
+<departement NUMERO="11">
+<DEPARTEMENT>Aude</DEPARTEMENT>
+<PREFECTURE>Carcassonne</PREFECTURE>
+<REGION>Languedoc-Roussillon</REGION>
+</departement>
+<departement NUMERO="12">
+<DEPARTEMENT>Aveyron</DEPARTEMENT>
+<PREFECTURE>Rodez</PREFECTURE>
+<REGION>Midi-Pyrénées</REGION>
+</departement>
+<departement NUMERO="13">
+<DEPARTEMENT>Bouches-du-Rhône</DEPARTEMENT>
+<PREFECTURE>Marseille</PREFECTURE>
+<REGION>Provence-Alpes-Côte d&apos;Azur</REGION>
+</departement>
+<departement NUMERO="14">
+<DEPARTEMENT>Calvados</DEPARTEMENT>
+<PREFECTURE>Caen</PREFECTURE>
+<REGION>Basse-Normandie</REGION>
+</departement>
+<departement NUMERO="15">
+<DEPARTEMENT>Cantal</DEPARTEMENT>
+<PREFECTURE>Aurillac</PREFECTURE>
+<REGION>Auvergne</REGION>
+</departement>
+<departement NUMERO="16">
+<DEPARTEMENT>Charente</DEPARTEMENT>
+<PREFECTURE>Angoulême</PREFECTURE>
+<REGION>Poitou-Charentes</REGION>
+</departement>
+<departement NUMERO="17">
+<DEPARTEMENT>Charente-Maritime</DEPARTEMENT>
+<PREFECTURE>La Rochelle</PREFECTURE>
+<REGION>Poitou-Charentes</REGION>
+</departement>
+<departement NUMERO="18">
+<DEPARTEMENT>Cher</DEPARTEMENT>
+<PREFECTURE>Bourges</PREFECTURE>
+<REGION>Centre</REGION>
+</departement>
+<departement NUMERO="19">
+<DEPARTEMENT>Corrèze</DEPARTEMENT>
+<PREFECTURE>Tulle</PREFECTURE>
+<REGION>Limousin</REGION>
+</departement>
+<departement NUMERO="2A">
+<DEPARTEMENT>Corse-du-Sud</DEPARTEMENT>
+<PREFECTURE>Ajaccio</PREFECTURE>
+<REGION>Corse</REGION>
+</departement>
+<departement NUMERO="2B">
+<DEPARTEMENT>Haute-Corse</DEPARTEMENT>
+<PREFECTURE>Bastia</PREFECTURE>
+<REGION>Corse</REGION>
+</departement>
+<departement NUMERO="21">
+<DEPARTEMENT>Côte-d&apos;Or</DEPARTEMENT>
+<PREFECTURE>Dijon</PREFECTURE>
+<REGION>Bourgogne</REGION>
+</departement>
+<departement NUMERO="22">
+<DEPARTEMENT>Côtes d&apos;Armor</DEPARTEMENT>
+<PREFECTURE>Saint-Brieuc</PREFECTURE>
+<REGION>Bretagne</REGION>
+</departement>
+<departement NUMERO="23">
+<DEPARTEMENT>Creuse</DEPARTEMENT>
+<PREFECTURE>Guéret</PREFECTURE>
+<REGION>Limousin</REGION>
+</departement>
+<departement NUMERO="24">
+<DEPARTEMENT>Dordogne</DEPARTEMENT>
+<PREFECTURE>Périgueux</PREFECTURE>
+<REGION>Aquitaine</REGION>
+</departement>
+<departement NUMERO="25">
+<DEPARTEMENT>Doubs</DEPARTEMENT>
+<PREFECTURE>Besançon</PREFECTURE>
+<REGION>Franche-Comté</REGION>
+</departement>
+<departement NUMERO="26">
+<DEPARTEMENT>Drôme</DEPARTEMENT>
+<PREFECTURE>Valence</PREFECTURE>
+<REGION>Rhône-Alpes</REGION>
+</departement>
+<departement NUMERO="27">
+<DEPARTEMENT>Eure</DEPARTEMENT>
+<PREFECTURE>Évreux</PREFECTURE>
+<REGION>Haute-Normandie</REGION>
+</departement>
+<departement NUMERO="28">
+<DEPARTEMENT>Eure-et-Loir</DEPARTEMENT>
+<PREFECTURE>Chartres</PREFECTURE>
+<REGION>Centre</REGION>
+</departement>
+<departement NUMERO="29">
+<DEPARTEMENT>Finistère</DEPARTEMENT>
+<PREFECTURE>Quimper</PREFECTURE>
+<REGION>Bretagne</REGION>
+</departement>
+<departement NUMERO="30">
+<DEPARTEMENT>Gard</DEPARTEMENT>
+<PREFECTURE>Nîmes</PREFECTURE>
+<REGION>Languedoc-Roussillon</REGION>
+</departement>
+<departement NUMERO="31">
+<DEPARTEMENT>Haute-Garonne</DEPARTEMENT>
+<PREFECTURE>Toulouse</PREFECTURE>
+<REGION>Midi-Pyrénées</REGION>
+</departement>
+<departement NUMERO="32">
+<DEPARTEMENT>Gers</DEPARTEMENT>
+<PREFECTURE>Auch</PREFECTURE>
+<REGION>Midi-Pyrénées</REGION>
+</departement>
+<departement NUMERO="33">
+<DEPARTEMENT>Gironde</DEPARTEMENT>
+<PREFECTURE>Bordeaux</PREFECTURE>
+<REGION>Aquitaine</REGION>
+</departement>
+<departement NUMERO="34">
+<DEPARTEMENT>Hérault</DEPARTEMENT>
+<PREFECTURE>Montpellier</PREFECTURE>
+<REGION>Languedoc-Roussillon</REGION>
+</departement>
+<departement NUMERO="35">
+<DEPARTEMENT>Ille-et-Vilaine</DEPARTEMENT>
+<PREFECTURE>Rennes</PREFECTURE>
+<REGION>Bretagne</REGION>
+</departement>
+<departement NUMERO="36">
+<DEPARTEMENT>Indre</DEPARTEMENT>
+<PREFECTURE>Châteauroux</PREFECTURE>
+<REGION>Centre</REGION>
+</departement>
+<departement NUMERO="37">
+<DEPARTEMENT>Indre-et-Loire</DEPARTEMENT>
+<PREFECTURE>Tours</PREFECTURE>
+<REGION>Centre</REGION>
+</departement>
+<departement NUMERO="38">
+<DEPARTEMENT>Isère</DEPARTEMENT>
+<PREFECTURE>Grenoble</PREFECTURE>
+<REGION>Rhône-Alpes</REGION>
+</departement>
+<departement NUMERO="39">
+<DEPARTEMENT>Jura</DEPARTEMENT>
+<PREFECTURE>Lons-le-Saunier</PREFECTURE>
+<REGION>Franche-Comté</REGION>
+</departement>
+<departement NUMERO="40">
+<DEPARTEMENT>Landes</DEPARTEMENT>
+<PREFECTURE>Mont-de-Marsan</PREFECTURE>
+<REGION>Aquitaine</REGION>
+</departement>
+<departement NUMERO="41">
+<DEPARTEMENT>Loir-et-Cher</DEPARTEMENT>
+<PREFECTURE>Blois</PREFECTURE>
+<REGION>Centre</REGION>
+</departement>
+<departement NUMERO="42">
+<DEPARTEMENT>Loire</DEPARTEMENT>
+<PREFECTURE>Saint-Étienne</PREFECTURE>
+<REGION>Rhône-Alpes</REGION>
+</departement>
+<departement NUMERO="43">
+<DEPARTEMENT>Haute-Loire</DEPARTEMENT>
+<PREFECTURE>Le Puy-en-Velay</PREFECTURE>
+<REGION>Auvergne</REGION>
+</departement>
+<departement NUMERO="44">
+<DEPARTEMENT>Loire-Atlantique</DEPARTEMENT>
+<PREFECTURE>Nantes</PREFECTURE>
+<REGION>Pays de la Loire</REGION>
+</departement>
+<departement NUMERO="45">
+<DEPARTEMENT>Loiret</DEPARTEMENT>
+<PREFECTURE>Orléans</PREFECTURE>
+<REGION>Centre</REGION>
+</departement>
+<departement NUMERO="46">
+<DEPARTEMENT>Lot</DEPARTEMENT>
+<PREFECTURE>Cahors</PREFECTURE>
+<REGION>Midi-Pyrénées</REGION>
+</departement>
+<departement NUMERO="47">
+<DEPARTEMENT>Lot-et-Garonne</DEPARTEMENT>
+<PREFECTURE>Agen</PREFECTURE>
+<REGION>Aquitaine</REGION>
+</departement>
+<departement NUMERO="48">
+<DEPARTEMENT>Lozère</DEPARTEMENT>
+<PREFECTURE>Mende</PREFECTURE>
+<REGION>Languedoc-Roussillon</REGION>
+</departement>
+<departement NUMERO="49">
+<DEPARTEMENT>Maine-et-Loire</DEPARTEMENT>
+<PREFECTURE>Angers</PREFECTURE>
+<REGION>Pays de la Loire</REGION>
+</departement>
+<departement NUMERO="50">
+<DEPARTEMENT>Manche</DEPARTEMENT>
+<PREFECTURE>Saint-Lô</PREFECTURE>
+<REGION>Basse-Normandie</REGION>
+</departement>
+<departement NUMERO="51">
+<DEPARTEMENT>Marne</DEPARTEMENT>
+<PREFECTURE>Châlons-en-Champagne</PREFECTURE>
+<REGION>Champagne-Ardenne</REGION>
+</departement>
+<departement NUMERO="52">
+<DEPARTEMENT>Haute-Marne</DEPARTEMENT>
+<PREFECTURE>Chaumont</PREFECTURE>
+<REGION>Champagne-Ardenne</REGION>
+</departement>
+<departement NUMERO="53">
+<DEPARTEMENT>Mayenne</DEPARTEMENT>
+<PREFECTURE>Laval</PREFECTURE>
+<REGION>Pays de la Loire</REGION>
+</departement>
+<departement NUMERO="54">
+<DEPARTEMENT>Meurthe-et-Moselle</DEPARTEMENT>
+<PREFECTURE>Nancy</PREFECTURE>
+<REGION>Lorraine</REGION>
+</departement>
+<departement NUMERO="55">
+<DEPARTEMENT>Meuse</DEPARTEMENT>
+<PREFECTURE>Bar-le-Duc</PREFECTURE>
+<REGION>Lorraine</REGION>
+</departement>
+<departement NUMERO="56">
+<DEPARTEMENT>Morbihan</DEPARTEMENT>
+<PREFECTURE>Vannes</PREFECTURE>
+<REGION>Bretagne</REGION>
+</departement>
+<departement NUMERO="57">
+<DEPARTEMENT>Moselle</DEPARTEMENT>
+<PREFECTURE>Metz</PREFECTURE>
+<REGION>Lorraine</REGION>
+</departement>
+<departement NUMERO="58">
+<DEPARTEMENT>Nièvre</DEPARTEMENT>
+<PREFECTURE>Nevers</PREFECTURE>
+<REGION>Bourgogne</REGION>
+</departement>
+<departement NUMERO="59">
+<DEPARTEMENT>Nord</DEPARTEMENT>
+<PREFECTURE>Lille</PREFECTURE>
+<REGION>Nord-Pas-de-Calais</REGION>
+</departement>
+<departement NUMERO="60">
+<DEPARTEMENT>Oise</DEPARTEMENT>
+<PREFECTURE>Beauvais</PREFECTURE>
+<REGION>Picardie</REGION>
+</departement>
+<departement NUMERO="61">
+<DEPARTEMENT>Orne</DEPARTEMENT>
+<PREFECTURE>Alençon</PREFECTURE>
+<REGION>Basse-Normandie</REGION>
+</departement>
+<departement NUMERO="62">
+<DEPARTEMENT>Pas-de-Calais</DEPARTEMENT>
+<PREFECTURE>Arras</PREFECTURE>
+<REGION>Nord-Pas-de-Calais</REGION>
+</departement>
+<departement NUMERO="63">
+<DEPARTEMENT>Puy-de-Dôme</DEPARTEMENT>
+<PREFECTURE>Clermont-Ferrand</PREFECTURE>
+<REGION>Auvergne</REGION>
+</departement>
+<departement NUMERO="64">
+<DEPARTEMENT>Pyrénées-Atlantiques</DEPARTEMENT>
+<PREFECTURE>Pau</PREFECTURE>
+<REGION>Aquitaine</REGION>
+</departement>
+<departement NUMERO="65">
+<DEPARTEMENT>Hautes-Pyrénées</DEPARTEMENT>
+<PREFECTURE>Tarbes</PREFECTURE>
+<REGION>Midi-Pyrénées</REGION>
+</departement>
+<departement NUMERO="66">
+<DEPARTEMENT>Pyrénées-Orientales</DEPARTEMENT>
+<PREFECTURE>Perpignan</PREFECTURE>
+<REGION>Languedoc-Roussillon</REGION>
+</departement>
+<departement NUMERO="67">
+<DEPARTEMENT>Bas-Rhin</DEPARTEMENT>
+<PREFECTURE>Strasbourg</PREFECTURE>
+<REGION>Alsace</REGION>
+</departement>
+<departement NUMERO="68">
+<DEPARTEMENT>Haut-Rhin</DEPARTEMENT>
+<PREFECTURE>Colmar</PREFECTURE>
+<REGION>Alsace</REGION>
+</departement>
+<departement NUMERO="69">
+<DEPARTEMENT>Rhône</DEPARTEMENT>
+<PREFECTURE>Lyon</PREFECTURE>
+<REGION>Rhône-Alpes</REGION>
+</departement>
+<departement NUMERO="70">
+<DEPARTEMENT>Haute-Saône</DEPARTEMENT>
+<PREFECTURE>Vesoul</PREFECTURE>
+<REGION>Franche-Comté</REGION>
+</departement>
+<departement NUMERO="71">
+<DEPARTEMENT>Saône-et-Loire</DEPARTEMENT>
+<PREFECTURE>Mâcon</PREFECTURE>
+<REGION>Bourgogne</REGION>
+</departement>
+<departement NUMERO="72">
+<DEPARTEMENT>Sarthe</DEPARTEMENT>
+<PREFECTURE>Le Mans</PREFECTURE>
+<REGION>Pays de la Loire</REGION>
+</departement>
+<departement NUMERO="73">
+<DEPARTEMENT>Savoie</DEPARTEMENT>
+<PREFECTURE>Chambéry</PREFECTURE>
+<REGION>Rhône-Alpes</REGION>
+</departement>
+<departement NUMERO="74">
+<DEPARTEMENT>Haute-Savoie</DEPARTEMENT>
+<PREFECTURE>Annecy</PREFECTURE>
+<REGION>Rhône-Alpes</REGION>
+</departement>
+<departement NUMERO="75">
+<DEPARTEMENT>Paris</DEPARTEMENT>
+<PREFECTURE>Paris</PREFECTURE>
+<REGION>Ile-de-France</REGION>
+</departement>
+<departement NUMERO="76">
+<DEPARTEMENT>Seine-Maritime</DEPARTEMENT>
+<PREFECTURE>Rouen</PREFECTURE>
+<REGION>Haute-Normandie</REGION>
+</departement>
+<departement NUMERO="77">
+<DEPARTEMENT>Seine-et-Marne</DEPARTEMENT>
+<PREFECTURE>Melun</PREFECTURE>
+<REGION>Ile-de-France</REGION>
+</departement>
+<departement NUMERO="78">
+<DEPARTEMENT>Yvelines</DEPARTEMENT>
+<PREFECTURE>Versailles</PREFECTURE>
+<REGION>Ile-de-France</REGION>
+</departement>
+<departement NUMERO="79">
+<DEPARTEMENT>Deux-Sèvres</DEPARTEMENT>
+<PREFECTURE>Niort</PREFECTURE>
+<REGION>Poitou-Charentes</REGION>
+</departement>
+<departement NUMERO="80">
+<DEPARTEMENT>Somme</DEPARTEMENT>
+<PREFECTURE>Amiens</PREFECTURE>
+<REGION>Picardie</REGION>
+</departement>
+<departement NUMERO="81">
+<DEPARTEMENT>Tarn</DEPARTEMENT>
+<PREFECTURE>Albi</PREFECTURE>
+<REGION>Midi-Pyrénées</REGION>
+</departement>
+<departement NUMERO="82">
+<DEPARTEMENT>Tarn-et-Garonne</DEPARTEMENT>
+<PREFECTURE>Montauban</PREFECTURE>
+<REGION>Midi-Pyrénées</REGION>
+</departement>
+<departement NUMERO="83">
+<DEPARTEMENT>Var</DEPARTEMENT>
+<PREFECTURE>Toulon</PREFECTURE>
+<REGION>Provence-Alpes-Côte d&apos;Azur</REGION>
+</departement>
+<departement NUMERO="84">
+<DEPARTEMENT>Vaucluse</DEPARTEMENT>
+<PREFECTURE>Avignon</PREFECTURE>
+<REGION>Provence-Alpes-Côte d&apos;Azur</REGION>
+</departement>
+<departement NUMERO="85">
+<DEPARTEMENT>Vendée</DEPARTEMENT>
+<PREFECTURE>La Roche-sur-Yon</PREFECTURE>
+<REGION>Pays de la Loire</REGION>
+</departement>
+<departement NUMERO="86">
+<DEPARTEMENT>Vienne</DEPARTEMENT>
+<PREFECTURE>Poitiers</PREFECTURE>
+<REGION>Poitou-Charentes</REGION>
+</departement>
+<departement NUMERO="87">
+<DEPARTEMENT>Haute-Vienne</DEPARTEMENT>
+<PREFECTURE>Limoges</PREFECTURE>
+<REGION>Limousin</REGION>
+</departement>
+<departement NUMERO="88">
+<DEPARTEMENT>Vosges</DEPARTEMENT>
+<PREFECTURE>Épinal</PREFECTURE>
+<REGION>Lorraine</REGION>
+</departement>
+<departement NUMERO="89">
+<DEPARTEMENT>Yonne</DEPARTEMENT>
+<PREFECTURE>Auxerre</PREFECTURE>
+<REGION>Bourgogne</REGION>
+</departement>
+<departement NUMERO="90">
+<DEPARTEMENT>Territoire-de-Belfort</DEPARTEMENT>
+<PREFECTURE>Belfort</PREFECTURE>
+<REGION>Franche-Comté</REGION>
+</departement>
+<departement NUMERO="91">
+<DEPARTEMENT>Essonne</DEPARTEMENT>
+<PREFECTURE>Évry</PREFECTURE>
+<REGION>Ile-de-France</REGION>
+</departement>
+<departement NUMERO="92">
+<DEPARTEMENT>Hauts-de-Seine</DEPARTEMENT>
+<PREFECTURE>Nanterre</PREFECTURE>
+<REGION>Ile-de-France</REGION>
+</departement>
+<departement NUMERO="93">
+<DEPARTEMENT>Seine-Saint-Denis</DEPARTEMENT>
+<PREFECTURE>Bobigny</PREFECTURE>
+<REGION>Ile-de-France</REGION>
+</departement>
+<departement NUMERO="94">
+<DEPARTEMENT>Val-de-Marne</DEPARTEMENT>
+<PREFECTURE>Créteil</PREFECTURE>
+<REGION>Ile-de-France</REGION>
+</departement>
+<departement NUMERO="95">
+<DEPARTEMENT>Val-d&apos;Oise</DEPARTEMENT>
+<PREFECTURE>Pontoise</PREFECTURE>
+<REGION>Ile-de-France</REGION>
+</departement>
+</departements>
