@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TalendNoSQLMetadata:NoSQLConnection xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:TalendNoSQLMetadata="http://www.talend.org/nosql" xmi:id="_HqBGkDl0Eeimcvf5ielwVg" name="mongoDB" label="mongoDB" dbType="MONGODB">
+  <attributes xmi:id="_HqBGkTl0Eeimcvf5ielwVg" key="DB_VERSION" value="MONGODB_3_2_X"/>
+  <attributes xmi:id="_HqBGkjl0Eeimcvf5ielwVg" key="HOST" value="ambari-server"/>
+  <attributes xmi:id="_HqBGkzl0Eeimcvf5ielwVg" key="PORT" value="27017"/>
+  <attributes xmi:id="_HqBGlDl0Eeimcvf5ielwVg" key="DATABASE" value=""/>
+  <attributes xmi:id="_HqBGlTl0Eeimcvf5ielwVg" key="REQUIRED_AUTHENTICATION" value="false"/>
+  <attributes xmi:id="_HqBGljl0Eeimcvf5ielwVg" key="USERNAME" value=""/>
+  <attributes xmi:id="_HqBGlzl0Eeimcvf5ielwVg" key="PASSWORD" value=""/>
+  <attributes xmi:id="_HqBGmDl0Eeimcvf5ielwVg" key="USE_REPLICA_SET" value="false"/>
+  <attributes xmi:id="_HqBGmTl0Eeimcvf5ielwVg" key="REPLICA_SET" value="[]"/>
+</TalendNoSQLMetadata:NoSQLConnection>

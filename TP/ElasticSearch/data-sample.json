@@ -1,0 +1,110 @@
+PUT /zenika/produit/1 //PUT /{index}/{type}/{id}
+
+{
+  "code" : "S10_1949",
+  "nom" : "1952 Alpine Renault 1300",
+  "echelle" : "1:10",
+  "fournisseur" : "Classic Metal Creations",
+  "stock" : "7305",
+  "prix" : "98.58",
+  "devise" : "EUR"
+}
+
+POST /zenika/produit/1
+{
+  "prix" : "78.90"
+}
+
+/zenika/_search?nom="renault" // chercher tous elements contenant le mot renault
+/zenika/_search?q=fournisseur:classic // chercher tous les fournisseur contenant le mot classique
+/zenika/_search?q=code:S*
+GET zenika/produit,personnel/_search?pretty // recherche multi type
+
+#rename index
+POST /_reindex
+{
+  "source": {
+    "index": "pepole"
+  },
+  "dest": {
+    "index": "psg"
+  }
+}
+
+#delete old index
+DELETE /pepole
+
+_source=false // cacher les données
+
+
+PUT /psg1978/joueurs/2
+{
+  "nom":"thiago",
+  "prenom":"silva"
+}
+
+GET zenika/_search?pretty
+GET _all/_search
+GET zenika/personnel/1?_source=false
+GET psg/personnel/_search?_source_include=nom
+GET psg/personnel/_search?_source=nom,prenom
+GET psg/personnel/_search?fields=nom,prenom
+
+POST zenika/personnel/2
+{
+  "nom":"sad",
+  "prenom":"syrine"
+}
+
+#rename index
+POST /_reindex
+{
+  "source": {
+    "index": "pepole"
+  },
+  "dest": {
+    "index": "psg"
+  }
+}
+
+#delete old index
+DELETE /pepole    // action.destructive_requires_name: false pour interdire le delete all
+
+GET /psg*,-psg1978/_search?pretty
+
+//create index with settings
+PUT /library/
+{
+	"settings" :{
+					"index" : {
+						"number_of_shards" : 8,
+						"number_of_replicas" : 2
+					}
+	}
+}
+
+//index modification
+PUT /library/
+{
+	"settings" :{
+					"index" : {
+						"number_of_replicas" : 2,
+						"refresh_interval" : "30s"
+					}
+	}
+}
+
+// mise a jour via script
+script.inline = true
+POST /library/livre/1/_update
+{
+	"script" : "ctx._source.prix += addition",
+	"params" : {"addition" : 4}
+}
+
+"script" : "ctx._source.remove(\"prix\")"
+
+POST /library/livre/1/_update
+{
+	"doc" : {"prix" : 35}
+}
