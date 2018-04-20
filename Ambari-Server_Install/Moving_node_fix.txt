@@ -1,0 +1,27 @@
+Add node ==> manual Fix :
+/var/lib/ambari-agent/
+/etc/ambari-agent/
+/usr/lib/ambari-agent/
+/var/log/ambari-agent/
+PID : /usr/lib/python2.6/site-packages/ambari_agent/main.py --> sudo kill -9 9403
+sudo vim /etc/ambari-agent/conf/ambari-agent.ini --> replace server address
+remove files, packages, users --> python /usr/lib/python2.6/site-packages/ambari_agent/HostCleanup.py --silent --skip=users
+install phase :
+sudo scp -r -i ~/.ssh/aws ubuntu@ip-172-31-22-190.eu-west-1.compute.internal:/usr/lib/ambari-infra-solr-client/ /usr/lib/
+sudo scp -r -i ~/.ssh/aws ubuntu@ip-172-31-22-190.eu-west-1.compute.internal:/etc/slider/ /etc/
+sudo scp -r -i ~/.ssh/aws ubuntu@ip-172-31-22-190.eu-west-1.compute.internal:/usr/hdp/2.6.3.0-235/slider/ /usr/hdp/2.6.3.0-235/
+/usr/hdp/2.6.3.0-235/slider $ sudo rm -rf conf && sudo ln -s /etc/slider/2.6.3.0-235/0 conf
+/usr/hdp/current $ sudo ln -s /usr/hdp/2.6.3.0-235/slider slider-client
+
+Add node ==> Clean node
+sudo apt-get autoremove --purge ambari-server // remove amabari-server with all files
+sudo find / -type f -iname "*ambari*" --> check undeleted files
+run script remove_ambari_server.sh
+sudo apt-get autoremove --purge ambari-agent // remove amabari-agent with all files
+run script remove_ambari_agent.sh
+sudo scp -r -i ~/.ssh/aws ubuntu@ip-172-31-22-190.eu-west-1.compute.internal:/usr/lib/ambari-infra-solr-client/ /usr/lib/
+sudo scp -r -i ~/.ssh/aws ubuntu@ip-172-31-22-190.eu-west-1.compute.internal:/etc/slider/ /etc/
+sudo scp -r -i ~/.ssh/aws ubuntu@ip-172-31-22-190.eu-west-1.compute.internal:/usr/hdp/2.6.3.0-235/slider/ /usr/hdp/2.6.3.0-235/
+/usr/hdp/2.6.3.0-235/slider $ sudo rm -rf conf && sudo ln -s /etc/slider/2.6.3.0-235/0 conf
+/usr/hdp/current $ sudo ln -s /usr/hdp/2.6.3.0-235/slider slider-client
+sudo mkdir /var/log/zookeeper && sudo rm -rf zookeeper-client && sudo ln -s /usr/hdp/2.6.3.0-235/zookeeper zookeeper-client && sudo ln -s /usr/hdp/2.6.3.0-235/zookeeper zookeeper-server

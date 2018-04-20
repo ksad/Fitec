@@ -1,0 +1,33 @@
+git clone https://github.com/nikunjness/mongo-ambari.git -- original repo ambari-mongo
+
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5 && \
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.6 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.6.list && \
+sudo apt-get update
+
+modify these files : 
+	- package/files/mongodb-org.repo --> set repo base url from https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/	
+
+	- package/scripts/mongo_base.py --> replace Centos repo list file by ubuntu
+		'/etc/yum.repos.d/mongodb-org.repo' --> '/etc/yum.repos.d/mongodb-org.repo'
+
+
+/var/lib/ambari-server/resources/stacks/HDP/2.6/services/ambari-mongodb-cluster/package/scripts$ sudo vim mongo_db.py
+
+
+logs : /var/log/mongodb/mongod.log
+conf : /etc/mongod.conf
+/lib/systemd/system/mongod.service
+
+FIX pid issue :
+1/ mkdir -p  /var/run/mongodb/ ;chown -R  mongod:mongod /var/run/mongodb/ --> not work
+
+2/ 
+ExecStartPre=/usr/bin/mkdir -p /var/run/mongodb
+ExecStartPre=/usr/bin/chown mongod:mongod /var/run/mongodb
+ExecStartPre=/usr/bin/chmod 0755 /var/run/mongodb
+PermissionsStartOnly=true
+
+sudo service mongod start
+sudo systemctl daemon-reload
+
+
