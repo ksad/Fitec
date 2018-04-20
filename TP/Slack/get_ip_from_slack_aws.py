@@ -52,8 +52,8 @@ if response["ok"]:
 		#print res['text']
 	if results:
 		for res in results:
-			if (res.get('type') == 'message' and res.get('user') == 'U92AAH5C6' ): # user : mehdi
-			#if (res.get('type') == 'message' and res.get('user') == 'U90SDQ2NL' ): # # user : karim
+			#if (res.get('type') == 'message' and (res.get('user') == 'U92AAH5C6' or res.get('user') == 'U90SDQ2NL' or res.get('user') == 'U90VDBWUR')): # user : mehdi
+			if (res.get('type') == 'message' and res.get('user') == 'U90VDBWUR' ): # # user : karim
 				ip = re.findall( r'[\s]+[0-9]+(?:\.[0-9]+){3}', res.get('text'))
 				if ip:
 					last_update_date = datetime.datetime.fromtimestamp(float(str(res['ts']))).strftime('%Y-%m-%d %H:%M:%S')
@@ -68,7 +68,6 @@ if response["ok"]:
 							if user1 in str(i) :
 								print bcolors.WARNING + bcolors.BOLD + str(i) + bcolors.ENDC + ' ' * ((tablen - len(i)))
 								ip_user1 = re.search(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}', str(i)).group()
-								#os.system('sed -i "12s/.*/\\tHostname "'+ip_user1+'"/" ~/.ssh/config && sed -i "4s/.*/"'+ip_karim+'"\\tnode-karim\\tip-172-31-18-9.eu-west-1.compute.internal/" /etc/hosts')	
 								os.system('sed -i "5s/.*/"'+ip_user1+'"\\tambari-server\\tip-172-31-20-126.eu-west-1.compute.internal #Azziz/" /etc/hosts')
 							elif user2 in str(i):
 								print bcolors.WARNING + bcolors.BOLD + str(i) + bcolors.ENDC + ' ' * ((tablen - len(i)))
