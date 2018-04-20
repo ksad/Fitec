@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:java="http://www.yworks.com/xml/yfiles-common/1.0/java" xmlns:sys="http://www.yworks.com/xml/yfiles-common/markup/primitives/2.0" xmlns:x="http://www.yworks.com/xml/yfiles-common/markup/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:y="http://www.yworks.com/xml/graphml" xmlns:yed="http://www.yworks.com/xml/yed/3" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://www.yworks.com/xml/schema/graphml/1.1/ygraphml.xsd">
+  <!--Created by yEd 3.18.0.2-->
+  <key attr.name="Description" attr.type="string" for="graph" id="d0"/>
+  <key for="port" id="d1" yfiles.type="portgraphics"/>
+  <key for="port" id="d2" yfiles.type="portgeometry"/>
+  <key for="port" id="d3" yfiles.type="portuserdata"/>
+  <key attr.name="url" attr.type="string" for="node" id="d4"/>
+  <key attr.name="description" attr.type="string" for="node" id="d5"/>
+  <key for="node" id="d6" yfiles.type="nodegraphics"/>
+  <key for="graphml" id="d7" yfiles.type="resources"/>
+  <key attr.name="url" attr.type="string" for="edge" id="d8"/>
+  <key attr.name="description" attr.type="string" for="edge" id="d9"/>
+  <key for="edge" id="d10" yfiles.type="edgegraphics"/>
+  <graph edgedefault="directed" id="G">
+    <data key="d0"/>
+    <node id="n0" yfiles.foldertype="group">
+      <data key="d4"/>
+      <data key="d6">
+        <y:ProxyAutoBoundsNode>
+          <y:Realizers active="0">
+            <y:GroupNode>
+              <y:Geometry height="455.45168412126134" width="222.93791917497595" x="774.7446512547618" y="176.77996576119892"/>
+              <y:Fill color="#CAECFF84" transparent="false"/>
+              <y:BorderStyle color="#666699" type="dotted" width="1.0"/>
+              <y:NodeLabel alignment="center" autoSizePolicy="node_width" backgroundColor="#99CCFF" borderDistance="0.0" fontFamily="Dialog" fontSize="18" fontStyle="bold" hasLineColor="false" height="24.953125" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="222.93791917497595" x="0.0" y="0.0">DataLake</y:NodeLabel>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="4.0" x="109.46895958748803" y="225.72584206063067">
+                <y:LabelModel>
+                  <y:SmartNodeLabelModel distance="4.0"/>
+                </y:LabelModel>
+                <y:ModelParameter>
+                  <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
+                </y:ModelParameter>
+              </y:NodeLabel>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="4.0" x="109.46895958748803" y="225.72584206063067">
+                <y:LabelModel>
+                  <y:SmartNodeLabelModel distance="4.0"/>
+                </y:LabelModel>
+                <y:ModelParameter>
+                  <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
+                </y:ModelParameter>
+              </y:NodeLabel>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="4.0" x="109.46895958748803" y="225.72584206063067">
+                <y:LabelModel>
+                  <y:SmartNodeLabelModel distance="4.0"/>
+                </y:LabelModel>
+                <y:ModelParameter>
+                  <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
+                </y:ModelParameter>
+              </y:NodeLabel>
+              <y:Shape type="roundrectangle"/>
+              <y:State closed="false" closedHeight="50.0" closedWidth="50.0" innerGraphDisplayEnabled="false"/>
+              <y:Insets bottom="15" bottomF="15.0" left="15" leftF="15.0" right="15" rightF="15.0" top="15" topF="15.0"/>
+              <y:BorderInsets bottom="16" bottomF="15.740063033617957" left="37" leftF="36.9963233724651" right="40" rightF="39.94159580251085" top="203" topF="202.63723841436138"/>
+            </y:GroupNode>
+            <y:GroupNode>
+              <y:Geometry height="50.0" width="50.0" x="92.5" y="670.8683662414551"/>
+              <y:Fill color="#CAECFF84" transparent="false"/>
+              <y:BorderStyle color="#666699" type="dotted" width="1.0"/>
+              <y:NodeLabel alignment="right" autoSizePolicy="node_width" backgroundColor="#99CCFF" borderDistance="0.0" fontFamily="Dialog" fontSize="15" fontStyle="plain" hasLineColor="false" height="21.4609375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="50.0" x="0.0" y="0.0">2</y:NodeLabel>
+              <y:Shape type="roundrectangle"/>
+              <y:State closed="true" closedHeight="50.0" closedWidth="50.0" innerGraphDisplayEnabled="false"/>
+              <y:Insets bottom="15" bottomF="15.0" left="15" leftF="15.0" right="15" rightF="15.0" top="15" topF="15.0"/>
+              <y:BorderInsets bottom="0" bottomF="0.0" left="0" leftF="0.0" right="0" rightF="0.0" top="0" topF="0.0"/>
+            </y:GroupNode>
+          </y:Realizers>
+        </y:ProxyAutoBoundsNode>
+      </data>
+      <graph edgedefault="directed" id="n0:">
+        <node id="n0::n0">
+          <data key="d6">
+            <y:ImageNode>
+              <y:Geometry height="114.0" width="116.0" x="826.7409746272269" y="458.5384618488423"/>
+              <y:Fill color="#CCCCFF" transparent="false"/>
+              <y:BorderStyle color="#000000" type="line" width="1.0"/>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="18" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="24.953125" horizontalTextPosition="center" iconTextGap="4" modelName="sandwich" modelPosition="s" textColor="#000000" verticalTextPosition="bottom" visible="true" width="101.8486328125" x="7.07568359375" y="118.0">mongoDB</y:NodeLabel>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="4.0" x="56.0" y="55.0">
+                <y:LabelModel>
+                  <y:SmartNodeLabelModel distance="4.0"/>
+                </y:LabelModel>
+                <y:ModelParameter>
+                  <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
+                </y:ModelParameter>
+              </y:NodeLabel>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="14" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="20.296875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#FF0000" verticalTextPosition="bottom" visible="true" width="84.14453125" x="15.927734375" y="-39.168132673282">Data View<y:LabelModel>
+                  <y:SmartNodeLabelModel distance="4.0"/>
+                </y:LabelModel>
+                <y:ModelParameter>
+                  <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.5" nodeRatioX="0.0" nodeRatioY="-0.5" offsetX="0.0" offsetY="-18.871257673282003" upX="0.0" upY="-1.0"/>
+                </y:ModelParameter>
+              </y:NodeLabel>
+              <y:Image alphaImage="true" refid="1"/>
+            </y:ImageNode>
+          </data>
+        </node>
+      </graph>
+    </node>
+    <node id="n1" yfiles.foldertype="group">
+      <data key="d4"/>
+      <data key="d6">
+        <y:ProxyAutoBoundsNode>
+          <y:Realizers active="0">
+            <y:GroupNode>
+              <y:Geometry height="453.7234024813233" width="701.3304034999494" x="-5.902590980651894" y="178.50824740113694"/>
+              <y:Fill color="#CAECFF84" transparent="false"/>
+              <y:BorderStyle color="#666699" type="dotted" width="1.0"/>
+              <y:NodeLabel alignment="center" autoSizePolicy="node_width" backgroundColor="#99CCFF" borderDistance="0.0" fontFamily="Dialog" fontSize="18" fontStyle="bold" hasLineColor="false" height="24.953125" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="701.3304034999494" x="0.0" y="0.0">Zeppelin NoteBook</y:NodeLabel>
+              <y:Shape type="roundrectangle"/>
+              <y:State autoResize="false" closed="false" closedHeight="50.0" closedWidth="50.0" innerGraphDisplayEnabled="false"/>
+              <y:Insets bottom="15" bottomF="15.0" left="15" leftF="15.0" right="15" rightF="15.0" top="15" topF="15.0"/>
+              <y:BorderInsets bottom="45" bottomF="44.69318803361796" left="308" leftF="308.0866222583595" right="0" rightF="0.0" top="0" topF="0.0"/>
+            </y:GroupNode>
+            <y:GroupNode>
+              <y:Geometry height="50.0" width="50.0" x="143.0184128952394" y="888.9999999999994"/>
+              <y:Fill color="#CAECFF84" transparent="false"/>
+              <y:BorderStyle color="#666699" type="dotted" width="1.0"/>
+              <y:NodeLabel alignment="right" autoSizePolicy="node_width" backgroundColor="#99CCFF" borderDistance="0.0" fontFamily="Dialog" fontSize="15" fontStyle="plain" hasLineColor="false" height="21.4609375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="50.0" x="0.0" y="0.0">2</y:NodeLabel>
+              <y:Shape type="roundrectangle"/>
+              <y:State closed="true" closedHeight="50.0" closedWidth="50.0" innerGraphDisplayEnabled="false"/>
+              <y:Insets bottom="15" bottomF="15.0" left="15" leftF="15.0" right="15" rightF="15.0" top="15" topF="15.0"/>
+              <y:BorderInsets bottom="0" bottomF="0.0" left="0" leftF="0.0" right="0" rightF="0.0" top="0" topF="0.0"/>
+            </y:GroupNode>
+          </y:Realizers>
+        </y:ProxyAutoBoundsNode>
+      </data>
+      <graph edgedefault="directed" id="n1:">
+        <node id="n1::n0">
+          <data key="d5"/>
+          <data key="d6">
+            <y:GenericNode configuration="com.yworks.entityRelationship.big_entity">
+              <y:Geometry height="114.0" width="310.0" x="317.1840312777076" y="458.5384618488423"/>
+              <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
+              <y:BorderStyle color="#000000" type="line" width="1.0"/>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Dialog" fontSize="18" fontStyle="bold" hasLineColor="false" height="24.953125" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="147.9384765625" x="81.03076171875" y="4.0">Pandas 0.20.3</y:NodeLabel>
+              <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Dialog" fontSize="18" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="66.859375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="top" visible="true" width="294.3466796875" x="2.0" y="36.953125">- Calcul formules mathematique
+- Moyenne
+- Scroring<y:LabelModel>
+                  <y:ErdAttributesNodeLabelModel/>
+                </y:LabelModel>
+                <y:ModelParameter>
+                  <y:ErdAttributesNodeLabelModelParameter/>
+                </y:ModelParameter>
+              </y:NodeLabel>
+              <y:StyleProperties>
+                <y:Property class="java.lang.Boolean" name="y.view.ShadowNodePainter.SHADOW_PAINTING" value="true"/>
+              </y:StyleProperties>
+            </y:GenericNode>
+          </data>
+        </node>
+        <node id="n1::n1">
+          <data key="d5"/>
+          <data key="d6">
+            <y:GenericNode configuration="com.yworks.entityRelationship.big_entity">
+              <y:Geometry height="114.0" width="310.0" x="317.1840312777076" y="249.4652911578071"/>
+              <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
+              <y:BorderStyle color="#000000" type="line" width="1.0"/>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Dialog" fontSize="18" fontStyle="bold" hasLineColor="false" height="24.953125" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="120.3583984375" x="94.82080078125" y="4.0">Spark 2.2.0</y:NodeLabel>
+              <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Dialog" fontSize="18" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="66.859375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="top" visible="true" width="156.015625" x="2.0" y="36.953125">- Jointure
+- Spark SQL
+- Calcul distribué<y:LabelModel>
+                  <y:ErdAttributesNodeLabelModel/>
+                </y:LabelModel>
+                <y:ModelParameter>
+                  <y:ErdAttributesNodeLabelModelParameter/>
+                </y:ModelParameter>
+              </y:NodeLabel>
+              <y:StyleProperties>
+                <y:Property class="java.lang.Boolean" name="y.view.ShadowNodePainter.SHADOW_PAINTING" value="true"/>
+              </y:StyleProperties>
+            </y:GenericNode>
+          </data>
+        </node>
+        <node id="n1::n2">
+          <data key="d5"/>
+          <data key="d6">
+            <y:GenericNode configuration="com.yworks.bpmn.Activity.withShadow">
+              <y:Geometry height="114.0" width="281.0" x="414.4278125192975" y="-0.5202054328055965"/>
+              <y:Fill color="#FFFFFFE6" color2="#D4D4D4CC" transparent="false"/>
+              <y:BorderStyle color="#123EA2" type="line" width="1.0"/>
+              <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="16" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="41.25" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="210.8828125" x="35.05859375" y="36.375">Connecteurs installés :
+- mongoDB<y:LabelModel>
+                  <y:SmartNodeLabelModel distance="4.0"/>
+                </y:LabelModel>
+                <y:ModelParameter>
+                  <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
+                </y:ModelParameter>
+              </y:NodeLabel>
+              <y:StyleProperties>
+                <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.line.color" value="#000000"/>
+                <y:Property class="com.yworks.yfiles.bpmn.view.TaskTypeEnum" name="com.yworks.bpmn.taskType" value="TASK_TYPE_ABSTRACT"/>
+                <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.fill2" value="#d4d4d4cc"/>
+                <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.fill" value="#ffffffe6"/>
+                <y:Property class="com.yworks.yfiles.bpmn.view.BPMNTypeEnum" name="com.yworks.bpmn.type" value="ACTIVITY_TYPE"/>
+                <y:Property class="com.yworks.yfiles.bpmn.view.ActivityTypeEnum" name="com.yworks.bpmn.activityType" value="ACTIVITY_TYPE_TASK"/>
+              </y:StyleProperties>
+            </y:GenericNode>
+          </data>
+        </node>
+      </graph>
+    </node>
+    <node id="n2">
+      <data key="d6">
+        <y:ImageNode>
+          <y:Geometry height="114.0" width="116.0" x="826.7409746272269" y="249.4652911578071"/>
+          <y:Fill color="#CCCCFF" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="18" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="24.953125" horizontalTextPosition="center" iconTextGap="4" modelName="sandwich" modelPosition="s" textColor="#000000" verticalTextPosition="bottom" visible="true" width="101.8486328125" x="7.07568359375" y="118.0">mongoDB</y:NodeLabel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="4.0" x="56.0" y="55.0">
+            <y:LabelModel>
+              <y:SmartNodeLabelModel distance="4.0"/>
+            </y:LabelModel>
+            <y:ModelParameter>
+              <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
+            </y:ModelParameter>
+          </y:NodeLabel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="14" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="20.296875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#FF0000" verticalTextPosition="bottom" visible="true" width="89.39453125" x="13.302734375" y="-39.168132673282">Data Table<y:LabelModel>
+              <y:SmartNodeLabelModel distance="4.0"/>
+            </y:LabelModel>
+            <y:ModelParameter>
+              <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.5" nodeRatioX="0.0" nodeRatioY="-0.5" offsetX="0.0" offsetY="-18.871257673282003" upX="0.0" upY="-1.0"/>
+            </y:ModelParameter>
+          </y:NodeLabel>
+          <y:Image alphaImage="true" refid="1"/>
+        </y:ImageNode>
+      </data>
+    </node>
+    <node id="n3">
+      <data key="d5"/>
+      <data key="d6">
+        <y:GenericNode configuration="com.yworks.bpmn.Activity.withShadow">
+          <y:Geometry height="114.0" width="234.0" x="12.097409019348106" y="348.3699486417986"/>
+          <y:Fill color="#FFFFFFE6" color2="#D4D4D4CC" transparent="false"/>
+          <y:BorderStyle color="#123EA2" type="line" width="1.0"/>
+          <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="16" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="97.125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="209.6875" x="12.15625" y="8.4375">Librairies disponibles :
+- Scala
+- Angular
+- JDBC
+- Spark<y:LabelModel>
+              <y:SmartNodeLabelModel distance="4.0"/>
+            </y:LabelModel>
+            <y:ModelParameter>
+              <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
+            </y:ModelParameter>
+          </y:NodeLabel>
+          <y:StyleProperties>
+            <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.line.color" value="#000000"/>
+            <y:Property class="com.yworks.yfiles.bpmn.view.TaskTypeEnum" name="com.yworks.bpmn.taskType" value="TASK_TYPE_ABSTRACT"/>
+            <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.fill2" value="#d4d4d4cc"/>
+            <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.fill" value="#ffffffe6"/>
+            <y:Property class="com.yworks.yfiles.bpmn.view.BPMNTypeEnum" name="com.yworks.bpmn.type" value="ACTIVITY_TYPE"/>
+            <y:Property class="com.yworks.yfiles.bpmn.view.ActivityTypeEnum" name="com.yworks.bpmn.activityType" value="ACTIVITY_TYPE_TASK"/>
+          </y:StyleProperties>
+        </y:GenericNode>
+      </data>
+    </node>
+    <node id="n4">
+      <data key="d5"/>
+      <data key="d6">
+        <y:GenericNode configuration="com.yworks.bpmn.Activity.withShadow">
+          <y:Geometry height="114.0" width="353.0" x="-5.902590980651894" y="-0.5202054328055965"/>
+          <y:Fill color="#FFFFFFE6" color2="#D4D4D4CC" transparent="false"/>
+          <y:BorderStyle color="#123EA2" type="line" width="1.0"/>
+          <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="16" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="59.875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="307.0859375" x="22.95703125" y="27.0625">Librairies installées :
+- Python
+- Configuration avec py anaconda<y:LabelModel>
+              <y:SmartNodeLabelModel distance="4.0"/>
+            </y:LabelModel>
+            <y:ModelParameter>
+              <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
+            </y:ModelParameter>
+          </y:NodeLabel>
+          <y:StyleProperties>
+            <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.line.color" value="#000000"/>
+            <y:Property class="com.yworks.yfiles.bpmn.view.TaskTypeEnum" name="com.yworks.bpmn.taskType" value="TASK_TYPE_ABSTRACT"/>
+            <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.fill2" value="#d4d4d4cc"/>
+            <y:Property class="java.awt.Color" name="com.yworks.bpmn.icon.fill" value="#ffffffe6"/>
+            <y:Property class="com.yworks.yfiles.bpmn.view.BPMNTypeEnum" name="com.yworks.bpmn.type" value="ACTIVITY_TYPE"/>
+            <y:Property class="com.yworks.yfiles.bpmn.view.ActivityTypeEnum" name="com.yworks.bpmn.activityType" value="ACTIVITY_TYPE_TASK"/>
+          </y:StyleProperties>
+        </y:GenericNode>
+      </data>
+    </node>
+    <edge id="n1::e0" source="n1::n1" target="n1::n0">
+      <data key="d9"/>
+      <data key="d10">
+        <y:GenericEdge configuration="com.yworks.edge.framed">
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#000000" type="line" width="3.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="14" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="20.296875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" verticalTextPosition="bottom" visible="true" width="192.4599609375" x="7.770029812863868" y="37.398360878324695">DF Spark --&gt; DF Pandas<y:LabelModel>
+              <y:SmartEdgeLabelModel autoRotationEnabled="false" defaultAngle="0.0" defaultDistance="10.0"/>
+            </y:LabelModel>
+            <y:ModelParameter>
+              <y:SmartEdgeLabelModelParameter angle="6.283185307179586" distance="104.0" distanceToCenter="true" position="left" ratio="0.5" segment="-1"/>
+            </y:ModelParameter>
+            <y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
+          </y:EdgeLabel>
+        </y:GenericEdge>
+      </data>
+    </edge>
+    <edge id="e0" source="n2" target="n1::n1">
+      <data key="d9"/>
+      <data key="d10">
+        <y:GenericEdge configuration="com.yworks.edge.framed">
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#00CCFF" type="line" width="3.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="16" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="59.875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#00CCFF" verticalTextPosition="bottom" visible="true" width="180.2734375" x="-190.47853708659522" y="-29.937510355864788">Connecteur mongo 
+
+pour spark<y:LabelModel>
+              <y:SmartEdgeLabelModel autoRotationEnabled="false" defaultAngle="0.0" defaultDistance="10.0"/>
+            </y:LabelModel>
+            <y:ModelParameter>
+              <y:SmartEdgeLabelModelParameter angle="0.0" distance="30.0" distanceToCenter="true" position="center" ratio="0.5" segment="0"/>
+            </y:ModelParameter>
+            <y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
+          </y:EdgeLabel>
+        </y:GenericEdge>
+      </data>
+    </edge>
+    <edge id="e1" source="n0::n0" target="n1::n0">
+      <data key="d9"/>
+      <data key="d10">
+        <y:GenericEdge configuration="com.yworks.edge.framed">
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#00CCFF" type="line" width="3.0"/>
+          <y:Arrows source="standard" target="none"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="16" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="59.875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#00CCFF" verticalTextPosition="bottom" visible="true" width="174.703125" x="-187.69338083659522" y="-29.937490299595197">Connecteur mongo
+
+pour pandas<y:LabelModel>
+              <y:SmartEdgeLabelModel autoRotationEnabled="false" defaultAngle="0.0" defaultDistance="10.0"/>
+            </y:LabelModel>
+            <y:ModelParameter>
+              <y:SmartEdgeLabelModelParameter angle="0.0" distance="30.0" distanceToCenter="true" position="center" ratio="0.5" segment="0"/>
+            </y:ModelParameter>
+            <y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
+          </y:EdgeLabel>
+        </y:GenericEdge>
+      </data>
+    </edge>
+    <edge id="e2" source="n1::n2" target="n1">
+      <data key="d9"/>
+      <data key="d10">
+        <y:GenericEdge configuration="com.yworks.edge.framed">
+          <y:Path sx="0.0" sy="0.0" tx="210.1652017499747" ty="-226.8308861417986"/>
+          <y:LineStyle color="#00CCFF" type="line" width="3.0"/>
+          <y:Arrows source="none" target="standard"/>
+        </y:GenericEdge>
+      </data>
+    </edge>
+    <edge id="e3" source="n4" target="n1">
+      <data key="d9"/>
+      <data key="d10">
+        <y:GenericEdge configuration="com.yworks.edge.framed">
+          <y:Path sx="0.0" sy="0.0" tx="-174.1652017499747" ty="-225.3699486417986"/>
+          <y:LineStyle color="#00CCFF" type="line" width="3.0"/>
+          <y:Arrows source="none" target="standard"/>
+        </y:GenericEdge>
+      </data>
+    </edge>
+  </graph>
+  <data key="d7">
+    <y:Resources>
+      <y:Resource id="1" type="java.awt.image.BufferedImage">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</y:Resource>
+    </y:Resources>
+  </data>
+</graphml>
