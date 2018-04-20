@@ -1,0 +1,76 @@
+{
+	"source" : "Sitadel2",
+    "datatype" : "essentiel_en_chiffres",
+    "geoData" : "commune|département|regions",
+    "year" : "2013-2017"
+}
+{
+	"Code": "10",
+	"Departement": "Aube",
+	"Prix": [{
+		"Montant": 70000,
+		"Nombre_pieces": 5,
+		"Surface_terrain": 196,
+		"Construction": "-",
+		"Garage": "Oui",
+		"DPE": "-",
+		"GES": "-",
+		"Nombre_niveaux": 2,
+		"Sous_sol": "Oui"
+	}, {
+		"Montant": 45000,
+		"Nombre_pieces": 3,
+		"Surface_terrain": 686,
+		"Construction": "1970 \/ 1980",
+		"Garage": "Oui",
+		"DPE": "E",
+		"GES": "A",
+		"Nombre_niveaux": 2,
+		"Sous_sol": "Oui"
+	}, {
+		"Montant": 178000,
+		"Nombre_pieces": 4,
+		"Surface_terrain": 1225,
+		"Construction": "1981 \/ 1991",
+		"Garage": "Oui",
+		"DPE": "E",
+		"GES": "C",
+		"Nombre_niveaux": 2,
+		"Sous_sol": "Non"
+	}]
+}
+{
+	"Code": "13",
+	"Departement": "Bouches-du-Rh\u00f4ne",
+	"PrixMaison-Data": [{
+		"Montant": 233000,
+		"Nombre_pieces": 5,
+		"Surface_terrain": 600,
+		"Construction": "1948 \/ 1969",
+		"Garage": "Oui",
+		"DPE": "E",
+		"GES": "E",
+		"Nombre_niveaux": 1,
+		"Sous_sol": "Non"
+	}, {
+		"Montant": 288999,
+		"Nombre_pieces": 4,
+		"Surface_terrain": 2130,
+		"Construction": "2011 \/ 2020",
+		"Garage": "Oui",
+		"DPE": "-",
+		"GES": "-",
+		"Nombre_niveaux": 1,
+		"Sous_sol": "Non"
+	}, {
+		"Montant": 884350,
+		"Nombre_pieces": 0,
+		"Surface_terrain": 1230,
+		"Construction": "-",
+		"Garage": "-",
+		"DPE": "-",
+		"GES": "-",
+		"Nombre_niveaux": 2,
+		"Sous_sol": "Non"
+	}]
+}

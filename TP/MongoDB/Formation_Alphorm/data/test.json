@@ -1,0 +1,54 @@
+{ 
+    "address" : {
+        "building" : "1007", 
+        "coord" : {
+            "type" : "Point", 
+            "coordinates" : [
+                -73.856077, 
+                40.848447
+            ]
+        }, 
+        "street" : "Morris Park Ave", 
+        "zipcode" : "10462"
+    }, 
+    "borough" : "Bronx", 
+    "cuisine" : "Bakery", 
+    "name" : "Morris Park Bake Shop", 
+    "restaurant_id" : "30075445"
+}
+{ 
+    "address" : {
+        "building" : "469", 
+        "coord" : {
+            "type" : "Point", 
+            "coordinates" : [
+                -73.961704, 
+                40.662942
+            ]
+        }, 
+        "street" : "Flatbush Avenue", 
+        "zipcode" : "11225"
+    }, 
+    "borough" : "Brooklyn", 
+    "cuisine" : "Hamburgers", 
+    "name" : "Wendy'S", 
+    "restaurant_id" : "30112340"
+}
+{ 
+    "address" : {
+        "building" : "2780", 
+        "coord" : {
+            "type" : "Point", 
+            "coordinates" : [
+                -73.98241999999999, 
+                40.579505
+            ]
+        }, 
+        "street" : "Stillwell Avenue", 
+        "zipcode" : "11224"
+    }, 
+    "borough" : "Brooklyn", 
+    "cuisine" : "American ", 
+    "name" : "Riviera Caterer", 
+    "restaurant_id" : "40356018"
+}

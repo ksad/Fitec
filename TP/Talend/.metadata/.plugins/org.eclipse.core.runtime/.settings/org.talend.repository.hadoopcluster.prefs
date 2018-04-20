@@ -1,2 +1,0 @@
-eclipse.preferences.version=1
-hadoopcluster.token.records={"HADDOP_CLOUDERA"\:{"HADOOPCLUSTER"\:{"types"\:{"CLOUDERA/Cloudera_CDH5_8"\:1,"HORTONWORKS/HDP_2_5"\:1}}},"IMMOBILIER_PROJECT"\:{"HADOOPCLUSTER"\:{"types"\:{}}},"SAMPLE_LOCAL_PROJECT"\:{"HADOOPCLUSTER"\:{"types"\:{"CLOUDERA/Cloudera_CDH5_8"\:1}}}}

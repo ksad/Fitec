@@ -1,0 +1,208 @@
+1. Install mongodb
+2. Run mongo instance from command line (options)
+mkdir instance01
+sudo chown -R mongodb:mongodb instance01/
+sudo -u mongodb mongod --port 27018 --dbpath instance01/ --logpath instance01/mongodb_27018.log --fork // fork to run on background
+Tips : to run commands as mongodb user
+- Allow connection on bash with mongodb user : sudo /etc/passwd --> mongodb:x:122:65534::/home/mongodb:/bin/false --> mongodb:x:122:65534::/home/mongodb:/bin/bash
+- sudo su mongodb
+3. Run mongo instance from config file
+mkdir instance02
+sudo chown -R mongodb:mongodb instance02/
+sudo -u mongodb vim instance02/mongod.conf --> port=27019 | dbpath=<path> | logpath=<path> | bind_ip=*
+sudo -u mongodb mongod -f instance02/mongod.conf --fork
+
+Outils mongodb
+mongod (le moteur de base)
+mongo (le shell javascript)
+mongos (le contrôleur de Sharding)
+Les outils d’import/export
+mongoimport, mongoexport, mongodump, mongorestore, bsondump
+mongofiles (l’utilitaire GridFS)
+mongostat (visualisation des stats d’une instance mongoDB)
+mongosniff (le tcpdump de mongo)
+mongotop, mongoperf
+ø
+connection to mongodb :
+mongo --host localhost --port 27017 test // test = dabase
+
+## mongo shell prompt customization
+> var host = db.serverStatus().host;
+> var prompt = function { return db+"@"+host+" > ";}
+> var prompt = function() {user = db.runCommand({connectionStatus : 1}).authInfo.authenticatedUsers[0]; if (user) {return user.user + "@db[" + db +"] > "}; return ">"}
+
+## or set the mongorc.js file
+vim ~/.mongorc.js
+prompt = function() {
+    user = db.runCommand({connectionStatus : 1}).authInfo.authenticatedUsers[0]
+    if (user) {
+        return user.user + "@db[" + db +"] > "
+    }
+    return ">"
+}
+
+Création / Suppression
+ Création de bases de données
+• Automatique
+- # mongo --port 27017 <db_name>
+- > use <db_name>
+MongoDB: Administration alphorm.com™©
+ Suppression de bases de données
+• # mongo
+• > use <db_name>;
+• > db.runCommand({dropDatabase: 1});
+• > db.dropDatabase();
+
+Stockage des données physiques d’une base --> Page 53 (support_cous.pdf)
+Les espaces de noms --> Page 56 (support_cous.pdf)
+
+Collection create
+db.createCollection('<collectionName');
+db.<collection_name>.insert( { var1: "valeur", var2: "valeur", var3: "valeur"} );
+db.<collection_name>.save({var1:"valeur"})
+
+Delete collectionName
+db.<collection_name>.deop()
+
+CRUD Operation
+-- Import data sample
+mongoimport --db <db_name> --collection <collection_name> <data_file.json>
+Example : mongoimport --db gescon --collection employes data/employes.json
+
+mongoimport --username karim --db toto --collection testcsv --type csv --file locations.csv --headerline
+-- Insert
+db.<collection_name>.insert( { var1: "valeur", var2: "valeur", var3: "valeur"} );
+db.<collection_name>.save({var1:"valeur"})
+
+-- Update
+db.<collection_name>.update({<filter>}, {<$set|$unset|$inc>:{<'field_to_update'>:<value>}}, <createDocumentIfNotExist:true|false>, <updateAllRecords:true|false>)
+db.employes.update({nom:"Herring"}, {$set:{'prenom':"Sofiane"}}, false, true); // update records where nom = "Herring"
+db.employes.update({nom:"Herring"}, {$set:{'address.numero':23}}, false, true) // update records where nom = "Herring"
+db.employes.update({nom:"SAD"}, {$set:{'phone.home':0123456789}}, true, true) // This record doesn't exist, it will be created
+db.employes.update({nom:"Valencia", prenom:"Lancaster"}, {$inc:{'prime':255}}, true, true); // increment prime with 255
+
+-- delete field
+db.employes.update({<filter>}, {$unset:{'field_to_update':1}}, false, true);
+db.employes.update({nom:"SAD"}, {$unset:{'phone.home':1}}, false, true);
+/home/ksad/MY-DATA/Immobilier_BigData/DATASETS/Insee/Amenagemlent_du_territoir_villes_quartier_2017
+-- Read
+db.employes.find().pretty()
+db.employes.findOne().pretty()
+db.employes.find().limit(3).pretty()
+db.employes.find().count()
+db.employes.find({nom:"Herring"}, {nom:1, 'address.codepostal':1}).pretty() // show some elements
+db.employes.find({<filter> : {<$gt|$gte|$lt|$lte|$ne|$all|$in>:<value>}}).pretty() // comparaison >
+db.employes.find({anciennete : {$in:[21, 9, 4]}}).pretty()
+db.employes.find({'address.ville' : {$ne:"Onton"}}).pretty()
+db.employes.find({nom : /^Do/}).pretty() // Like
+db.employes.find({anciennete : {$gt:2}}, {nom:1, anciennete:1}).sort({anciennete:-1|1}) // Sort
+
+-- Remove
+db.employes.find({anciennete: {$gt:35} }).count();
+db.employes.remove({anciennete: {$gt:35} });
+db.employes.remove(); // Delete all
+
+
+###### Replication
+--replSet
+--shardsvr
+
+PRIMARY> rs.add("host:port")
+PRIMARY> rs.remove("host:port")
+
+- rs.initiate(cfg); (permet d’initialiser la configuration d’un Replica Set)
+- db.isMaster(); (permet de vérifier qui est le maître)
+- rs.status(); (permet de vérifier l’état du Replica Set)
+- rs.slaveOk() ; (permet d’activer les lecture sur les serveurs esclaves)
+- rs.syncFrom("host:port"); (permet de forcer la synchronisation depuis le master)
+
+
+# Set up replicat Set
+mkdir -p tp_replSet/rs01_master_inst00
+mkdir -p tp_replSet/rs01_slave1_inst01
+mkdir -p tp_replSet/rs01_slave2_inst02
+mkdir -p tp_replSet/rs01_arbiter/home/ksad/MY-DATA/Immobilier_BigData/DATASETS/Insee/Amenagemlent_du_territoir_villes_quartier_2017
+sudo chown -R mongodb:mongodb tp_replSet/
+sudo chmod -R 777 tp_replSet/
+
+1. Create instances
+mongod --replSet rs01 --port 27101 --shardsvr --dbpath tp_replSet/rs01_arbiter --logpath tp_replSet/rs01_arbiter/mongod_27101_arbiter.log --fork
+mongod --replSet rs01 --port 27102 --shardsvr --dbpath tp_replSet/rs01_master_inst00 --logpath tp_replSet/rs01_master_inst00/mongod_27102_master.log --fork
+mongod --replSet rs01 --port 27103 --shardsvr --dbpath tp_replSet/rs01_slave1_inst01 --logpath tp_replSet/rs01_slave1_inst01/mongod_27103_slave1.log --fork
+
+2. Initiate instances
+mongo --port 27102 admin
+> cfg = {_id:"rs01", members:[{_id:0, host:"127.0.0.1:27102"}, {_id:1, host:"127.0.0.1:27103"}, {_id:2, host:"127.0.0.1:27101", arbiterOnly:true}]};
+> rs.initiate(cfg);
+> rs.isMaster(); // check if master or slave
+
+3. Create some data to test Replication
+rs01:PRIMARY> use gescom;
+rs01:PRIMARY> db.employes.save({code:1, nom:"SAD"})
+rs01:PRIMARY> db.employes.save({code:2, nom:"SYRINE"})
+rs01:PRIMARY> db.employes.find()
+{ "_id" : ObjectId("5aca6340ea660f4769816356"), "code" : 1, "nom" : "SAD"}
+{ "_id" : ObjectId("5aca634bea660f4769816357"), "code" : 2, "nom" : "SYRINE"}
+
+Connect to secondary node to check replication
+mongo --port 27103 gescom
+rs01:SECONDARY> rs.slaveOk(); // to activate reading from slaves
+rs01:SECONDARY> db.employes.find()
+{ "_id" : ObjectId("5aca6340ea660f4769816356"), "code" : 1, "nom" : "SAD"}
+{ "_id" : ObjectId("5aca634bea660f4769816357"), "code" : 2, "nom" : "SYRINE"}
+
+rs01:SECONDARY> db.printReplicationInfo();
+configured oplog size:   1391.6753902435303MB
+log length start to end: 1242secs (0.35hrs)
+oplog first event time:  Sun Apr 08 2018 20:37:12 GMT+0200 (CEST)
+oplog last event time:   Sun Apr 08 2018 20:57:54 GMT+0200 (CEST)/home/ksad/MY-DATA/Immobilier_BigData/DATASETS/Insee/Amenagemlent_du_territoir_villes_quartier_2017
+now:                     Sun Apr 08 2018 20:57:57 GMT+0200 (CEST)
+
+3. Add new replicaSet
+mongod --replSet rs01 --port 27104 --shardsvr --dbpath tp_replSet/rs01_slave2_inst02 --logpath tp_replSet/rs01_slave2_inst02/mongod_27104_slave2.log --fork
+mongo --port 27102
+rs01:PRIMARY > rs.add("127.0.0.1:27104")
+
+4. Remove a replicat
+mongo --port 27102
+rs01:PRIMARY > rs.remove("127.0.0.1:27104");
+
+##### Sharding
+
+Les étapes de mise en oeuvre
+ Mise en place du Replica Set
+ Mise en place du sharding
+• Les Config servers : Serveur de configuration qui va stocker les metadata du shard
+• Le mongos : Sert de routeur vers les différents shards
+• Les Shard servers : ou instances mongod
+
+ Test de l’infrastructure
+-- configServers
+sudo -u mongodb mongod --configsvr --replSet rs01 --port 27201 --dbpath tp_sharding/configsrv1 --logpath tp_sharding/configsrv1/configsvr1.log --fork
+sudo -u mongodb mongod --configsvr --replSet rs01 --port 27202 --dbpath tp_sharding/configsrv2 --logpath tp_sharding/configsrv1/configsvr2.log --fork
+sudo -u mongodb mongod --configsvr --replSet rs01 --port 27203 --dbpath tp_sharding/configsrv3 --logpath tp_sharding/configsrv1/configsvr3.log --fork
+mongo --port 27201
+> rs.initiate();
+>rs.add("127.0.0.1:27202");
+>rs.add("127.0.0.1:27203");
+
+-- mongos
+sudo -u mongodb mongos --port 27301 --configdb rs01/127.0.0.1:27201,127.0.0.1:27202,127.0.0.1:27203 --logpath tp_sharding/mongos/mongo_27301.log --fork
+to change chunk size --> connect to mongos : use config; db.settings.save( { _id:"chunksize", value: <sizeInMB> } )
+mongo --port 27301
+mongos >
+
+
+### Security
+sudo vim /etc/mongod.conf
+security:
+  authorization: enabled
+
+connect to mongo :
+mongo admin
+use admin
+> db.createUser({user: "karim", pwd: "enirys", roles:[{role: "readWrite", db: "admin" }, "dbOwner"]});
+
+### delete
+use <database>
+db.dropUser("<username>")

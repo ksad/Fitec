@@ -1,0 +1,46 @@
+{
+	"metadata" : {
+		"source" : "insee",
+		"datatype" : "chiffre_detaillés",
+		"geodata" : "regions",
+		"année" : "2017"
+	},
+	"address" : {
+		"building" : "2780", 
+			"coord" : {
+				"type" : "Point", 
+				"coordinates" : [
+					-73.98241999999999, 
+				40.579505
+				]
+			}, 
+			"street" : "Stillwell Avenue", 
+			"zipcode" : "11224"
+	}, 
+		"borough" : "Brooklyn", 
+		"cuisine" : "American ", 
+		"grades" : [
+		{
+			"date" : ISODate("2014-06-10T00:00:00.000+0000"), 
+			"grade" : "A", 
+			"score" : NumberInt(5)
+		}, 
+		{
+			"date" : ISODate("2013-06-05T00:00:00.000+0000"), 
+			"grade" : "A", 
+			"score" : NumberInt(7)
+		}, 
+		{
+			"date" : ISODate("2012-04-13T00:00:00.000+0000"), 
+			"grade" : "A", 
+			"score" : NumberInt(12)
+		}, 
+		{
+			"date" : ISODate("2011-10-12T00:00:00.000+0000"), 
+			"grade" : "A", 
+			"score" : NumberInt(12)
+		}
+	], 
+	"name" : "Riviera Caterer", 
+	"restaurant_id" : "40356018"
+}
